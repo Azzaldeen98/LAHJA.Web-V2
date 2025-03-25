@@ -49,7 +49,13 @@ namespace Infrastructure.DataSource.ApiClient.Payment
             {
                 var model = _mapper.Map<Nswag.SubscriptionCreate>(request);
                 var client = await GetApiClient();
-                var response = await client.CreateSubscriptionAsync(model);
+                var response=await ExecuteWithRetryAsync(async () =>
+                {
+                    var response = await client.CreateSubscriptionAsync(model);
+                    return response;
+                });
+             
+                
 
 
                 var resModel = _mapper.Map<SubscriptionCreateResponseModel>(response);

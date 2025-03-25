@@ -1,9 +1,9 @@
 ﻿@using Domain.ShareData
+@using LAHJA.ContextServices
 @using LAHJA.Helpers.Services
 @using Microsoft.AspNetCore.Authorization
-@inject LanguageService languageService
-@inject IManageLanguageService _manageLanguageService
 
+@inherits ProtectedComponent 
 @attribute [Authorize]
 
 
@@ -39,7 +39,7 @@
 
 
 @code {
- 
+
     private string SidebarWidth { get; set; } = "200px"; // العرض الافتراضي
     // private bool IsResizing { get; set; } = false;
 
@@ -111,18 +111,21 @@
     }
     protected override void OnInitialized()
     {
+        changeLanguage(service.lg);
 
-        languageService.OnLanguageChanged += changeLanguage;
-        changeLanguage("ar");
+    }
 
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
     }
     protected override async void OnAfterRender(bool firstRender)
 
     {
         if (firstRender)
         {
-            var currentLanguage = await _manageLanguageService.GetLanguageAsync();
-            changeLanguage(currentLanguage);
+            // var currentLanguage = await _manageLanguageService.GetLanguageAsync();
+            // changeLanguage(currentLanguage);
 
         }
 

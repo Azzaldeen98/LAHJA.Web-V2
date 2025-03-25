@@ -12,7 +12,7 @@ namespace Shared.Constants.Router
         public static string REGISTER = "Rigist";
         public static string LOGOUT = "Logout";
         public static string HOME = "/";
-        public static string PLANS = "TemplatePlan";
+        public static string PLANS = "Plans";//"TemplatePlan";
         public static string CONFIRM_EMAIL = "ConfirmEmail";
         public static string EMAIL_CONFIRM_PAGE = "email-confirmation";
         public static string FORGET_PASSWORD = "ForgetPassword";

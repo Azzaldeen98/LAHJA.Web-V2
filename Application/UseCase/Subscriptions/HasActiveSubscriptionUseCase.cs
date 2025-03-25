@@ -1,4 +1,5 @@
-﻿using Domain.Repository.Subscriptions;
+﻿using Domain.Repository.Profile;
+using Domain.Repository.Subscriptions;
 using Domain.Wrapper;
 
 namespace Application.UseCase.Plans.Get
@@ -6,10 +7,12 @@ namespace Application.UseCase.Plans.Get
     public class HasActiveSubscriptionUseCase
     {
         private readonly ISubscriptionsRepository repository;
-        public HasActiveSubscriptionUseCase(ISubscriptionsRepository repository)
+        private readonly IProfileRepository profileRepository;
+        public HasActiveSubscriptionUseCase(ISubscriptionsRepository repository, IProfileRepository profileRepository)
         {
 
             this.repository = repository;
+            this.profileRepository = profileRepository;
         }
 
         public async Task<Result<bool>> ExecuteAsync()
@@ -18,7 +21,7 @@ namespace Application.UseCase.Plans.Get
             return await repository.HasActiveSubscriptionAsync();
 
         }
-    }  
+    }   
 
 
 

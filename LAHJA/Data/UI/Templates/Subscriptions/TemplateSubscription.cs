@@ -4,14 +4,11 @@ using Domain.Entities.Subscriptions.Response;
 using Domain.ShareData.Base;
 using Domain.Wrapper;
 using LAHJA.ApplicationLayer.Subscription;
-using LAHJA.ApplicationLayer.Subscription;
 using LAHJA.Data.UI.Components;
 using LAHJA.Data.UI.Components.Subscription;
 using LAHJA.Data.UI.Templates.Base;
-using LAHJA.Data.UI.Templates.Subscription;
 using LAHJA.Helpers.Services;
 using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.DependencyInjection;
 using MudBlazor;
 using Shared.Constants.Router;
 
@@ -42,6 +39,8 @@ namespace LAHJA.Data.UI.Templates.Subscription
         public Func<T, Task> SubmitPause { get; set; }
         public Func<T, Task> SubmitResume { get; set; }
         public Func<T, Task> SubmitDelete { get; set; }
+        //public Func<T, Task<Result<ICollection<ProfileSubscriptionResponse>>>> GetUserSubscriptions { get; set; }
+        //public Func<T, Task<Result<ICollection<ProfileSubscriptionResponse>>>> GetUserActiveSubscriptions { get; set; }
         public Func<T, Task<Result<SubscriptionCreateResponse>>> SubmitCreate { get; set; }
         public Func<T, Task> SubmitUpdate { get; set; }
 
@@ -54,6 +53,7 @@ namespace LAHJA.Data.UI.Templates.Subscription
 
         //Task<Result<List<SubscriptionResponse>>> SearchAsync(T data);
         Task<Result<List<UserSubscription>>> GetAllAsync();
+        Task<Result<SubscriptionResponse>> GetUserActiveSubscriptionAsync();
         Task<Result<bool>> HasActiveSubscriptionAsync();
         Task<Result<SubscriptionCreateResponse>> CreateAsync(T data);
         Task<Result<UserSubscription>> ResumeAsync(T data);
@@ -78,7 +78,9 @@ namespace LAHJA.Data.UI.Templates.Subscription
 
         public abstract Task<Result<List<UserSubscription>>> GetAllAsync();
         public abstract Task<Result<bool>> HasActiveSubscriptionAsync();
-
+        public abstract Task<Result<SubscriptionResponse>> GetUserActiveSubscriptionAsync();
+        //public abstract Task<ICollection<ProfileSubscriptionResponse>> GetUserSubscriptionsAsync();
+        //public abstract Task<Result<SubscriptionResponse>> GetUserActiveSubscription();
         public abstract Task<Result<SubscriptionCreateResponse>> CreateAsync(E data);
         public abstract Task<Result<UserSubscription>> PauseAsync(E data);
         public abstract Task<Result<UserSubscription>> ResumeAsync(E data);
@@ -148,6 +150,14 @@ namespace LAHJA.Data.UI.Templates.Subscription
 
         }
 
+        public override async Task<Result<SubscriptionResponse>> GetUserActiveSubscriptionAsync()
+        {
+            return await Service.GetUserActiveSubscriptionAsync();
+        }   
+        public override async Task<Result<bool>> HasActiveSubscriptionAsync()
+        {
+            return await Service.HasActiveSubscriptionAsync();
+        }
         public override async Task<Result<UserSubscription>> PauseAsync(DataBuildUserSubscriptionInfo data)
         {
             //var model = Mapper.Map<SubscriptionCreate>(data);
@@ -287,10 +297,7 @@ namespace LAHJA.Data.UI.Templates.Subscription
             }
         }
 
-        public override async Task<Result<bool>> HasActiveSubscriptionAsync()
-        {
-            return await Service.HasActiveSubscriptionAsync();
-        }
+
     }
 
 
@@ -335,6 +342,25 @@ namespace LAHJA.Data.UI.Templates.Subscription
         {
             navigation.NavigateTo(url, false);
         }
+
+
+
+        public async Task<bool> HasActiveSubscriptionAsync()
+        {
+            var res= await builderApi.HasActiveSubscriptionAsync();
+            if(res.Succeeded)
+            {
+                return res.Data;
+            }
+
+            return false;
+        }
+
+        public async Task<Result<SubscriptionResponse>> GetUserActiveSubscriptionAsync()
+        {
+            return  await builderApi.GetUserActiveSubscriptionAsync();
+        }
+
 
         private async Task OnSubmitDeleteSubscription(DataBuildUserSubscriptionInfo DataBuildUserSubscriptionInfo)
         {
@@ -417,10 +443,7 @@ namespace LAHJA.Data.UI.Templates.Subscription
             return await builderApi.GetAllAsync();
         }
 
-        public async Task<Result<bool>> HasActiveSubscriptionAsync()
-        {
-            return await builderApi.HasActiveSubscriptionAsync();
-        }
+     
 
 
 

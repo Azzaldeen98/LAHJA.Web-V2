@@ -8,14 +8,13 @@ using Infrastructure.DataSource.ApiClient.Payment;
 
 using Domain.ShareData.Base;
 using Domain.Repository.Subscriptions;
-using Infrastructure.Models.Plans;
 using Domain.Entities.Subscriptions.Response;
 using Infrastructure.Models.Subscriptions.Request;
 using Infrastructure.Models.Subscriptions.Response;
 using Domain.Entities.Subscriptions.Request;
 using Infrastructure.DataSource.Seeds.Models;
 using Domain.ShareData;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using Infrastructure.DataSource.ApiClient.Profile;
 
 
 namespace Infrastructure.Repository.Subscription
@@ -23,6 +22,7 @@ namespace Infrastructure.Repository.Subscription
 
     public class SubscriptionsRepository : ISubscriptionsRepository
     {
+        private readonly ProfileApiClient profileApiClient;
         private readonly SeedsSubscriptionsPlans seedsPlans;
         private readonly SeedsSubscriptionsData seedsSubscriptionsData;
         private readonly SubscriptionsApiClient subscriptionApiClient;
@@ -35,7 +35,8 @@ namespace Infrastructure.Repository.Subscription
             ApplicationModeService appModeService,
             SubscriptionsApiClient subscriptionApiClient,
             SeedsSubscriptionsData seedsSubscriptionsData,
-            ISessionUserManager sessionUserManager)
+            ISessionUserManager sessionUserManager,
+            ProfileApiClient profileApiClient)
         {
 
             //seedsPlans = new SeedsPlans();
@@ -46,39 +47,149 @@ namespace Infrastructure.Repository.Subscription
             this.subscriptionApiClient = subscriptionApiClient;
             this.seedsSubscriptionsData = seedsSubscriptionsData;
             _sessionUserManager = sessionUserManager;
+            this.profileApiClient = profileApiClient;
         }
-
         public async Task<Result<bool>> HasActiveSubscriptionAsync()
         {
-            var response = await ExecutorAppMode.ExecuteAsync<Result<List<SubscriptionResponseModel>>>(
-                 async () => await subscriptionApiClient.getAllAsync(),
-                  async () => {
-                      var email = await _sessionUserManager.GetEmailAsync();
-                      if (email == null)
-                          return Result<List<SubscriptionResponseModel>>.Fail();
 
-                      var data = seedsSubscriptionsData.getActiveSubscriptions(email);
-                      if(data != null)
-                      {
-                          var items=_mapper.Map<List<SubscriptionResponseModel>>(data);
-                          return Result<List<SubscriptionResponseModel>>.Success(items);
-                      }
-                  
-                    
-                      return Result<List<SubscriptionResponseModel>>.Fail();
-                  });
-
-            if (response.Succeeded)
+            try
             {
-                return Result<bool>.Success(true);
+                var subscriptions = await profileApiClient.SubscriptionsAsync();
+                if (subscriptions != null)
+                {
+                    if (subscriptions != null && subscriptions?.Any() == true)
+                    {
+                        var result = subscriptions.Any(x => x.Status?.ToLower() == "active");
+                        return Result<bool>.Success(result);
+                    }
+
+                    return Result<bool>.Success(false);
+                }
+                else
+                {
+                    return Result<bool>.Fail("not found");
+                }
+
             }
-            else
+            catch (Exception e)
             {
-                return Result<bool>.Fail();
+                return Result<bool>.Fail(e.Message);
             }
 
 
         }
+        public async Task<Result<SubscriptionResponse>> GetUserActiveSubscriptionAsync()
+        {
+
+            try
+            {
+                var subscriptions = await profileApiClient.SubscriptionsAsync();
+                if (subscriptions != null)
+                {
+                    if (subscriptions != null && subscriptions?.Any() == true)
+                    {
+                        var result = subscriptions.FirstOrDefault(x => x.Status?.ToLower() == "active");
+                        if (result != null)
+                        {
+                            var sub = _mapper.Map<SubscriptionResponse>(result);
+                            return Result<SubscriptionResponse>.Success(sub);
+                        }
+                    }
+
+            
+                }
+              
+                return Result<SubscriptionResponse>.Fail("not found");
+                
+
+            }
+            catch (Exception e)
+            {
+                return Result<SubscriptionResponse>.Fail(e.Message);
+            }
+
+
+            //var response = await ExecutorAppMode.ExecuteAsync<Result<List<SubscriptionResponseModel>>>(
+            //    async () => await subscriptionApiClient.getAllAsync(),
+            //     async () => {
+            //         var email = await _sessionUserManager.GetEmailAsync();
+            //         if (email == null)
+            //             return Result<List<SubscriptionResponseModel>>.Fail();
+
+            //         var data = seedsSubscriptionsData.getActiveSubscriptions(email);
+            //         if (data != null)
+            //         {
+            //             var items = _mapper.Map<List<SubscriptionResponseModel>>(data);
+            //             return Result<List<SubscriptionResponseModel>>.Success(items);
+            //         }
+
+
+            //         return Result<List<SubscriptionResponseModel>>.Fail();
+            //     });
+            //if (response.Succeeded)
+            //{
+
+            //    var subscriptions = response.Data;
+            //    if (subscriptions != null && subscriptions?.Any() == true)
+            //    {
+            //        var result = subscriptions.FirstOrDefault(x => x.Status?.ToLower() == "active");
+            //        if (result != null)
+            //        {
+            //           var sub= _mapper.Map<SubscriptionResponse>(result);
+            //          return Result<SubscriptionResponse>.Success(sub);
+            //        }
+                   
+            //    }
+
+            //    return Result<SubscriptionResponse>.Fail("No found");
+            //}
+            //else
+            //{
+            //    return Result<SubscriptionResponse>.Fail(response?.Messages?.Any()==true? response?.Messages[0]?? "Error" : "Error");
+            //}
+        }
+
+        //public async Task<Result<bool>> HasActiveSubscriptionAsync()
+        //{
+        //    var response = await ExecutorAppMode.ExecuteAsync<Result<List<SubscriptionResponseModel>>>(
+        //         async () => await subscriptionApiClient.getAllAsync(),
+        //          async () => {
+
+        //              return await subscriptionApiClient.getAllAsync();
+        //              //var email = await _sessionUserManager.GetEmailAsync();
+        //              //if (email == null)
+        //              //    return Result<List<SubscriptionResponseModel>>.Fail();
+
+        //              //var data = seedsSubscriptionsData.getActiveSubscriptions(email);
+        //              //if(data != null)
+        //              //{
+        //              //    var items=_mapper.Map<List<SubscriptionResponseModel>>(data);
+        //              //    return Result<List<SubscriptionResponseModel>>.Success(items);
+        //              //}
+
+
+        //              //return Result<List<SubscriptionResponseModel>>.Fail();
+        //          });
+
+        //    if (response.Succeeded)
+        //    {
+
+        //        var subscriptions = response.Data;
+        //        if (subscriptions != null && subscriptions?.Any() == true)
+        //        {
+        //            var result= subscriptions.Any(x => x.Status?.ToLower() == "active");
+        //            return Result<bool>.Success(result);
+        //        }
+                
+        //        return Result<bool>.Success(false);
+        //    }
+        //    else
+        //    {
+        //        return Result<bool>.Fail(response?.Messages?.Any() == true ? response?.Messages[0] ?? "Error" : "Error");
+        //    }
+
+
+        //}
         public async Task<Result<List<SubscriptionResponse>>> getAllAsync()
         {
             var response = await ExecutorAppMode.ExecuteAsync<Result<List<SubscriptionResponseModel>>>(

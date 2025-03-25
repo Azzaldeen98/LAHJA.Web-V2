@@ -46,6 +46,7 @@ builder.Services.AddAuthorization();  // تسجيل خدمات التفويض ب
 builder.Services.AddCascadingAuthenticationState();  // تسجيل حالة المصادقة
 builder.Services.AddScoped<CustomAuthenticationStateProvider>();  // تسجيل موفر حالة المصادقة المخصص
 builder.Services.AddScoped<AuthenticationStateProvider>(sp => sp.GetRequiredService<CustomAuthenticationStateProvider>());
+//builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
 
 

@@ -77,6 +77,15 @@
     private bool isListening = false;
     private bool continuousListening = true;
     private string currentText = "";
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await CreateSessionTokenAsync();
+    }
+
+
     public void OnValueChanged(string? value)
     {
         // transcribedText = currentText = value ?? "";

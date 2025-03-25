@@ -1,6 +1,8 @@
 ﻿using Domain.ShareData.Base;
+using LAHJA.ContextServices;
 using LAHJA.Data.UI.Templates.AuthSession;
 using LAHJA.Data.UI.Templates.Services;
+using LAHJA.Data.UI.Templates.Subscription;
 using LAHJA.Helpers;
 using LAHJA.Helpers.Services;
 using Microsoft.AspNetCore.Components;
@@ -12,14 +14,20 @@ namespace LAHJA.Data.UI.Components.StudioLahjaAiVM
 {
     public class StudioAi: StudioAiCard<DataBuildStudioBase>
     {
-        [Inject]
-        SessionUserManager sessionUserManager { get; set; }
+
         [Inject] TemplateAuthSession templateAuthSession { get; set; }
-        [Inject] NavigationManager Navigation { get; set; }
+        [Inject] public SecureComponentService secureComponentService { get; set; }
 
         [Inject] public TemplateServices templateServices { get; set; }
+        [Inject] public TemplateSubscription subscription  { get; set; }
         [Inject] public ISnackbar Snackbar { get; set; }
         public static bool IsDialogBox = false;
+
+
+        protected override async Task OnInitializedAsync()
+        {
+            await subscription.HasActiveSubscriptionAsync();
+        }
 
 
         protected string _srcFrame;

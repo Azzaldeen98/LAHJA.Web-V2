@@ -16,6 +16,7 @@ namespace Application.Services.Subscriptions
         private readonly CreateSubscriptionUseCase createSubscriptionUseCase;
         private readonly UpdateSubscriptionUseCase updateSubscriptionUseCase;
         private readonly HasActiveSubscriptionUseCase hasActiveSubscriptionUseCase;
+        private readonly GetUserActiveSubscriptionUseCase  getUserActiveSubscriptionUseCase;
 
         public SubscriptionService(
             PauseSubscriptionUseCase pauseSubscriptionUseCase,
@@ -24,7 +25,8 @@ namespace Application.Services.Subscriptions
             GetAllSubscriptionsUseCase getAllSubscriptionsUseCase,
             CreateSubscriptionUseCase createSubscriptionUseCase,
             UpdateSubscriptionUseCase updateSubscriptionUseCase,
-            HasActiveSubscriptionUseCase hasActiveSubscriptionUseCase)
+            HasActiveSubscriptionUseCase hasActiveSubscriptionUseCase,
+            GetUserActiveSubscriptionUseCase getUserActiveSubscriptionUseCase)
         {
             this.pauseSubscriptionUseCase = pauseSubscriptionUseCase;
             this.deleteSubscriptionUseCase = deleteSubscriptionUseCase;
@@ -33,6 +35,7 @@ namespace Application.Services.Subscriptions
             this.createSubscriptionUseCase = createSubscriptionUseCase;
             this.updateSubscriptionUseCase = updateSubscriptionUseCase;
             this.hasActiveSubscriptionUseCase = hasActiveSubscriptionUseCase;
+            this.getUserActiveSubscriptionUseCase = getUserActiveSubscriptionUseCase;
         }
         public async Task<Result<bool>> HasActiveSubscriptionAsync()
         {
@@ -42,6 +45,11 @@ namespace Application.Services.Subscriptions
         {
             return await createSubscriptionUseCase.ExecuteAsync(request);
         }
+        public async Task<Result<SubscriptionResponse>> GetUserActiveSubscriptionAsync()
+        {
+            return await getUserActiveSubscriptionUseCase.ExecuteAsync();
+        }   
+        
         public async Task<Result<SubscriptionResponse>> UpdateAsync(SubscriptionRequest request)
         {
             return await updateSubscriptionUseCase.ExecuteAsync(request);

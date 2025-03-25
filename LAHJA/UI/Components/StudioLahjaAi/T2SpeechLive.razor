@@ -41,14 +41,18 @@
 @code
 {
 
-
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await CreateSessionTokenAsync();
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
 
-            await CreateSessionTokenAsync();
+            // await CreateSessionTokenAsync();
         }
     }
     private async Task OnSubmit(DataBuildServiceBase data)

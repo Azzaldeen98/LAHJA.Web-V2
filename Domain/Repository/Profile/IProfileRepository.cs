@@ -8,6 +8,7 @@ namespace Domain.Repository.Profile;
 
 public interface IProfileRepository
 {
+    //Task<Result<bool>> HasActiveSubscriptionAsync();
     public  Task<Result<ProfileUserResponse>> UpdateProfileUserAsync(ProfileUserRequest request);
     public Task<Result<ProfileUserResponse>> GetProfileUserAsync();
     public Task<Result<ProfileResponse>> getProfileAsync();

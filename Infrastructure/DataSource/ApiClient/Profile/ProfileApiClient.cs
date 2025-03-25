@@ -113,8 +113,12 @@ namespace Infrastructure.DataSource.ApiClient.Profile
             try
             {
                 var client = await GetApiClient();
-
-                var response = await client.SubscriptionsAsync();
+                var response = await ExecuteWithRetryAsync(async () =>
+                {
+                    var response = await client.SubscriptionsAsync();
+                    return response;
+                });
+                //var response = await client.SubscriptionsAsync();
                 var resModel = _mapper.Map<ICollection<ProfileSubscriptionResponse>>(response);
 
                 return resModel;
@@ -173,6 +177,7 @@ namespace Infrastructure.DataSource.ApiClient.Profile
             { 
 
                 var client = await GetApiClient();
+
                 var response = await client.ServicesModelAiAsync(modelAiId);
                 var resModel = _mapper.Map<ICollection<ProfileServiceResponse>>(response);
 
@@ -196,8 +201,12 @@ namespace Infrastructure.DataSource.ApiClient.Profile
             {
 
                 var client = await GetApiClient();
-
-                var response = await client.SpacesSubscriptionAsync(subscriptionId);
+                var response = await ExecuteWithRetryAsync(async () =>
+                {
+                    var response = await client.SpacesSubscriptionAsync(subscriptionId);
+                    return response;
+                });
+              
                 var resModel = _mapper.Map<ICollection<ProfileSpaceResponse>>(response);
 
                 return resModel;

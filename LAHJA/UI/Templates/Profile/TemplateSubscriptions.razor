@@ -56,7 +56,7 @@
     protected override async Task OnInitializedAsync()
     {
         lg = CultureInfo.CurrentUICulture.Name;
-        // await loadedData();
+        await loadedData();
 
      
     }
@@ -64,7 +64,7 @@
     {
         if (firstRender)
         {
-             await loadedData();
+             // await loadedData();
         }
     }
     private async Task OnSubmitCheckoutManage(DataBuildUserSubscriptionInfo dataBuild)

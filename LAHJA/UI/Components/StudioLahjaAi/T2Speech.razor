@@ -198,16 +198,20 @@
     private bool isAudioPlayingIsEnd = true;
     public bool Streaming { get; set; } = true;
     bool _open_api = false;
-
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnInitializedAsync()
     {
-        if (firstRender)
-        {
-
-            await CreateSessionTokenAsync();
-        }
+        await base.OnInitializedAsync();
+        await CreateSessionTokenAsync();
     }
+
+    // protected override async Task OnAfterRenderAsync(bool firstRender)
+    // {
+    //     if (firstRender)
+    //     {
+
+    //         await CreateSessionTokenAsync();
+    //     }
+    // }
 
 
     void onViewApi()

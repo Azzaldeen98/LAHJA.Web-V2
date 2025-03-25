@@ -7,7 +7,7 @@ namespace LAHJA.Data.UI.Components.Plan
     {
         public string? Id { get; set; }
         public string? ProductId { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; } = "";
         public string? Description { get; set; }
         public bool Active { get; set; } = true;
         public decimal Price { get; set; } = 2;
@@ -33,7 +33,9 @@ namespace LAHJA.Data.UI.Components.Plan
         public string HeaderImport { get; set; } = "";
         public string? BillingPeriod { get; set; }
 
-        public string Status { get; set; } 
+        public string Status { get; set; } = ""; 
+        public bool IsActive => Status?.ToLower()=="active";
+        public bool IsFree => Name?.ToLower()=="free";
         public bool IsSubscriptionAllowed { get; set; } = false;
         public bool IsUpgradeAllowed { get; set; } = false;
         public decimal? TotalBilling { get; set; } = 0;

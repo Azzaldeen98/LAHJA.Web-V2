@@ -16,12 +16,6 @@
 
 @inherits StudioAi
 
-@*   <iframe 
-          src="https://modelspeech.onrender.com/studio-t2text/" 
-          width="100%" 
-          height="600" 
-          style="border: none;height:100%">
-      </iframe> *@
 
 
 
@@ -29,11 +23,11 @@
 {
 
     <IframeComponent Lg="@Lg"
-                     StyleCss="width:100%;height:100%;border:none;"
-                     IsLoading="true"
-                     UrlCancel="@UrlCancel"
-                     UrlRedirect="@(Helper.GetFullPath(Navigation,$"{UrlPage}"))"
-                     SrcIFrame="@_srcFrame" />
+    StyleCss="width:100%;height:100%;border:none;"
+    IsLoading="true"
+    UrlCancel="@UrlCancel"
+    UrlRedirect="@(Helper.GetFullPath(Navigation,$"{UrlPage}"))"
+    SrcIFrame="@_srcFrame" />
 
 
 }
@@ -53,29 +47,29 @@
 
                         </CardHeaderContent>
                         <CardHeaderActions >
-                               
-                        
+
+
                             <MudButtonGroup Color="@AppColors.BASE_COLOR_ENUM" Style="height: 26px;width:250px">
 
                               <MudIconButton Icon="@Icons.Material.Filled.FilterAlt"   Color="@AppColors.BASE_COLOR_ENUM" />
                                                                 <MudIconButton Icon="@Icons.Material.Filled.Code"   Color="@AppColors.BASE_COLOR_ENUM" />
 
                                <FilterItemSelected Filter="DataBuild.ServiceTypeFilter" CurrentLanguage="@CurrentLanguage" />
-                                                            
+
                               </MudButtonGroup>
-                           
-                           
-                              
+
+
+
                         </CardHeaderActions>
                     </MudCardHeader>
     @if (DataBuild != null)
     {
 
-        
+
          <MudPaper  class="p-3 m-2 nav-option-speech">
         <div class="d-flex flex-column  " style="font-size:12px !important">
 
-         
+
              <FilterItemSelected Filter="DataBuild.CategoriesFilter" CurrentLanguage="@CurrentLanguage" />
              <FilterItemSelected Filter="DataBuild.LanguagesFilter" CurrentLanguage="@CurrentLanguage" />
              <FilterItemSelected Filter="DataBuild.ServiceTypeFilter" CurrentLanguage="@CurrentLanguage" />
@@ -87,7 +81,7 @@
     }
 
 
-   
+
 
     <MudCardContent Class="flex-grow-1 mt-2 border-0 p-0 w-100 p-2 overflow-auto" Style="max-height:250px;min-height:250px">
         <div id="chat-messages" class="d-flex flex-column gap-2">
@@ -96,7 +90,7 @@
                 @foreach (var message in ChatMessages)
                 {
                     <MessageComponent  Message="@message" MessageToSpeech="@SpeechMessage"  />
-                 
+
                 }
             }
             else
@@ -111,11 +105,11 @@
             <InputCardD ActionSendedr="onInput" />
         </MudPaper>
     <MudCard Style="width:100%" Class="mb-3 d-flex flex-column justify-content-start align-items-start">
- 
 
- 
 
-        
+
+
+
         <MudCard Style="width:100%" Class="d-flex flex-row-reverse">
             <MudCardContent Style="width:100%">
 
@@ -162,7 +156,7 @@
 
 @code {
 
-   
+
 
     private bool IsSettingsMenuVisible = false;
     // private string CurrentLanguage = "ar";
@@ -170,12 +164,18 @@
     private RenderFragment? SelectedComponent;
     private bool isProcessing = false;
 
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await CreateSessionTokenAsync();
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
 
-            await CreateSessionTokenAsync();
+            // await CreateSessionTokenAsync();
         }
     }
 

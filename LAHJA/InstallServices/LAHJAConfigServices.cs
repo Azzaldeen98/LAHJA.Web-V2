@@ -31,6 +31,7 @@ using LAHJA.Data.UI.Templates.AuthSession;
 using LAHJA.ApplicationLayer.ModelAi;
 using LAHJA.Data.UI.Models.ModelAi;
 using LAHJA.Data.UI.Templates.ModelAi;
+using LAHJA.ContextServices;
 
 
 namespace LAHJA
@@ -44,10 +45,17 @@ namespace LAHJA
             InstallServices(serviceCollection);
             InstallHelperServices(serviceCollection);
             InstallTemplates(serviceCollection);
+            InstallAppUtilityServices(serviceCollection);
 
         }
 
 
+       private static  void InstallAppUtilityServices(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddScoped<AppUtilityComponentService>();
+            serviceCollection.AddScoped<ProtectedComponentService>();
+            serviceCollection.AddScoped<SecureComponentService>();
+        }
        private static  void InstallMapping(this IServiceCollection serviceCollection)
         {
           

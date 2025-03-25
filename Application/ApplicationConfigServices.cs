@@ -118,6 +118,7 @@ namespace Infrastructure
             serviceCollection.AddScoped<GetAllSubscriptionsUseCase>();
             serviceCollection.AddScoped<CreateSubscriptionUseCase>();
             serviceCollection.AddScoped<UpdateSubscriptionUseCase>();
+            serviceCollection.AddScoped<GetUserActiveSubscriptionUseCase>();
 
             //// Credit Card
             serviceCollection.AddScoped<ActiveCreditCardUseCase>();

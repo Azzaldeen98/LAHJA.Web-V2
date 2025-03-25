@@ -322,9 +322,6 @@ namespace LAHJA.Data.UI.Templates.Profile
 
         public List<string> Errors { get => _errors; }
 
-
-         
-
         public TemplateProfile(
             IMapper mapper,
             AuthService AuthService,
