@@ -11,6 +11,7 @@ using LAHJA.Helpers.Services;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using Shared.Constants.Router;
+using System.Threading.Tasks;
 
 
 namespace LAHJA.Data.UI.Templates.Subscription
@@ -36,9 +37,10 @@ namespace LAHJA.Data.UI.Templates.Subscription
     {
         public Func<T, Task> SubmitSearch { get; set; }
         public Func<Task> SubmitGetAll { get; set; }
+        public Func<FilterResponseData,Task<Result<DataBuildUserSubscriptionInfo>>> SubmitGetSubscription { get; set; }
         public Func<T, Task> SubmitPause { get; set; }
         public Func<T, Task> SubmitResume { get; set; }
-        public Func<T, Task> SubmitDelete { get; set; }
+        public Func<T, Task<Result<DeleteResponse>>> SubmitDelete { get; set; }
         //public Func<T, Task<Result<ICollection<ProfileSubscriptionResponse>>>> GetUserSubscriptions { get; set; }
         //public Func<T, Task<Result<ICollection<ProfileSubscriptionResponse>>>> GetUserActiveSubscriptions { get; set; }
         public Func<T, Task<Result<SubscriptionCreateResponse>>> SubmitCreate { get; set; }
@@ -54,6 +56,7 @@ namespace LAHJA.Data.UI.Templates.Subscription
         //Task<Result<List<SubscriptionResponse>>> SearchAsync(T data);
         Task<Result<List<UserSubscription>>> GetAllAsync();
         Task<Result<SubscriptionResponse>> GetUserActiveSubscriptionAsync();
+        Task<Result<SubscriptionResponse>> GetSubscriptionAsync(FilterResponseData filter);
         Task<Result<bool>> HasActiveSubscriptionAsync();
         Task<Result<SubscriptionCreateResponse>> CreateAsync(T data);
         Task<Result<UserSubscription>> ResumeAsync(T data);
@@ -80,7 +83,7 @@ namespace LAHJA.Data.UI.Templates.Subscription
         public abstract Task<Result<bool>> HasActiveSubscriptionAsync();
         public abstract Task<Result<SubscriptionResponse>> GetUserActiveSubscriptionAsync();
         //public abstract Task<ICollection<ProfileSubscriptionResponse>> GetUserSubscriptionsAsync();
-        //public abstract Task<Result<SubscriptionResponse>> GetUserActiveSubscription();
+        public abstract Task<Result<SubscriptionResponse>> GetSubscriptionAsync(FilterResponseData filter);
         public abstract Task<Result<SubscriptionCreateResponse>> CreateAsync(E data);
         public abstract Task<Result<UserSubscription>> PauseAsync(E data);
         public abstract Task<Result<UserSubscription>> ResumeAsync(E data);
@@ -93,12 +96,12 @@ namespace LAHJA.Data.UI.Templates.Subscription
     public class BuilderSubscriptionComponent<T> : IBuilderSubscriptionComponent<T>
     {
 
-
+        public Func<FilterResponseData, Task<Result<DataBuildUserSubscriptionInfo>>> SubmitGetSubscription { get; set; }
         public Func<T, Task> SubmitSearch { get; set; }
         public Func <Task> SubmitGetAll { get; set; }
         public Func<T, Task> SubmitPause { get; set; }
         public Func<T, Task> SubmitResume { get; set; }
-        public Func<T, Task> SubmitDelete { get; set; }
+        public Func<T, Task<Result<DeleteResponse>>> SubmitDelete { get; set; }
         public Func<T, Task> SubmitUpdate { get; set; }
         public Func<T, Task<Result<SubscriptionCreateResponse>>> SubmitCreate{ get; set; }
 
@@ -150,6 +153,10 @@ namespace LAHJA.Data.UI.Templates.Subscription
 
         }
 
+        public override async Task<Result<SubscriptionResponse>> GetSubscriptionAsync(FilterResponseData filter)
+        {
+            return await Service.GetSubscriptionAsync(filter);
+        }
         public override async Task<Result<SubscriptionResponse>> GetUserActiveSubscriptionAsync()
         {
             return await Service.GetUserActiveSubscriptionAsync();
@@ -324,6 +331,7 @@ namespace LAHJA.Data.UI.Templates.Subscription
             this.BuilderComponents.SubmitCreate = OnSubmitCreateSubscription;
 
             this.BuilderComponents.SubmitGetAll = OnSubmitGetAllSubscriptions;
+            this.BuilderComponents.SubmitGetSubscription = OnGetSubscriptionAsync;
 
             this.BuilderComponents.SubmitPause = OnSubmitPauseSubscription;
             this.BuilderComponents.SubmitResume = OnSubmitUResumeSubscription;
@@ -362,7 +370,7 @@ namespace LAHJA.Data.UI.Templates.Subscription
         }
 
 
-        private async Task OnSubmitDeleteSubscription(DataBuildUserSubscriptionInfo DataBuildUserSubscriptionInfo)
+        private async Task<Result<DeleteResponse>> OnSubmitDeleteSubscription(DataBuildUserSubscriptionInfo DataBuildUserSubscriptionInfo)
         {
 
             if (DataBuildUserSubscriptionInfo != null)
@@ -370,13 +378,15 @@ namespace LAHJA.Data.UI.Templates.Subscription
                 var response = await builderApi.DeleteAsync(DataBuildUserSubscriptionInfo);
                 if (response.Succeeded)
                 {
-                    redirectTo(RouterPage.DASHBOARD_SUBSCRIPTION);
+                    return response;
                 }
                 else
                 {
                     _errors = response.Messages;
+                    return Result<DeleteResponse>.Fail(response.Messages);
                 }
             }
+            return Result<DeleteResponse>.Fail();
 
         }
    
@@ -405,6 +415,25 @@ namespace LAHJA.Data.UI.Templates.Subscription
                 return await builderApi.CreateAsync(DataBuildUserSubscriptionInfo);
              
             
+
+        }    
+        
+        private async Task<Result<DataBuildUserSubscriptionInfo>> OnGetSubscriptionAsync(FilterResponseData filter)
+        {
+
+
+                var response= await builderApi.GetSubscriptionAsync(filter);
+                if (response.Succeeded)
+                {
+                   var mapData = mapper.Map<DataBuildUserSubscriptionInfo>(response.Data);
+                    return Result<DataBuildUserSubscriptionInfo>.Success(mapData);
+                }
+                else
+                {
+                    return Result<DataBuildUserSubscriptionInfo>.Fail(response?.Messages ?? ["Error"]); 
+                }
+
+
 
         }
         private async Task OnSubmitUResumeSubscription(DataBuildUserSubscriptionInfo DataBuildUserSubscriptionInfo)

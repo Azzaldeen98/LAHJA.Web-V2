@@ -11,6 +11,7 @@ namespace Domain.Repository.Subscriptions
     public interface ISubscriptionsRepository
     {
         Task<Result<SubscriptionResponse>> GetUserActiveSubscriptionAsync();
+        Task<Result<SubscriptionResponse>> GetSubscriptionAsync(FilterResponseData filter);
         Task<Result<bool>> HasActiveSubscriptionAsync();
         Task<Result<DeleteResponse>> DeleteAsync(string id);
         Task<Result<SubscriptionResponse>> ResumeAsync(string id);

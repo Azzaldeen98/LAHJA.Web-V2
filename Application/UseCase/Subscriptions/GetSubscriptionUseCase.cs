@@ -1,22 +1,23 @@
 ﻿using Domain.Entities.Subscriptions.Response;
 using Domain.Repository.Subscriptions;
+using Domain.ShareData.Base;
 using Domain.Wrapper;
 
 namespace Application.UseCase.Plans.Get
 {
-    public class GetUserActiveSubscriptionUseCase
+    public class GetSubscriptionUseCase
     {
         private readonly ISubscriptionsRepository repository;
-        public GetUserActiveSubscriptionUseCase(ISubscriptionsRepository repository)
+        public GetSubscriptionUseCase(ISubscriptionsRepository repository)
         {
 
             this.repository = repository;
         }
 
-        public async Task<Result<SubscriptionResponse>> ExecuteAsync()
+        public async Task<Result<SubscriptionResponse>> ExecuteAsync(FilterResponseData filter)
         {
 
-            return await repository.GetUserActiveSubscriptionAsync();
+            return await repository.GetSubscriptionAsync(filter);
 
         }
     }

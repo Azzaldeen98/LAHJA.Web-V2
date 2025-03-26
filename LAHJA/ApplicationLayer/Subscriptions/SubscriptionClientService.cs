@@ -30,6 +30,10 @@ namespace LAHJA.ApplicationLayer.Subscription
         {
             return await _subscriptionService.GetUserActiveSubscriptionAsync();
         }
+        public async Task<Result<SubscriptionResponse>> GetSubscriptionAsync(FilterResponseData filter)
+        {
+            return await _subscriptionService.GetSubscriptionAsync(filter);
+        }
 
         public async Task<Result<SubscriptionCreateResponse>> CreateAsync(SubscriptionCreate request)
         {

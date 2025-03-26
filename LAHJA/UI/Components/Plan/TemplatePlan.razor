@@ -29,34 +29,79 @@
             <small class="mx-3">@dataBuild.Description</small>
             <MudCardContent>
                 <MudText Typo="Typo.body1" Class="mb-1">
-                    @if (dataBuild.IsPaid == true)
+                    @if (!dataBuild.IsFree)
                     {
                         <MudText Typo="Typo.h5"> @(dataBuild.MonthlyPrice)$ <small style="font-size:9px">/ @DMonth[lg]</small> </MudText>
                     }
                 </MudText>
                 <MudList Dense="true" T="object">
+                    @if (_isDisplayButton){
+                        @if (dataBuild.IsSubscriptionActive)
+                        {
+                            <MudCardActions>
+                                <MudButton style="width:100%" Variant="Variant.Filled" Color="@AppColors.BASE_COLOR_ENUM"
+                                           OnClick="@(()=>OnSubmitOpenSubscription(@dataBuild))"
+                                Class="@AppTextStyle.TEXT_TRANSFORM_NORMAL">@GetTranslation("Open Subscription")</MudButton>
+                            </MudCardActions>
+                        }
+                        else
+                        {
+                            @if (dataBuild.IsFree)
+                            {
 
-                    @if (!dataBuild.IsActive && dataBuild.IsSubscriptionAllowed && !dataBuild.IsUpgradeAllowed)
-                    {
-                        <MudCardActions>
-                            <MudButton style="width:100%" Variant="Variant.Filled" Color="@AppColors.BASE_COLOR_ENUM" OnClick="@(()=>Submit(@dataBuild))" Class="@AppTextStyle.TEXT_TRANSFORM_NORMAL">@GetTranslation("Select Plan")</MudButton>
-                        </MudCardActions>
+                                <MudCardActions>
+                                    <MudButton Disabled="@(dataBuild.NumberOfSubscriptions > 0)" style="width:100%"
+                                        Variant="Variant.Filled" Color="@AppColors.BASE_COLOR_ENUM"
+                                               OnClick="@(()=>OnSubmitSelectPlan(@dataBuild))"
+                                               Class="@AppTextStyle.TEXT_TRANSFORM_NORMAL">@GetTranslation("Select Plan")</MudButton>
+                                </MudCardActions>
 
+
+                            }
+                            else{
+
+                                if (dataBuild.Name.ToLower().Contains("enterprise"))
+                                {
+                                    <MudCardActions>
+                                        <MudButton style="width:100%" Variant="Variant.Filled" Color="@AppColors.BASE_COLOR_ENUM"
+                                                   OnClick="@(()=>OnSubmitContactUs(@dataBuild))"
+                                                   Class="@AppTextStyle.TEXT_TRANSFORM_NORMAL">@GetTranslation("Contact Us")</MudButton>
+                                    </MudCardActions>
+                                }
+                                else if (dataBuild.IsSubscriptionAllowed)
+                                {
+                                    <MudCardActions>
+                                        <MudButton style="width:100%" Variant="Variant.Filled" Color="@AppColors.BASE_COLOR_ENUM"
+                                                   OnClick="@(()=>OnSubmitSelectPlan(@dataBuild))"
+                                                   Class="@AppTextStyle.TEXT_TRANSFORM_NORMAL">@GetTranslation("Select Plan")</MudButton>
+                                    </MudCardActions>
+                                }
+
+                            }
+                        }
                     }
-                    else if (!dataBuild.IsActive && dataBuild.IsUpgradeAllowed)
-                    {
-                        <MudCardActions>
-                            <MudButton style="width:100%" Variant="Variant.Filled" Color="@AppColors.BASE_COLOR_ENUM" OnClick="@(()=>OpenSubscription(@dataBuild))"
-                                       Class="@AppTextStyle.TEXT_TRANSFORM_NORMAL">@GetTranslation("Upgrade")</MudButton>
-                        </MudCardActions>
-                    }  
-                    else if (dataBuild.IsActive)
-                    {
-                        <MudCardActions>
-                            <MudButton style="width:100%" Variant="Variant.Filled" Color="@AppColors.BASE_COLOR_ENUM" OnClick="@(()=>OpenSubscription(@dataBuild))"
-                                       Class="@AppTextStyle.TEXT_TRANSFORM_NORMAL">@GetTranslation("Open Subscription")</MudButton>
-                        </MudCardActions>
-                    }
+
+                    @* @if (!dataBuild.IsActive && dataBuild.IsSubscriptionAllowed && !dataBuild.IsUpgradeAllowed) *@
+                    @* { *@
+                    @*     <MudCardActions> *@
+                    @*         <MudButton style="width:100%" Variant="Variant.Filled" Color="@AppColors.BASE_COLOR_ENUM" OnClick="@(()=>Submit(@dataBuild))" Class="@AppTextStyle.TEXT_TRANSFORM_NORMAL">@GetTranslation("Select Plan")</MudButton> *@
+                    @*     </MudCardActions> *@
+
+                    @* } *@
+                    @* else if (!dataBuild.IsActive && dataBuild.IsUpgradeAllowed) *@
+                    @* { *@
+                    @*     <MudCardActions> *@
+                    @*         <MudButton style="width:100%" Variant="Variant.Filled" Color="@AppColors.BASE_COLOR_ENUM" OnClick="@(()=>OpenSubscription(@dataBuild))" *@
+                    @*                    Class="@AppTextStyle.TEXT_TRANSFORM_NORMAL">@GetTranslation("Upgrade")</MudButton> *@
+                    @*     </MudCardActions> *@
+                    @* }   *@
+                    @* else if (dataBuild.IsActive) *@
+                    @* { *@
+                    @*     <MudCardActions> *@
+                    @*         <MudButton style="width:100%" Variant="Variant.Filled" Color="@AppColors.BASE_COLOR_ENUM" OnClick="@(()=>OpenSubscription(@dataBuild))" *@
+                    @*                    Class="@AppTextStyle.TEXT_TRANSFORM_NORMAL">@GetTranslation("Open Subscription")</MudButton> *@
+                    @*     </MudCardActions> *@
+                    @* } *@
                     <MudDivider />
                     @if (dataBuild.Features != null && dataBuild.Features.Count() > 0)
                     {
@@ -129,8 +174,10 @@
 
     [Parameter] public SubscriptionPlanInfo? DataBuild { get => dataBuild; set => dataBuild=value; }
 
+    [Parameter] public EventCallback<SubscriptionPlanInfo> SubmitContactUs { get; set; }
     [Parameter] public EventCallback<SubscriptionPlanInfo> SubmitUpgrade { get; set; }
-    [Parameter] public EventCallback<SubscriptionPlanInfo> SubmitConfirm { get; set; }
+    [Parameter] public EventCallback<SubscriptionPlanInfo> SubmitOpenSubscription { get; set; }
+    @* [Parameter] public EventCallback<SubscriptionPlanInfo> SubmitSelectPlan { get; set; } *@
     [Parameter] public EventCallback<SubscriptionPlanInfo> SubmitCancel { get; set; }
 
 
@@ -157,7 +204,7 @@
         {
             if (dataBuild.Status == "active")
             {
-                _isDisplayButton = false;
+                @* _isDisplayButton = false; *@
             }
 
             _isLoading = false;
@@ -183,13 +230,14 @@
 
     }
 
-    private async Task OnSubmitConfirm(SubscriptionPlanInfo input)
+    private async Task OnSubmitContactUs(SubscriptionPlanInfo data)
     {
-        if (SubmitConfirm.HasDelegate && input != null)
+        if (SubmitContactUs.HasDelegate && data != null)
         {
-            await SubmitConfirm.InvokeAsync(input);
+            await SubmitContactUs.InvokeAsync(data);
         }
     }
+
 
     private async Task OnSubmitCancel(SubscriptionPlanInfo input)
     {
@@ -208,11 +256,14 @@
     }
 
 
-    private async Task OpenSubscription(SubscriptionPlanInfo input)
+    private async Task OnSubmitOpenSubscription(SubscriptionPlanInfo input)
     {
-        
+        if (SubmitOpenSubscription.HasDelegate && input != null)
+        {
+            await SubmitOpenSubscription.InvokeAsync(input);
+        }
     }
-    private async Task Submit(SubscriptionPlanInfo input)
+    private async Task OnSubmitSelectPlan(SubscriptionPlanInfo input)
 
     {
 
@@ -221,7 +272,6 @@
         {
 
             if (OnSubmit.HasDelegate)
-
             {
 
                 await OnSubmit.InvokeAsync(input);
@@ -389,6 +439,7 @@
     {
         { "Confirm", "Confirm" },
         { "Upgrade", "Upgrade" },
+        { "Contact Us", "Contact Us" },
         { "Select Plan", "Select Plan" },
         { "Open Subscription", "Open Subscription" },
 
@@ -397,6 +448,7 @@
     private Dictionary<string, string> TransAr = new Dictionary<string, string>()
     {
         { "Confirm", "تأكيد" },
+        { "Contact Us", "إتصل بناء" },
         { "Upgrade", "ترقية" },
          { "Select Plan", "اختيار الخطه" },
           { "Open Subscription", "فتح الاشتراك" },

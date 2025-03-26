@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Domain.Entities.Subscriptions.Request;
 using Domain.Exceptions;
+using Domain.ShareData.Base;
 using Domain.Wrapper;
 using Infrastructure.DataSource.ApiClient.Base;
 using Infrastructure.DataSource.ApiClientFactory;
@@ -98,7 +99,40 @@ namespace Infrastructure.DataSource.ApiClient.Payment
 
 
         }
+        public async Task<SubscriptionResponseModel> GetSubscriptionAsync(FilterResponseData filter)
+        {
+            try
+            {
+                //var model = _mapper.Map<ProductUpdate>(request);
+                var client = await GetApiClient();
+              
 
+                var response = await ExecuteWithRetryAsync(async () =>
+                {
+                    var response = await client.GetSubscriptionAsync(filter.Id);
+                    return response;
+                });
+
+                var resModel = _mapper.Map<SubscriptionResponseModel>(response);
+                return resModel;
+
+            }
+            catch (ApiException e)
+            {
+
+                throw;
+
+            }
+            catch (Exception e)
+            {
+
+                throw;
+
+            }
+
+
+
+        }
         public async Task<Result<SubscriptionResponseModel>> ResumeAsync(string id)
         {
             try

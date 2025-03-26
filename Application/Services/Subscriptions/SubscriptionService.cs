@@ -17,6 +17,7 @@ namespace Application.Services.Subscriptions
         private readonly UpdateSubscriptionUseCase updateSubscriptionUseCase;
         private readonly HasActiveSubscriptionUseCase hasActiveSubscriptionUseCase;
         private readonly GetUserActiveSubscriptionUseCase  getUserActiveSubscriptionUseCase;
+        private readonly GetSubscriptionUseCase getSubscriptionUseCase;
 
         public SubscriptionService(
             PauseSubscriptionUseCase pauseSubscriptionUseCase,
@@ -26,7 +27,8 @@ namespace Application.Services.Subscriptions
             CreateSubscriptionUseCase createSubscriptionUseCase,
             UpdateSubscriptionUseCase updateSubscriptionUseCase,
             HasActiveSubscriptionUseCase hasActiveSubscriptionUseCase,
-            GetUserActiveSubscriptionUseCase getUserActiveSubscriptionUseCase)
+            GetUserActiveSubscriptionUseCase getUserActiveSubscriptionUseCase,
+            GetSubscriptionUseCase getSubscriptionUseCase)
         {
             this.pauseSubscriptionUseCase = pauseSubscriptionUseCase;
             this.deleteSubscriptionUseCase = deleteSubscriptionUseCase;
@@ -36,6 +38,7 @@ namespace Application.Services.Subscriptions
             this.updateSubscriptionUseCase = updateSubscriptionUseCase;
             this.hasActiveSubscriptionUseCase = hasActiveSubscriptionUseCase;
             this.getUserActiveSubscriptionUseCase = getUserActiveSubscriptionUseCase;
+            this.getSubscriptionUseCase = getSubscriptionUseCase;
         }
         public async Task<Result<bool>> HasActiveSubscriptionAsync()
         {
@@ -48,8 +51,11 @@ namespace Application.Services.Subscriptions
         public async Task<Result<SubscriptionResponse>> GetUserActiveSubscriptionAsync()
         {
             return await getUserActiveSubscriptionUseCase.ExecuteAsync();
-        }   
-        
+        }
+        public async Task<Result<SubscriptionResponse>> GetSubscriptionAsync(FilterResponseData filter)
+        {
+            return await getSubscriptionUseCase.ExecuteAsync(filter);
+        }
         public async Task<Result<SubscriptionResponse>> UpdateAsync(SubscriptionRequest request)
         {
             return await updateSubscriptionUseCase.ExecuteAsync(request);

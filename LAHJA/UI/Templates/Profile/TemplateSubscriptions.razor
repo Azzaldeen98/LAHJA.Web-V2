@@ -1,5 +1,6 @@
 ﻿@* @page "/settings/subscriptions" *@
 @using Domain.ShareData
+@using LAHJA.ContextServices
 @using LAHJA.Data.UI.Components
 @using LAHJA.Data.UI.Components.Plan
 @using LAHJA.Data.UI.Components.ProFileModel
@@ -22,7 +23,7 @@
 @inject LAHJA.Data.UI.Templates.Subscription.TemplateSubscription TemplateSub
 @inject LAHJA.Data.UI.Templates.Payment.TemplatePayment TemplatePayment
 
-
+@inherits AppUtilityComponent 
 
     @if(Template!=null){
 
@@ -33,12 +34,12 @@
     else if (buildData != null)
     {
         <Subscription Language="@lg"
-            DataBuild="buildData"
-            IsLoading="isLoading"
-            SubmitCheckoutManage="OnSubmitCheckoutManage"
-            SubmitPause="TemplateSub.BuilderComponents.SubmitPause"
-            SubmitResume="TemplateSub.BuilderComponents.SubmitResume"
-            SubmitDelete="TemplateSub.BuilderComponents.SubmitDelete" />
+        DataBuild="buildData"
+        IsLoading="isLoading"
+        SubmitCheckoutManage="OnSubmitCheckoutManage"
+        SubmitPause="TemplateSub.BuilderComponents.SubmitPause"
+        SubmitResume="TemplateSub.BuilderComponents.SubmitResume"
+        SubmitDelete="OnSubmitDeleteSubscription" />
     }
 
 
@@ -58,14 +59,30 @@
         lg = CultureInfo.CurrentUICulture.Name;
         await loadedData();
 
-     
+
     }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-             // await loadedData();
+            // await loadedData();
         }
+    }
+    private async Task OnSubmitDeleteSubscription(DataBuildUserSubscriptionInfo dataBuild)
+    {
+        if (TemplateSub.BuilderComponents.SubmitDelete != null)
+        {
+            var response = await TemplateSub.BuilderComponents.SubmitDelete(dataBuild);
+            if (response.Succeeded)
+            {
+                services.GoTo(RouterPage.DASHBOARD_SUBSCRIPTION);
+            }
+            else
+            {
+                
+            }
+        }
+       
     }
     private async Task OnSubmitCheckoutManage(DataBuildUserSubscriptionInfo dataBuild)
     {

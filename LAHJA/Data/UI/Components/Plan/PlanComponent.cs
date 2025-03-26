@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using LAHJA.Helpers;
+using Microsoft.AspNetCore.Components;
 
 namespace LAHJA.Data.UI.Components.Plan
 {
@@ -32,14 +33,22 @@ namespace LAHJA.Data.UI.Components.Plan
 
         public string HeaderImport { get; set; } = "";
         public string? BillingPeriod { get; set; }
+        public string SubscriptionId { get; set; }
 
         public string Status { get; set; } = ""; 
-        public bool IsActive => Status?.ToLower()=="active";
-        public bool IsFree => Name?.ToLower()=="free";
-        public bool IsSubscriptionAllowed { get; set; } = false;
+        public bool IsActive => Status?.ToLower()?.Contains("active") ?? false;
+        public bool IsFree => SubscriptionHelpers.isFreePlan(Name);
+        public bool IsSubscriptionAllowed { get; set; } = true;
         public bool IsUpgradeAllowed { get; set; } = false;
+       
+        public bool IsSubscriptionActive { get; set; } = false;
+        public int? NumberOfSubscriptions { get; set; } = 0;
+
         public decimal? TotalBilling { get; set; } = 0;
         public decimal TotalAmount { get; set; } = 0;
+
+
+
         //public string? TotalAmountDescription { get; set; }
         public string? Token { get; set; }
         public string? Processor { get; set; }

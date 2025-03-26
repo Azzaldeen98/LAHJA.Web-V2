@@ -149,6 +149,25 @@ namespace Infrastructure.Repository.Subscription
             //}
         }
 
+        public async Task<Result<SubscriptionResponse>> GetSubscriptionAsync(FilterResponseData filter)
+        {
+    
+                var response = await ExecutorAppMode.ExecuteAsync<SubscriptionResponseModel>(
+                async () => await subscriptionApiClient.GetSubscriptionAsync(filter),
+                 async () => await subscriptionApiClient.GetSubscriptionAsync(filter));
+
+            
+                if (response != null)
+                {
+                    var sub = _mapper.Map<SubscriptionResponse>(response);
+                    return Result<SubscriptionResponse>.Success(sub);
+                }
+
+                return Result<SubscriptionResponse>.Fail("not found");
+
+
+
+        }
         //public async Task<Result<bool>> HasActiveSubscriptionAsync()
         //{
         //    var response = await ExecutorAppMode.ExecuteAsync<Result<List<SubscriptionResponseModel>>>(
@@ -180,7 +199,7 @@ namespace Infrastructure.Repository.Subscription
         //            var result= subscriptions.Any(x => x.Status?.ToLower() == "active");
         //            return Result<bool>.Success(result);
         //        }
-                
+
         //        return Result<bool>.Success(false);
         //    }
         //    else
@@ -370,5 +389,7 @@ namespace Infrastructure.Repository.Subscription
                 return Result<SubscriptionResponse>.Fail(response.Messages);
             }
         }
+
+      
     } 
 }

@@ -1,7 +1,9 @@
 ﻿@using Domain.ShareData.Base
 @using LAHAJ.Loading
+@using LAHJA.ContextServices
 @using LAHJA.Data.UI.Components
 @using LAHJA.Data.UI.Components.Plan
+@using LAHJA.Helpers
 @using LAHJA.UI.Components.Auth
 @using LAHJA.Data.UI.Templates.Auth
 @using LAHJA.UI.Components.Index.MainSectionCard
@@ -9,7 +11,9 @@
 
 @inject LAHJA.Data.UI.Templates.Plans.TemplatePlans Template
 @inject LAHJA.Data.UI.Templates.Profile.TemplateProfile TemplateProfile
-@inherits BaseInitializationComponent
+@inherits AppUtilityComponent
+
+
 @if (isLoading)
 {
     <Loading IsLoading="isLoading" />
@@ -18,8 +22,10 @@ else{
 
     @if (Template != null)
     {
-        <MainPlan IsLoading="isLoading" DataBuilds="dataBuilds"
-        OnSubmit="Template.BuilderComponents.SubmitSubscriptionPlan" />
+        <MainPlan IsLoading="isLoading"
+            DataBuilds="dataBuilds"
+            SubmitSelectPlan="Template.BuilderComponents.SubmitSubscriptionPlan"
+            SubmitOpenSubscription="OnSubmitOpenSubscription" />
     }
 }
 
@@ -36,128 +42,99 @@ else{
 
     private List<SubscriptionPlanInfo> dataBuilds=new();
 
+
+
+
+
+
+    private void OnSubmitOpenSubscription(SubscriptionPlanInfo plan)
+    {
+        GoTo($"{RouterPage.SUBSCRIPTION_DETAILS}/{plan.SubscriptionId}/{plan.Id}");
+    }
+
+
     protected override async Task OnInitializedAsync()
     {
         var data = new DataBuildPlansBase { Lg = CultureInfo.CurrentUICulture.Name, Take = _countItemsShow, PremiumPlanNumber = 2 };
         if (Template.BuilderComponents.GetPlans != null)
         {
-            // var response = await Template.BuilderComponents.GetPlans(data);
-            // if (response.Succeeded)
-            // {
-            //     var _dataBuilds = response.Data;
-            //     var res = await TemplateProfile.GetDataBuildSubscriptions(new FilterResponseData { lg = lg });
-
-            //     التحقق مما إذا كان هناك اشتراك نشط
-            //     bool hasActiveSubscription = res.Succeeded && res.Data?.Any(sub => sub?.Status.ToLower() == "active") == true;
-
-            //     التحقق مما إذا كان المستخدم قد اشترك سابقًا في الخطة المجانية
-            //     bool hasSubscribedToFreeBefore = res.Succeeded && res.Data?.Any(sub =>
-            //         _dataBuilds.Any(plan => plan.Name.ToLower() == "free" && plan.Id == sub.PlanId)
-            //     ) == true;
-
-            //     foreach (var plan in _dataBuilds)
-            //     {
-            //         var planName = plan.Name.ToLower();
-
-            //         التحقق مما إذا كان هناك اشتراك نشط لهذه الخطة
-            //         var existingSubscription = res.Data?.FirstOrDefault(sub => sub?.PlanId == plan.Id);
-            //         bool isActive = existingSubscription != null && existingSubscription.Status.ToLower() == "active";
-
-            //         if (planName == "free")
-            //         {
-            //             لا يمكن الاشتراك بالخطة المجانية إذا تم الاشتراك بها مسبقًا
-            //             plan.IsSubscriptionAllowed = !hasSubscribedToFreeBefore;
-            //             plan.IsUpgradeAllowed = false;
-            //         }
-            //         else
-            //         {
-            //             إذا لم يكن هناك أي اشتراك سابق، فالسماح بالاشتراك بأي خطة
-            //             if (!hasActiveSubscription)
-            //             {
-            //                 plan.IsSubscriptionAllowed = true;
-            //             }
-            //             else
-            //             {
-            //                 إذا كان المستخدم لديه اشتراك نشط، فالسماح فقط بالترقية
-            //                 plan.IsSubscriptionAllowed = !isActive;
-            //                 plan.IsUpgradeAllowed = isActive;
-            //             }
-            //         }
-
-            //         dataBuilds.Add(plan);
-            //     }
-            // }
-
-
 
             var response = await Template.BuilderComponents.GetPlans(data);
             if (response.Succeeded)
             {
                 var _dataBuilds = response.Data;
                 var res = await TemplateProfile.GetDataBuildSubscriptions(new FilterResponseData { lg = lg });
+                if (res.Succeeded && res.Data?.Any()==true)
+                {
+                    dataBuilds = await SubscriptionHelpers.filterPlansAsync(_dataBuilds, res.Data);
+                }
+                else
+                {
+                    dataBuilds = _dataBuilds;
+                }
 
                 // التحقق مما إذا كان هناك اشتراك نشط
-                bool hasActiveSubscription = res.Succeeded && res.Data?.Any(sub => sub?.Status.ToLower() == "active") == true;
+                // bool hasActiveSubscription = res.Succeeded && res.Data?.Any(sub => sub?.Status.ToLower() == "active") == true;
 
-                // التحقق مما إذا كان المستخدم قد اشترك سابقًا في الخطة المجانية
-                bool hasSubscribedToFreeBefore = res.Succeeded && res.Data?.Any(sub =>
-                    sub.PlanId != null && _dataBuilds.Any(plan => plan.Name.ToLower() == "free" && plan.Id == sub.PlanId)
-                ) == true;
+                // // التحقق مما إذا كان المستخدم قد اشترك سابقًا في الخطة المجانية
+                // bool hasSubscribedToFreeBefore = res.Succeeded && res.Data?.Any(sub =>
+                //     sub.PlanId != null && _dataBuilds.Any(plan => plan.Name.ToLower() == "free" && plan.Id == sub.PlanId)
+                // ) == true;
 
-                bool hasSubActive = false; // مؤشر لوجود اشتراك نشط في أي خطة مدفوعة
-                bool atLeastOnePlanAvailable = false; // مؤشر للتأكد من أن هناك خطة متاحة على الأقل
+                // bool hasSubActive = false; // مؤشر لوجود اشتراك نشط في أي خطة مدفوعة
+                // bool atLeastOnePlanAvailable = false; // مؤشر للتأكد من أن هناك خطة متاحة على الأقل
 
-                foreach (var plan in _dataBuilds)
-                {
-                    var planName = plan.Name.ToLower();
-                    var existingSubscription = res.Data?.FirstOrDefault(sub => sub?.PlanId == plan.Id);
-                    bool isActive = existingSubscription != null && existingSubscription.Status.ToLower() == "active";
+                // foreach (var plan in _dataBuilds)
+                // {
+                //     var planName = plan.Name.ToLower();
+                //     var existingSubscription = res.Data?.FirstOrDefault(sub => sub?.PlanId == plan.Id);
+                //     bool isActive = existingSubscription != null && existingSubscription.Status.ToLower() == "active";
 
-                    if (planName == "free")
-                    {
-                        // الخطة المجانية غير متاحة إذا تم الاشتراك بها مسبقًا
-                        plan.IsSubscriptionAllowed = !hasSubscribedToFreeBefore;
-                        plan.IsUpgradeAllowed = false;
-                    }
-                    else
-                    {
-                        if (!hasActiveSubscription)
-                        {
-                            // إذا لم يكن هناك أي اشتراك نشط، جميع الخطط المدفوعة متاحة للاشتراك
-                            plan.IsSubscriptionAllowed = true;
-                            atLeastOnePlanAvailable = true;
-                        }
-                        else
-                        {
-                            if (isActive)
-                            {
-                                // إذا كانت هذه الخطة نشطة حاليًا، لا يمكن الاشتراك فيها مجددًا
-                                plan.IsSubscriptionAllowed = false;
-                                plan.IsUpgradeAllowed = false;
-                                hasSubActive = true; // لدينا خطة نشطة
-                            }
-                            else if (hasSubActive)
-                            {
-                                // إذا كان هناك اشتراك نشط، يمكن الترقية لهذه الخطة
-                                plan.IsSubscriptionAllowed = true;
-                                plan.IsUpgradeAllowed = true;
-                                atLeastOnePlanAvailable = true;
-                            }
-                        }
-                    }
+                //     if (planName == "free")
+                //     {
+                //         // الخطة المجانية غير متاحة إذا تم الاشتراك بها مسبقًا
+                //         plan.IsSubscriptionAllowed = !hasSubscribedToFreeBefore;
+                //         plan.IsUpgradeAllowed = false;
+                //     }
+                //     else
+                //     {
+                //         if (!hasActiveSubscription)
+                //         {
+                //             // إذا لم يكن هناك أي اشتراك نشط، جميع الخطط المدفوعة متاحة للاشتراك
+                //             plan.IsSubscriptionAllowed = true;
+                //             atLeastOnePlanAvailable = true;
+                //         }
+                //         else
+                //         {
+                //             if (isActive)
+                //             {
+                //                 // إذا كانت هذه الخطة نشطة حاليًا، لا يمكن الاشتراك فيها مجددًا
+                //                 plan.IsSubscriptionAllowed = false;
+                //                 plan.IsUpgradeAllowed = false;
+                //                 hasSubActive = true; // لدينا خطة نشطة
+                //             }
+                //             else if (hasSubActive)
+                //             {
+                //                 // إذا كان هناك اشتراك نشط، يمكن الترقية لهذه الخطة
+                //                 plan.IsSubscriptionAllowed = true;
+                //                 plan.IsUpgradeAllowed = true;
+                //                 atLeastOnePlanAvailable = true;
+                //             }
+                //         }
+                //     }
 
-                    dataBuilds.Add(plan);
-                }
+                //     dataBuilds.Add(plan);
+                // }
 
-                // التأكد من أن هناك دائمًا خطة واحدة متاحة على الأقل
-                if (!atLeastOnePlanAvailable)
-                {
-                    var firstAvailablePlan = dataBuilds.FirstOrDefault(p => p.Name.ToLower() != "free");
-                    if (firstAvailablePlan != null)
-                    {
-                        firstAvailablePlan.IsSubscriptionAllowed = true;
-                    }
-                }
+                // // التأكد من أن هناك دائمًا خطة واحدة متاحة على الأقل
+                // if (!atLeastOnePlanAvailable)
+                // {
+                //     var firstAvailablePlan = dataBuilds.FirstOrDefault(p => p.Name.ToLower() != "free");
+                //     if (firstAvailablePlan != null)
+                //     {
+                //         firstAvailablePlan.IsSubscriptionAllowed = true;
+                //     }
+                // }
             }
 
 
@@ -177,16 +154,50 @@ else{
         //     }
         // }
 
+    // var response = await Template.BuilderComponents.GetPlans(data);
+    // if (response.Succeeded)
+    // {
+    //     var _dataBuilds = response.Data;
+    //     var res = await TemplateProfile.GetDataBuildSubscriptions(new FilterResponseData { lg = lg });
 
+    //     التحقق مما إذا كان هناك اشتراك نشط
+    //     bool hasActiveSubscription = res.Succeeded && res.Data?.Any(sub => sub?.Status.ToLower() == "active") == true;
 
+    //     التحقق مما إذا كان المستخدم قد اشترك سابقًا في الخطة المجانية
+    //     bool hasSubscribedToFreeBefore = res.Succeeded && res.Data?.Any(sub =>
+    //         _dataBuilds.Any(plan => plan.Name.ToLower() == "free" && plan.Id == sub.PlanId)
+    //     ) == true;
 
+    //     foreach (var plan in _dataBuilds)
+    //     {
+    //         var planName = plan.Name.ToLower();
 
+    //         التحقق مما إذا كان هناك اشتراك نشط لهذه الخطة
+    //         var existingSubscription = res.Data?.FirstOrDefault(sub => sub?.PlanId == plan.Id);
+    //         bool isActive = existingSubscription != null && existingSubscription.Status.ToLower() == "active";
 
+    //         if (planName == "free")
+    //         {
+    //             لا يمكن الاشتراك بالخطة المجانية إذا تم الاشتراك بها مسبقًا
+    //             plan.IsSubscriptionAllowed = !hasSubscribedToFreeBefore;
+    //             plan.IsUpgradeAllowed = false;
+    //         }
+    //         else
+    //         {
+    //             إذا لم يكن هناك أي اشتراك سابق، فالسماح بالاشتراك بأي خطة
+    //             if (!hasActiveSubscription)
+    //             {
+    //                 plan.IsSubscriptionAllowed = true;
+    //             }
+    //             else
+    //             {
+    //                 إذا كان المستخدم لديه اشتراك نشط، فالسماح فقط بالترقية
+    //                 plan.IsSubscriptionAllowed = !isActive;
+    //                 plan.IsUpgradeAllowed = isActive;
+    //             }
+    //         }
 
-
-
-    
-
-
-
-  } 
+    //         dataBuilds.Add(plan);
+    //     }
+    // }
+} 

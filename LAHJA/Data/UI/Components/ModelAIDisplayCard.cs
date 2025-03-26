@@ -2,7 +2,7 @@
 using LAHJA.UI.Components;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using Shared.Constants._Messages;
+using Shared.Constants;
 using Shared.Wrapper;
 
 namespace LAHJA.Data.UI.Components

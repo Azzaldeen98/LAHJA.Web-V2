@@ -8,10 +8,10 @@
         public string? PlanId { get; set; }
         public long? Nr { get; set; }
         public string? CustomerId { get; set; }
-        public DateTime StartDate { get; set; }
+        public DateTimeOffset StartDate { get; set; }
         public string? Status { get; set; }
         public string? BillingPeriod { get; set; }
-        public DateTime? CancelAt { get; set; }
+        public DateTimeOffset? CancelAt { get; set; }
         public bool? CancelAtPeriodEnd { get; set; }
      
 

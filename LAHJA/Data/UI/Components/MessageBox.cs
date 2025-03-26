@@ -1,7 +1,7 @@
 ﻿using ApexCharts;
 using LAHJA.UI.Components;
 using MudBlazor;
-using Shared.Constants._Messages;
+using Shared.Constants;
 using Shared.Wrapper;
 
 namespace LAHJA.Data.UI.Components
@@ -15,6 +15,11 @@ namespace LAHJA.Data.UI.Components
             _dialogService = dialogService;
         }
 
+        public  async Task<bool> ShowWithReplaceSubjectAsync(string title,string message,string subject,string lang = "ar")
+        {
+            message = message.Replace("{SUBJECT}$", subject);
+            return await ShowAsync(title, message, lang);
+        }
         public  async Task<bool> ShowAsync(string title,string message,string lang="ar")
         {
             var parameters = new DialogParameters

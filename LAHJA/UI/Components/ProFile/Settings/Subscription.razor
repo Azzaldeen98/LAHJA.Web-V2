@@ -31,8 +31,8 @@
     private string lg = CultureInfo.CurrentUICulture.Name;
     private List<CardStateCount<string>>? cardStates = null;
     private  GroupActionTabels groupAction = new GroupActionTabels();
+    private bool hasClickedRow = false;
 
-    
     [Parameter]
     public bool IsLoading {set => isLoading = value; get=> isLoading; }
 
@@ -57,15 +57,20 @@
     [Parameter] public EventCallback<DataBuildUserSubscriptionInfo> SubmitCancel { set; get; }
     [Parameter] public EventCallback<DataBuildUserSubscriptionInfo> SubmitCheckoutManage { set; get; }
 
+    protected override void  OnInitialized()
+    {
+        initializeData();
+        StateHasChanged();
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
 
         if (firstRender)
         {
-           
-            initializeData();
-            StateHasChanged();
+
+            // initializeData();
+            // StateHasChanged();
         }
     }
 
@@ -103,10 +108,10 @@
                 }
             };
         }
-       
+
         groupAction.Actions = new()
         {
-          
+
 
             new()
             {
@@ -123,23 +128,41 @@
         };
         groupAction.ChipClicked += OnChipClicked;
     }
-    private Task OnRowClicked(DataBuildUserSubscriptionInfo data)
+
+
+    private async Task OnRowClicked(DataBuildUserSubscriptionInfo data)
     {
-        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium,  FullWidth =true };
 
-        var parameters = new DialogParameters<SubscriptionDetails>
+        if (!hasClickedRow)
         {
-            { x =>x.DataBuild,data },
-            { x =>x.Language,lg},
-            { x =>x.SubmitPause,SubmitPause},
-            { x =>x.SubmitResume,SubmitResume},
-            { x =>x.SubmitDelete,SubmitDelete},
-            { x =>x.SubmitCheckoutManage,SubmitCheckoutManage},
-        };
+            hasClickedRow = true;
+            var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
 
-        DialogService.Show<SubscriptionDetails>("", parameters, options);
+            var parameters = new DialogParameters<SubscriptionDetails>
+            {
+                { x =>x.DataBuild,data },
+                { x =>x.Language,lg},
+                { x =>x.SubmitPause,SubmitPause},
+                { x =>x.SubmitResume,SubmitResume},
+                { x =>x.SubmitDelete,SubmitDelete},
+                { x =>x.SubmitCheckoutManage,SubmitCheckoutManage},
+            };
+
+            var dialogReference = DialogService.Show<SubscriptionDetails>("", parameters, options);
+            try
+            {
+                ///TODO
+                var result = await dialogReference.Result; 
+                hasClickedRow = false; 
+            }
+            catch (Exception)
+            {
+                hasClickedRow = false; 
+            }
+        }
+        
         // Navigation.NavigateTo($"/settings/spaces/{data.Id}");
-        return Task.CompletedTask;
+        // return Task.CompletedTask;
 
     }
     private async Task OnSubmitCheckoutManage()

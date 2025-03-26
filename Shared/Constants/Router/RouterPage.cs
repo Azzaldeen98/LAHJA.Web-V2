@@ -24,6 +24,7 @@ namespace Shared.Constants.Router
         public static string DASHBOARD = "dashboard";
         public static string SIGIN_PAGE = "InitAuth";
         public static string SIGINOUT_PAGE = "LogoutPage";
+        public static string SUBSCRIPTION_DETAILS = "subscriptionDetails";
 
 
     }

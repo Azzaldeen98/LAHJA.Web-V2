@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using LAHJA.Data.UI.Components;
+using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using Shared.Constants;
 using System.Globalization;
@@ -55,12 +56,40 @@ namespace LAHJA.ContextServices
 
     public class AppUtilityComponent : ComponentBase
     {
-        [Inject] public AppUtilityComponentService AppUtilityService { get; set; }
-  
+        [Inject] public AppUtilityComponentService services { get; set; }
+        [Inject] public MessageBox MessageBox { get; set; }
 
-     
-        
+        public string lg { get => services?.lg??ConstantsApp.DEFAULT_LANGUAGE; }
 
-     
+
+
+        public void GoToWithReload(string url)
+        {
+            services.GoToWithReload(url);
+        }
+
+        public void GoTo(string url)
+        {
+            services.GoTo(url);
+        }
+
+
+        public void ShowErrorNotify(string message)
+        {
+
+            services.ShowErrorNotify(message);
+        }
+
+        public void ShowSuccessNotify(string message)
+        {
+            services.ShowSuccessNotify(message);
+        }
+        public void ShowWarningNotify(string message)
+        {
+
+            services.ShowWarningNotify(message);
+        }
+
+
     }
 }
