@@ -1,6 +1,7 @@
 ﻿@using Domain.Entities.AuthorizationSession
 @using Domain.ShareData
 @using Domain.Wrapper
+@using LAHJA.ContextServices
 @using LAHJA.Data.UI.Components
 @using LAHJA.Helpers
 @using LAHJA.UI.Components.ServiceCard
@@ -9,9 +10,11 @@
 @attribute [Authorize]
 
 @inject IDialogService DialogService
-@inject ISnackbar Snackbar
-@inject IManageLanguageService _manageLanguageService
+@* @inject ISnackbar Snackbar *@
+@* @inject IManageLanguageService _manageLanguageService *@
 @inject NavigationManager Navigation
+@inherits AppUtilityComponent
+
 
 <TabelDashCard 
     T="DataBuildSpace" 
@@ -29,9 +32,10 @@
 
 
 @code{
+    private bool hasClickedRow = false;
     private bool isLoading = true;
     private DataAndEventBuildTabelCard<DataBuildSpace> dataAndEvent = null;
-    private string lg="ar";
+
     private string srcIframe = "https://lahja-core.onrender.com/createspace";
     private List<DataBuildSpace>? _dataBuild=new();
 
@@ -70,23 +74,18 @@
             if (response.Succeeded)
             {
                 srcIframe= Helper.GetServiceSrcFrame(response.Data.UrlCore, response.Data.SessionToken);
-                OpenDialog(srcIframe);
-                
+               await OpenDialog(srcIframe);
+
             }
         }
     }
 
 
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override void OnInitialized()
     {
+        initData(_dataBuild);
+        StateHasChanged();
 
-        if (firstRender)
-        {
-            lg = await _manageLanguageService.GetLanguageAsync();
-            initData(_dataBuild);
-            StateHasChanged();
-        }
     }
     private void initData(List<DataBuildSpace> dataBuild)
     {
@@ -163,40 +162,55 @@
     {
         if (action.Tag == "delete")
         {
-            Snackbar.Add("fgffg", Severity.Error);
+            // Snackbar.Add("fgffg", Severity.Error);
 
         }
         else if(action.Tag=="create")
         {
             await OnSubmitCreateSpace();
-           
+
         }
 
         // await Task.CompletedTask;
 
     }
 
-    private void OpenDialog(string srcIframe)
+    private async Task OpenDialog(string srcIframe)
     {
 
-
-        
-        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Large, FullWidth = true };
-
-
-        var parameters = new DialogParameters<DialogContent>
+        if (!hasClickedRow)
         {
+            hasClickedRow = true;
 
-            { x =>x.DataBuild1,null },
-            {x => x.DataBuildCheck,null},
-            {x => x.Language,lg},
-            {x => x.UrlRedirect,Helper.GetFullPath(Navigation,RouterPage.DASHBOARD_SPACES)},
-            {x => x.UrlCancel,Helper.GetFullPath(Navigation,RouterPage.DASHBOARD_SPACES)},
-            {x => x.Data,null},
-            {x=>x.SrcIframe,srcIframe}
-        };
 
-        DialogService.Show<DialogContent>("", parameters, options);
+            var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Large, FullWidth = true };
+
+
+            var parameters = new DialogParameters<DialogContent>
+            {
+
+                { x =>x.DataBuild1,null },
+                {x => x.DataBuildCheck,null},
+                {x => x.Language,lg},
+                {x => x.UrlRedirect,Helper.GetFullPath(Navigation,RouterPage.DASHBOARD_SPACES)},
+                {x => x.UrlCancel,Helper.GetFullPath(Navigation,RouterPage.DASHBOARD_SPACES)},
+                {x => x.Data,null},
+                {x=>x.SrcIframe,srcIframe}
+            };
+
+            var dialog= DialogService.Show<DialogContent>("", parameters, options);
+            try
+            {
+                ///TODO
+                var result = await dialog.Result;
+                hasClickedRow = false;
+            }
+            catch (Exception)
+            {
+                hasClickedRow = false;
+            }
+
+        }
     }
 
     private static readonly Dictionary<string, Dictionary<string, string>> TranslationsLST = new()

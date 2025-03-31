@@ -4,6 +4,7 @@ using AutoMapper;
 using Domain.Entities.Plans.Response;
 using Domain.ShareData.Base;
 using Domain.Wrapper;
+using Infrastructure.Middlewares;
 using LAHJA.ApplicationLayer.Plans;
 using LAHJA.Data.UI.Components;
 using LAHJA.Data.UI.Components.Category;
@@ -94,10 +95,11 @@ namespace LAHJA.Data.UI.Templates.Plans
                 IBuilderPlansComponent<E> builderComponents,
                 NavigationManager navigation,
                 IDialogService dialogService,
-                ISnackbar snackbar
+                ISnackbar snackbar,
+                  IClientSafelyHandlerException safelyHandler
 
 
-            ) : base(mapper, AuthService, client)
+            ) : base(mapper, AuthService, client, safelyHandler)
         {
 
 
@@ -191,7 +193,7 @@ namespace LAHJA.Data.UI.Templates.Plans
 
         public override async Task<Result<SubscriptionPlanInfo>> GetPlanAsync(DataBuildPlansBase data)
         {
-
+            
             var res = await Service.GetPlanAsync(data.PlanId, data.Lg);
             if (res.Succeeded)
             {
@@ -250,9 +252,6 @@ namespace LAHJA.Data.UI.Templates.Plans
         public List<string> Errors { get => _errors; }
 
 
-
-
-
         public TemplatePlans(
             IMapper mapper,
             AuthService AuthService,
@@ -260,7 +259,9 @@ namespace LAHJA.Data.UI.Templates.Plans
             IBuilderPlansComponent<DataBuildPlansBase> builderComponents,
             NavigationManager navigation,
             IDialogService dialogService,
-            ISnackbar snackbar) : base(mapper, AuthService, client, builderComponents, navigation, dialogService, snackbar)
+            ISnackbar snackbar,
+            IClientSafelyHandlerException safelyHandler) 
+            : base(mapper, AuthService, client, builderComponents, navigation, dialogService, snackbar, safelyHandler)
         {
             this.BuilderComponents.GetPlans = getPlansAsync;
             this.BuilderComponents.SubmitSubscriptionPlan = OnSubmitSubscriptionPlan;
@@ -301,7 +302,9 @@ namespace LAHJA.Data.UI.Templates.Plans
         {
 
             List<SubscriptionPlanInfo> allPlans;
-            var response = await builderApi.GetPlansAsync(new FilterResponseData { lg=buildData.Lg});
+            var response =  await safelyHandler.InvokeAsync(async () => await builderApi.GetPlansAsync(new FilterResponseData { lg = buildData.Lg }));
+         
+            //var response = await builderApi.GetPlansAsync(new FilterResponseData { lg=buildData.Lg});
             if (response.Succeeded)
             {
                
@@ -333,7 +336,7 @@ namespace LAHJA.Data.UI.Templates.Plans
         public async Task getAllSubscriptionsPlansAsync(FilterResponseData filter, int premiumPlanNumber = 0)
         {
 
-            var response = await builderApi.GetPlansAsync(filter);
+            var response = await safelyHandler.InvokeAsync(async () => await builderApi.GetPlansAsync(filter));
             if (response.Succeeded)
             {
                 if (premiumPlanNumber > 0 && filter.Take > 0)
@@ -365,7 +368,8 @@ namespace LAHJA.Data.UI.Templates.Plans
 
             if (dataBuildPlansBase != null)
             {
-                var response = await builderApi.CreatePlanAsync(dataBuildPlansBase);
+                var response = await safelyHandler.InvokeAsync(async () => await builderApi.CreatePlanAsync(dataBuildPlansBase));
+                //var response = await builderApi.CreatePlanAsync(dataBuildPlansBase);
                 if (response.Succeeded)
                 {
 
@@ -383,7 +387,8 @@ namespace LAHJA.Data.UI.Templates.Plans
 
             if (dataBuildPlansBase != null)
             {
-                var response = await builderApi.UpdatePlanAsync(dataBuildPlansBase);
+                //var response = await builderApi.UpdatePlanAsync(dataBuildPlansBase);
+                var response = await safelyHandler.InvokeAsync(async () => await builderApi.UpdatePlanAsync(dataBuildPlansBase));
                 if (response.Succeeded)
                 {
 
@@ -414,7 +419,7 @@ namespace LAHJA.Data.UI.Templates.Plans
         {
 
 
-            var response = await builderApi.GetPlanAsync(dataBuildPlansBase);
+            var response = await safelyHandler.InvokeAsync(async () => await builderApi.GetPlanAsync(dataBuildPlansBase));
 
             return response;
 

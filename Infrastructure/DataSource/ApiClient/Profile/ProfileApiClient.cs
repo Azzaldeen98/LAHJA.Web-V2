@@ -6,6 +6,7 @@ using Domain.Exceptions;
 using Domain.Wrapper;
 using Infrastructure.DataSource.ApiClient.Base;
 using Infrastructure.DataSource.ApiClientFactory;
+using Infrastructure.Middlewares;
 using Infrastructure.Models.Plans;
 using Infrastructure.Models.Profile.Response;
 using Infrastructure.Models.Request.Response;
@@ -22,9 +23,11 @@ namespace Infrastructure.DataSource.ApiClient.Profile
     public class ProfileApiClient: BuildApiClient<ProfileClient>
     {
 
-        public ProfileApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config)
-            : base(clientFactory, mapper, config)
+
+        public ProfileApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, IApiSafelyHandlerMiddleware apiSafelyHandler)
+            : base(clientFactory, mapper, config, apiSafelyHandler)
         {
+
         }
 
         public async Task<Result<ProfileUserResponse>> GetProfileUserAsync()
@@ -113,11 +116,10 @@ namespace Infrastructure.DataSource.ApiClient.Profile
             try
             {
                 var client = await GetApiClient();
-                var response = await ExecuteWithRetryAsync(async () =>
-                {
-                    var response = await client.SubscriptionsAsync();
-                    return response;
-                });
+           
+                var response = await client.SubscriptionsAsync();
+               
+           
                 //var response = await client.SubscriptionsAsync();
                 var resModel = _mapper.Map<ICollection<ProfileSubscriptionResponse>>(response);
 
@@ -201,11 +203,9 @@ namespace Infrastructure.DataSource.ApiClient.Profile
             {
 
                 var client = await GetApiClient();
-                var response = await ExecuteWithRetryAsync(async () =>
-                {
-                    var response = await client.SpacesSubscriptionAsync(subscriptionId);
-                    return response;
-                });
+    
+                 var response = await client.SpacesSubscriptionAsync(subscriptionId);
+         
               
                 var resModel = _mapper.Map<ICollection<ProfileSpaceResponse>>(response);
 

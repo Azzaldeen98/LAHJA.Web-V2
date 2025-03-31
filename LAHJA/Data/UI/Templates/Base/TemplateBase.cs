@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Infrastructure.Middlewares;
 using LAHJA.Helpers;
 using LAHJA.Helpers.Services;
 using Microsoft.AspNetCore.Components;
@@ -70,25 +71,26 @@ public abstract class TemplateBase<T,E> : ITemplateBase<T, E>
 
     protected readonly IMapper mapper;
     protected readonly AuthService authService;
+    protected readonly IClientSafelyHandlerException safelyHandler;
     //protected readonly ProtectedSessionStorage PSession;
     protected readonly T client;
     protected List<string> _errors;
 
 
-    public TemplateBase(IMapper mapper,
-        AuthService authService,
-        //ProtectedSessionStorage PSession,
-    T client)
+    public TemplateBase(IMapper mapper, AuthService authService, T client)
     {
 
         this.mapper = mapper;
         _errors = new List<string>();
         this.authService = authService;
         this.client = client;
-      
-        //this.PSession = PSession;
-        //_isAuth = authService.isAuth().Result;
-        //this.customAuthenticationStateProvider = customAuthenticationStateProvider;
+
+    }
+
+    public TemplateBase(IMapper mapper, AuthService authService, T client,IClientSafelyHandlerException safelyHandler): this(mapper, authService, client)
+    {
+
+        this.safelyHandler = safelyHandler;
     }
 
 }

@@ -50,7 +50,7 @@ namespace Infrastructure.DataSource.ApiClient.Payment
             {
                 var model = _mapper.Map<Nswag.SubscriptionCreate>(request);
                 var client = await GetApiClient();
-                var response=await ExecuteWithRetryAsync(async () =>
+                var response=await apiSafelyHandler.InvokeAsync(async () =>
                 {
                     var response = await client.CreateSubscriptionAsync(model);
                     return response;
@@ -107,7 +107,7 @@ namespace Infrastructure.DataSource.ApiClient.Payment
                 var client = await GetApiClient();
               
 
-                var response = await ExecuteWithRetryAsync(async () =>
+                var response = await apiSafelyHandler.InvokeAsync(async () =>
                 {
                     var response = await client.GetSubscriptionAsync(filter.Id);
                     return response;

@@ -47,9 +47,24 @@
 
             if (column.ToLower().Contains("date") || column.ToLower().Contains("time"))
             {
-                <MudTd>
-                    <MudDatePicker Style="font-size:12px !important" Label="" Date="DateTime.Parse(GetPropertyValue(context, column).ToString())" ReadOnly="true" />
-                </MudTd>
+               
+
+                    @if (DateTime.TryParse(GetPropertyValue(context, column)?.ToString(), out var dateValue))
+                    {
+                         <MudTd>
+                            <MudDatePicker Style="font-size:12px;" Label="" Date="dateValue" ReadOnly="true" />
+                        </MudTd>
+                    }
+                    else
+                    {
+                        <MudTd>
+                            <MudText Style="font-size:12px;">@GetPropertyValue(context, column)?.ToString()</MudText>
+                        </MudTd>
+                    }
+
+                    @* <MudDatePicker Style="font-size:12px !important" Label="" Date="DateTime.TryParse(GetPropertyValue(context, column)?.ToString(), out var dateValue) ? dateValue : (DateTime?)null" ReadOnly="true" /> *@
+                    @* <MudDatePicker Style="font-size:12px !important" Label="" Date="DateTime.Parse(GetPropertyValue(context, column).ToString())" ReadOnly="true" /> *@
+                @* </MudTd> *@
 
             }
 

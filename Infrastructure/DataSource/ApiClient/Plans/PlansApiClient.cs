@@ -11,12 +11,16 @@ namespace Infrastructure.DataSource.ApiClient.Plans
 {
     using Domain.ShareData.Base;
     using Infrastructure.DataSource.ApiClient.Base;
+    using Infrastructure.Middlewares;
     using System.Collections.Generic;
+    using System.Reflection;
 
     public class PlansApiClient:BuildApiClient<PlansClient>
     {
-        public PlansApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config) : base(clientFactory, mapper, config)
+        public PlansApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, 
+            IApiSafelyHandlerMiddleware apiSafelyHandler) : base(clientFactory, mapper, config, apiSafelyHandler)
         {
+
         }
 
 
@@ -49,6 +53,7 @@ namespace Infrastructure.DataSource.ApiClient.Plans
             try
             {
                 var model = _mapper.Map<PlanCreate>(request);
+
                 var client = await GetApiClient();
                 //var response = null; //await client.CreatePlanAsync(model);
 
@@ -73,9 +78,14 @@ namespace Infrastructure.DataSource.ApiClient.Plans
             try
             {
                 var model = _mapper.Map<PlanUpdate>(request);
-                var client = await GetApiClient();
-                var response = await client.UpdatePlanAsync(request.Id,model);
+          
+            
 
+                var response = await apiSafelyHandler.InvokeAsync(async () =>
+                {
+                    var client = await GetApiClient();
+                    return await client.UpdatePlanAsync(request.Id, model);
+                });
 
                 var resModel = _mapper.Map<SubscriptionPlanModel>(response);
                 return Result<SubscriptionPlanModel>.Success();
@@ -93,23 +103,22 @@ namespace Infrastructure.DataSource.ApiClient.Plans
         } 
         public async Task<Result<DeleteResponseModel>> DeletePlanAsync(string id)
         {
-            try
-            {
+    
+                //var client = await GetApiClient();
+                //var response = await client.DeletePlanAsync(id);
+
+               return await apiSafelyHandler.InvokeAsync(async () =>
+                {
+                    var client = await GetApiClient();
+                    var response = await client.DeletePlanAsync(id);
+                    var resModel = _mapper.Map<DeleteResponseModel>(response);
+                    return Result<DeleteResponseModel>.Success();
+
+                });
+
               
-                var client = await GetApiClient();
-                var response = await client.DeletePlanAsync(id);
 
-
-                var resModel = _mapper.Map<DeleteResponseModel>(response);
-                return Result<DeleteResponseModel>.Success();
-
-            }
-            catch (ApiException e)
-            {
-
-                return Result<DeleteResponseModel>.Fail(e.Response, httpCode: e.StatusCode);
-
-            }
+    
 
 
 
@@ -139,49 +148,78 @@ namespace Infrastructure.DataSource.ApiClient.Plans
         //}
         public async Task<Result<IEnumerable<SubscriptionPlanModel>>> GetPlansAsync(FilterResponseData filter)
         {
-            try
+            var response= await apiSafelyHandler.InvokeAsync(async () =>
             {
-
                 var client = await GetApiClient();
                 var response = await client.AsGroupAsync(filter.lg);
-                var response2 = response.OrderBy(p => p.Amount).ToList();
                 
-
                 if (response == null)
                     return Result<IEnumerable<SubscriptionPlanModel>>.Success();
 
+                response = response.OrderBy(p => p.Amount).ToList();
 
-                var resModel = _mapper.Map<IEnumerable<SubscriptionPlanModel>>(response2);
+
+
+
+                var resModel = _mapper.Map<IEnumerable<SubscriptionPlanModel>>(response);
                 return Result<IEnumerable<SubscriptionPlanModel>>.Success(resModel);
 
-            }
-            catch (ApiException e)
-            {
+            });
 
-                return Result<IEnumerable<SubscriptionPlanModel>>.Fail(e.Response,httpCode:e.StatusCode);
+            return response;
 
-            }
+            //try
+            //{
+
+            //    var client = await GetApiClient();
+            //    var response = await client.AsGroupAsync(filter.lg);
+            //    var response2 = response.OrderBy(p => p.Amount).ToList();
+
+
+            //    if (response == null)
+            //        return Result<IEnumerable<SubscriptionPlanModel>>.Success();
+
+
+            //    var resModel = _mapper.Map<IEnumerable<SubscriptionPlanModel>>(response2);
+            //    return Result<IEnumerable<SubscriptionPlanModel>>.Success(resModel);
+
+
+            //}
+            //catch (ApiException e)
+            //{
+
+            //    return Result<IEnumerable<SubscriptionPlanModel>>.Fail(e.Response,httpCode:e.StatusCode);
+
+            //}
 
 
 
         }
         public async Task<Result<SubscriptionPlanModel>> GetPlanAsync(string id,string lg="en")
         {
-            try
+            return await apiSafelyHandler.InvokeAsync(async () =>
             {
-
                 var client = await GetApiClient();
-                var response = await client.GetPlanAsync(id,lg);
+                var response = await client.GetPlanAsync(id, lg);
                 var resModel = _mapper.Map<SubscriptionPlanModel>(response);
                 return Result<SubscriptionPlanModel>.Success(resModel);
 
-            }
-            catch (ApiException e)
-            {
+            });
+            //try
+            //{
 
-                return Result<SubscriptionPlanModel>.Fail(e.Response, httpCode: e.StatusCode);
+            //    var client = await GetApiClient();
+            //    var response = await client.GetPlanAsync(id,lg);
+            //    var resModel = _mapper.Map<SubscriptionPlanModel>(response);
+            //    return Result<SubscriptionPlanModel>.Success(resModel);
 
-            }
+            //}
+            //catch (ApiException e)
+            //{
+
+            //    return Result<SubscriptionPlanModel>.Fail(e.Response, httpCode: e.StatusCode);
+
+            //}
 
 
 

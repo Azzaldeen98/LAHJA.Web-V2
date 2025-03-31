@@ -32,6 +32,7 @@ using LAHJA.ApplicationLayer.ModelAi;
 using LAHJA.Data.UI.Models.ModelAi;
 using LAHJA.Data.UI.Templates.ModelAi;
 using LAHJA.ContextServices;
+using Infrastructure.Middlewares;
 
 
 namespace LAHJA
@@ -66,6 +67,7 @@ namespace LAHJA
         private static void InstallHelperServices(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddTransient<IManageLanguageService,ManageLanguageService>();
+            serviceCollection.AddTransient<IClientSafelyHandlerException, ClientSafelyHandlerException>();
             serviceCollection.AddScoped<SessionUserManager>();
             serviceCollection.AddScoped<LanguageService>();
             serviceCollection.AddScoped<MessageBox>();

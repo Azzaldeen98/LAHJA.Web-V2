@@ -42,7 +42,7 @@
 
 @code {
 
-
+    private bool hasClickedRow = false;
     private List<CardStateCount<string>>? cardStates = new();
     private GroupActionTabels groupAction = new GroupActionTabels();
     private DataAndEventBuildTabelCard<DataBuildUserModelAi> dataAndEvent = new();
@@ -125,7 +125,7 @@
                     Tag="create", 
                     Name=TranslationsLST[lg]["Create"]
                 },
-        
+
             };
             groupAction.ChipClicked += OnChipClicked;
         }
@@ -156,15 +156,17 @@
 
     }
 
-    private void OpenDialog()
+    private async Task OpenDialog()
     {
 
+        if (!hasClickedRow)
+        {
+            hasClickedRow = true;
+
+            var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Large, FullWidth = true };
 
 
-        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Large, FullWidth = true };
-
-
-        var parameters = new DialogParameters<DialogContent>
+            var parameters = new DialogParameters<DialogContent>
         {
 
             { x =>x.DataBuild1,null },
@@ -173,7 +175,19 @@
             {x=>x.SrcIframe,"https://lahja-core.onrender.com/createspace"}
         };
 
-        DialogService.Show<DialogContent>("", parameters, options);
+            var dialogReference=DialogService.Show<DialogContent>("", parameters, options);
+
+            try
+            {
+                ///TODO
+                var result = await dialogReference.Result;
+                hasClickedRow = false;
+            }
+            catch (Exception)
+            {
+                hasClickedRow = false;
+            }
+        }
     }
 
     private static readonly Dictionary<string, Dictionary<string, string>> TranslationsLST = new()

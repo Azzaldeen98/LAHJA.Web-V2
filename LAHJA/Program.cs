@@ -18,12 +18,15 @@ using Microsoft.AspNetCore.ResponseCompression;
 using LAHJA.Notification;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Blazored.LocalStorage;
-using Microsoft.AspNetCore.Components;
-using LAHAJ.Helpers;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+// تهيئة التسجيل (Logging)
+builder.Logging.ClearProviders(); // مسح مقدمي الخدمة الافتراضيين
+builder.Logging.AddConsole(); // إضافة تسجيل في وحدة التحكم
+builder.Logging.AddDebug(); // تسجيل الأخطاء في نافذة التصحيح
 
 
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
@@ -69,6 +72,7 @@ builder.Services.Configure<ReCaptchaSettings>(builder.Configuration.GetSection("
 builder.Services.AddOptions<ReCaptchaSettings>().BindConfiguration("ReCaptchaSettings");
 
 ///////////////////////////////////////////////////
+
 
 
 builder.Services.AddScoped<IUserClaimsHelper, UserClaimsHelper>();
@@ -184,10 +188,18 @@ builder.Services.AddResponseCompression(opts =>
 
 //builder.Services.AddSingleton<NavigationManager>(sp => sp.GetRequiredService<NavigationManager>());
 
-
+//PreProcessingNSwagCode.Run("NSwageCode.txt", "..\\Infrastructure\\DataSource\\ApiClientFactory\\Nswag\\WebClientApi2.cs");
 
 var app = builder.Build();
 
+
+// الحصول على `ILogger` من DI (Dependency Injection)
+var logger = app.Services.GetRequiredService<ILogger<Program>>();
+logger.LogInformation("التطبيق بدأ التشغيل...");
+
+
+//app.UseMiddleware<ErrorHandlerMiddleware>();
+//app.UseMiddleware<AuthMiddleware>();
 //NavigationHelper.Init(app.Services);
 
 //var supportedCultures = new[] { "en", "ar" };
@@ -197,7 +209,7 @@ var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture(sup
     .AddSupportedCultures(supportedCultures)
     .AddSupportedUICultures(supportedCultures);
 
-//app.UseMiddleware<AuthMiddleware>();
+//
 
 
 app.UseRequestLocalization(localizationOptions);
@@ -239,6 +251,8 @@ app.UseEndpoints(endpoints =>
 });
 //await ATTK.Load();
 app.Run();
+
+
 
 
 

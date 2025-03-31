@@ -25,6 +25,17 @@
     <None Remove="UI\Teamplat\**" />
     <None Remove="wwwroot\js\NewFolder\**" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="NSwageCodePrism.txt">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="NSwageCode.txt">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
 	<ItemGroup>
 
 		<PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />

@@ -1,5 +1,6 @@
 ﻿@using LAHJA.Data.UI.Components
 @using LAHJA.Them
+@using LAHJA.UI.Components.Base
 @using LAHJA.UI.Components.TabelCard
 @inject MessageBox MessageBox;
 @inject NavigationManager NavigationManager;
@@ -93,18 +94,44 @@
                                                 </MudText>
                                             </MudItem>
                                             <MudItem xs="6">
+                                                @if (label.ToLower().Contains("token"))
+                                                {
+                                                    <MudTd>
 
+                                                        <IdCard Id="@(GetPropertyValue(label).ToString())"   NumCharShow="15" />
 
-                                                     @if (!isboolValue(dataBuild, label))
+                                                    </MudTd>
+                                                }
+                                                else if (label.ToLower().Contains("date") || label.ToLower().Contains("time"))
+                                                {
+                                                    <MudTd>
+                                                        <MudDatePicker Style="font-size:12px !important" Label="" Date="DateTime.Parse(GetPropertyValue(label).ToString())" ReadOnly="true" />
+                                                    </MudTd>
+
+                                                }
+                                                else if (label.ToLower().Contains("id"))
                                                     {
-                                                        <MudText Class="table-value wrap-text" Inline >@value</MudText>
-                                                    }
-                                                    else
-                                                    {
+                                                        <MudTd>
 
-                                                        <StateCell State="@value" />
+                                                        <IdCard Id="@(GetPropertyValue(label).ToString())"
+                                                                    NumCharShow="6"
+                                                                    Icon=null
+                                                                    IsCopy=false
+                                                                    MColor="Color.Info" />
 
+
+                                                        </MudTd>
                                                     }
+                                                else if (!isboolValue(dataBuild, label))
+                                                {
+                                                    <MudText Class="table-value wrap-text" Inline >@value</MudText>
+                                                }
+                                                else
+                                                {
+
+                                                    <StateCell State="@value" />
+
+                                                }
                                         @*         <MudChip Class="py-0 px-3" T="string" Color="@((bool)GetPropertyValue(DataBuild, "Active") ? Color.Success : Color.Error)">
                                                     @value
                                                 </MudChip> *@

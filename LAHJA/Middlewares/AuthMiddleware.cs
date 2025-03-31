@@ -1,6 +1,6 @@
 ﻿using Shared.Constants;
 
-namespace LAHJA
+namespace LAHJA.Middlewares
 {
     public class AuthMiddleware
     {

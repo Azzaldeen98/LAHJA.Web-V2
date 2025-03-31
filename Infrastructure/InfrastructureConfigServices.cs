@@ -37,12 +37,9 @@ using Infrastructure.Repository.Subscription;
 using Infrastructure.Repository.Users;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Domain.Repository.ModelAi;
+using Infrastructure.Mappings.Dynamic;
+using Infrastructure.Middlewares;
 
 namespace Infrastructure
 {
@@ -51,6 +48,8 @@ namespace Infrastructure
         public static void InstallInfrastructureConfigServices(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
 
+
+     
             InstallConfiguration(serviceCollection,configuration);
             InstallApiClients(serviceCollection);
             InstallSeeds(serviceCollection);
@@ -62,12 +61,15 @@ namespace Infrastructure
 
         private static void InstallConfiguration(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
+            
+
             var baseUrl = configuration.GetSection("BaseUrl").Get<BaseUrl>();
             serviceCollection.AddSingleton<BaseUrl>(baseUrl);
 
             serviceCollection.AddHttpClient("ApiClient", client => { client.BaseAddress = new Uri(baseUrl.Api); });
 
             serviceCollection.AddScoped<ClientFactory>();
+            serviceCollection.AddScoped<IApiSafelyHandlerMiddleware, ApiSafelyHandlerMiddleware>();
             //serviceCollection.AddScoped<ITokenProvider, TokenProvider>();
 
         }
@@ -111,6 +113,7 @@ namespace Infrastructure
 
         private static  void InstallMapping(this IServiceCollection serviceCollection)
         {
+            serviceCollection.AddAutoMapper(typeof(MappingConfig));
             serviceCollection.AddAutoMapper(typeof(InfrastructureMappingConfig));
             serviceCollection.AddAutoMapper(typeof(PlansMappingConfig));
             serviceCollection.AddAutoMapper(typeof(PlansRemoteMappingConfig));

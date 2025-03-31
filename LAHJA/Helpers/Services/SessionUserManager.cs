@@ -30,7 +30,10 @@ namespace LAHJA.Helpers.Services
         }
         public async Task SaveThemeAsync(string theme)
         {
-            await _jsRuntime.InvokeVoidAsync("localStorageHelper.setItem", "theme", theme);
+       
+                await _jsRuntime.InvokeVoidAsync("localStorageHelper.setItem", "theme", theme);
+
+          
         }
 
         public async Task<string> GetThemeAsync()

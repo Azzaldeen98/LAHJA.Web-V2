@@ -9,10 +9,10 @@ namespace LAHJA.ContextServices
 {
     public class AppUtilityComponentService
     {
-        private readonly NavigationManager Navigation;
-        private readonly ISnackbar snackbar;
+        protected readonly NavigationManager Navigation;
+        protected readonly ISnackbar snackbar;
 
-        public string lg { get => _lg; }
+        public string lg { set => _lg = value; get => _lg; }
 
         private string _lg = string.IsNullOrWhiteSpace(CultureInfo.CurrentUICulture.Name)
                                  ? ConstantsApp.DEFAULT_LANGUAGE
@@ -59,7 +59,7 @@ namespace LAHJA.ContextServices
         [Inject] public AppUtilityComponentService services { get; set; }
         [Inject] public MessageBox MessageBox { get; set; }
 
-        public string lg { get => services?.lg??ConstantsApp.DEFAULT_LANGUAGE; }
+        public string lg { set => services.lg = value; get => services?.lg ?? ConstantsApp.DEFAULT_LANGUAGE; }
 
 
 

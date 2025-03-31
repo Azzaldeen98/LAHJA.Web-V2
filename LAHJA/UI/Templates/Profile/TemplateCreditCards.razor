@@ -2,6 +2,7 @@
 @using LAHJA.Data.UI.Components
 @using LAHJA.Data.UI.Components.Payment.CreditCard
 @using LAHJA.Data.UI.Templates.CreditCard
+@using LAHJA.UI.Components.General.Skeleton
 @using LAHJA.UI.Components.ProFile.Settings
 @using LAHJA.UI.Components.ServiceCard
 @using LAHJA.UI.Components.TabelCard
@@ -14,20 +15,23 @@
 @attribute [Authorize]
 
 
-@if (Template != null)
+@if (Template != null && buildData!=null)
 {
 
 
     <CreditCards 
-    IsLoading="isLoading"
-    BuildData="buildData"
-    SubmitSelectedActiveCard="onSubmitActiveCreditCard"
-    SubmitCreateCard="OnSubmitCreateCard"
-    SubmitUpdateCard="OnSubmitUpdateCard"
-    SubmitDeleteCard="OnSubmitDeleteCard" />
+        IsLoading="isLoading"
+        BuildData="buildData"
+        SubmitSelectedActiveCard="onSubmitActiveCreditCard"
+        SubmitCreateCard="OnSubmitCreateCard"
+        SubmitUpdateCard="OnSubmitUpdateCard"
+        SubmitDeleteCard="OnSubmitDeleteCard" />
 
 
 
+}else @if (isLoading)
+{
+    <CustomPageSkeleton IsDisplay="isLoading" />
 }
 
 
@@ -61,7 +65,7 @@
             else
             {
                 buildData = new List<CardDetails> { new CardDetails { CardNumber = "454353455", HolderName = "Azzaldeen", CardType = "MasterCard",
-                ExpirationDate = "27/2", IsSelected = true, CVC = "721" } };
+                ExpirationDate = "27/02", IsSelected = true, CVC = "721" } };
             }
         }
         catch (Exception ex)

@@ -3,16 +3,16 @@
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize]
 
-@if (BuildData != null)
+@if (BuildData != null && BuildData?.Any()==true)
 {
     <div class="w-75 m-5">
         <CardsMethodsSection 
-        BuildData="@BuildData"
-        IsLoading="@IsLoading"
-        SelectedActiveCard="OnSelectedActiveCard"
-        EditCard="OnSubmitUpdateCard" 
-        CreateCard="OnSubmitCreateCard"
-        DeleteCard="OnSubmitDeleteCard" />
+            BuildData="@BuildData"
+            IsLoading="@IsLoading"
+            SelectedActiveCard="OnSelectedActiveCard"
+            EditCard="OnSubmitUpdateCard" 
+            CreateCard="OnSubmitCreateCard"
+            DeleteCard="OnSubmitDeleteCard" />
     </div>
 }
 
@@ -26,7 +26,7 @@
     [Parameter] public EventCallback<CardDetails> SubmitUpdateCard { get; set; }
     [Parameter] public EventCallback<CardDetails> SubmitDeleteCard { get; set; }
     [Parameter] public bool IsLoading { set => isLoading = value; get => isLoading; }
-    [Parameter] public List<CardDetails> BuildData { get; set; } 
+    [Parameter] public List<CardDetails> BuildData { get; set; } = new();
 
     
 

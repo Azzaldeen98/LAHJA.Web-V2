@@ -25,13 +25,14 @@
 @code {
 
     private bool isLoading = true;
+    private bool hasClickedRow = false;
     private List<SessionTokenAuth> _dataBuild = new();
     private DataAndEventBuildTabelCard<SessionTokenAuth> dataAndEvent = null;
     private string lg = "ar";
     private IDialogReference  dialog;
     private List<CardStateCount<string>>? cardStates = null;
     private GroupActionTabels groupAction = new GroupActionTabels();
-    
+
 
     [Parameter] public bool IsLoading { set => isLoading = value; get => isLoading; }
     [Parameter] public List<SessionTokenAuth> DataBuild { set
@@ -86,8 +87,8 @@
                          Value=_dataBuild.Where(x=>x.IsActive==false).Count().ToString(),
                        Label=TranslationsLST[lg]["UnActive"]
                     },   
-    
-                    
+
+
                 };
         }
         groupAction.Actions = new()
@@ -161,11 +162,16 @@
         dialog.Close();
         refreshPage();
     }
-    private Task OnRowClicked(SessionTokenAuth data)
+    private async Task OnRowClicked(SessionTokenAuth data)
     {
-        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+        if (!hasClickedRow)
+        {
+            hasClickedRow = true;
 
-        var parameters = new DialogParameters<ViewRowDetails<SessionTokenAuth>>
+
+            var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+
+            var parameters = new DialogParameters<ViewRowDetails<SessionTokenAuth>>
         {
             { x =>x.Title,"Session Token" },
             { x =>x.Lang,lg },
@@ -183,8 +189,19 @@
 
         };
 
-        dialog=DialogService.Show<ViewRowDetails<SessionTokenAuth>>("", parameters, options);
-        return Task.CompletedTask;
+            dialog = DialogService.Show<ViewRowDetails<SessionTokenAuth>>("", parameters, options);
+            try
+            {
+                ///TODO
+                var result = await dialog.Result;
+                hasClickedRow = false;
+            }
+            catch (Exception)
+            {
+                hasClickedRow = false;
+            }
+        }
+
 
     }
 

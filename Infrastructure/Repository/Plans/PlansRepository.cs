@@ -51,6 +51,8 @@ namespace Infrastructure.Repository.Plans
         /// <returns></returns>
         public async Task<Result<IEnumerable<SubscriptionPlan>>> GetPlansAsync(FilterResponseData filter)
         {
+
+       
             var response = await ExecutorAppMode.ExecuteAsync<Result<IEnumerable<SubscriptionPlanModel>>>(
             async () => await plansApiClient.GetPlansAsync(filter),
             async () =>
