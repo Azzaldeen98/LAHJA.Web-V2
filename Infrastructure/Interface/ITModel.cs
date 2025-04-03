@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Models.Interface
+namespace Infrastructure.Interface
 {
-   public interface ITDso
+
+    public interface ITModel
     {
 
     }
-
 }

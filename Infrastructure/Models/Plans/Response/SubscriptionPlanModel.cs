@@ -1,6 +1,4 @@
 ﻿using Domain.ShareData.Base;
-using Infrastructure.DataSource.Seeds.Models;
-using Infrastructure.Models.Interface;
 using Infrastructure.Models.User;
 
 namespace Infrastructure.Models.Plans

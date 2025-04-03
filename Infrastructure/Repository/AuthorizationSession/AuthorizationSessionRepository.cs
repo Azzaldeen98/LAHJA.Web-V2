@@ -59,8 +59,8 @@ namespace Infrastructure.Repository.AuthorizationSession
 
             
             await ExecutorAppMode.ExecuteAsync(
-                 async () =>  _apiClient.ValidateSessionTokenAsync(token),
-                  async () => _apiClient.ValidateSessionTokenAsync(token)
+                 async () =>  _apiClient.ValidateWebTokenAsync(token),
+                  async () => _apiClient.ValidateWebTokenAsync(token)
               );
         }
         public async Task<AuthorizationSessionEncryptResponse> EncryptFromWebAsync() {

@@ -15,16 +15,19 @@ namespace Shared.Middleware.HandlerException
     public  interface IExceptionHandlerMiddleware
     {
         public  Task<T> InvokeAsync<T>(Func<Task<T>> action);
+        public  Task InvokeAsync(Func<Task> action);
         public bool IsTransientError(HttpRequestException ex);
 
         public TimeSpan GetRetryDelay(int attempt);
         public int ExtractStateCode(string message);
+        public   void HandleAndThrowException(Exception ex);
     }
 
 
     public abstract class ExceptionHandlerMiddleware : IExceptionHandlerMiddleware
     {
         public abstract  Task<T> InvokeAsync<T>(Func<Task<T>> action);
+        public abstract  Task InvokeAsync(Func<Task> action);
 
         public TimeSpan GetRetryDelay(int attempt)
         {
@@ -50,6 +53,7 @@ namespace Shared.Middleware.HandlerException
                 case 409: return new ConflictException();
                 case 429: return new TooManyRequestsException();
                 case 500: return new InternalServerException();
+                case 502: return new BadGatewayException();
                 case 503: return new ServiceUnavailableException();
                 default: return new UnknownException();
             }
@@ -68,6 +72,7 @@ namespace Shared.Middleware.HandlerException
                 case 409: return new ConflictException(errorMessage, errorCode);
                 case 429: return new TooManyRequestsException(errorMessage, errorCode);
                 case 500: return new InternalServerException(errorMessage, errorCode);
+                case 502: return new BadGatewayException(errorMessage, errorCode);
                 case 503: return new ServiceUnavailableException(errorMessage, errorCode);
                 default: return new UnknownException(errorMessage, "Unknown");
             }
@@ -78,7 +83,7 @@ namespace Shared.Middleware.HandlerException
       
         }
 
-        public  void HandleAndThrowException(Exception ex)
+        public virtual void HandleAndThrowException(Exception ex)
         {
             
                 var stateCode = ExtractStateCode(ex.Message);
@@ -102,19 +107,25 @@ namespace Shared.Middleware.HandlerException
 
         public int DetectErrorTypeByMessage(string message)
         {
-            if (message.Contains("Conflict detected", StringComparison.OrdinalIgnoreCase))
+            message=message.ToLower();
+
+            if (message.Contains("bad request", StringComparison.OrdinalIgnoreCase))
+                return 400;
+            if (message.Contains("conflict detected", StringComparison.OrdinalIgnoreCase))
                 return 409;
-            if (message.Contains("Unauthorized", StringComparison.OrdinalIgnoreCase))
+            if (message.Contains("unauthorized", StringComparison.OrdinalIgnoreCase))
                 return 401;
-            if (message.Contains("Not Found", StringComparison.OrdinalIgnoreCase))
+            if (message.Contains("not found", StringComparison.OrdinalIgnoreCase))
                 return 404;
-            if (message.Contains("Timeout", StringComparison.OrdinalIgnoreCase))
-                return 408;
-            if (message.Contains("Too Many Requests", StringComparison.OrdinalIgnoreCase))
+            if (message.Contains("timeout", StringComparison.OrdinalIgnoreCase))
+                return 408; 
+            if (message.Contains("too many requests", StringComparison.OrdinalIgnoreCase))
                 return 429;
-            if (message.Contains("Internal Server Error", StringComparison.OrdinalIgnoreCase))
+            if (message.Contains("bad gateway", StringComparison.OrdinalIgnoreCase))
+                return 502;
+            if (message.Contains("internal server error", StringComparison.OrdinalIgnoreCase))
                 return 500;
-            if (message.Contains("Service Unavailable", StringComparison.OrdinalIgnoreCase))
+            if (message.Contains("service unavailable", StringComparison.OrdinalIgnoreCase))
                 return 503;      
 
             return -1; // في حال لم يتم العثور على تطابق

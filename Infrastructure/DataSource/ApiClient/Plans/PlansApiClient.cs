@@ -158,9 +158,6 @@ namespace Infrastructure.DataSource.ApiClient.Plans
 
                 response = response.OrderBy(p => p.Amount).ToList();
 
-
-
-
                 var resModel = _mapper.Map<IEnumerable<SubscriptionPlanModel>>(response);
                 return Result<IEnumerable<SubscriptionPlanModel>>.Success(resModel);
 

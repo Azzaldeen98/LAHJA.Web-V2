@@ -16,7 +16,7 @@ namespace LAHJA
         public static List<string> classNames = new List<string>(); // قائمة لحفظ أسماء الكلاسات
         public static List<string> classNamesEdinty = new List<string>(); // قائمة لحفظ أسماء الكلاسات المعدلة
         static string pattern = "\\b(class\\s+|new\\s+|\\breturn\\s+|\\btypeof\\s*\\(\\s*|\\bas\\s+|\\bis\\s+|\\bpublic\\s+|\\bprivate\\s+|\\bprotected\\s+|\\binternal\\s+|\\bstatic\\s+|\\breadonly\\s+|\\bvar\\s+|\\bthis\\s+|List<|Dictionary<|HashSet<|\\bTask<|\\bIEnumerable<|\\bFunc<|\\bAction<|\\bTuple<|\\bNullable<)([A-Z][a-zA-Z0-9_<>]*)\\b\r\n";
-        public static void ExtractDtoClasses(string filePath = "NSwageCodePrism.txt")
+        public static void ExtractNDtoClasses(string filePath = "NSwageCodePrism.txt")
         {
             var symbole = ": Prism.Mvvm.BindableBase"; // رمز البحث عن الكلاسات التي ترث Prism.Mvvm.BindableBase
 
@@ -30,7 +30,7 @@ namespace LAHJA
             foreach (var ln in lines)
             {
                 var line = ln.Trim();
-                if (line.Contains(symbole) && line.Contains(" class ") && Regex.IsMatch(line, pattern))
+                if (line.Contains(symbole) && line.Contains("partial class") )
                 {
                     // إزالة ": Prism.Mvvm.BindableBase"
                     var modifiedLine = line.Replace(symbole, "").Trim();
@@ -64,11 +64,32 @@ namespace LAHJA
                 }
             }
         }
+        public static void Run2(string filePath = "NSwageCode.txt", string outputFilePath = "..\\Infrastructure\\DataSource\\ApiClientFactory\\Nswag\\WebClientApi2.cs")
+        {
 
+
+            var pattern = "(public\\s+partial\\s+class\\s+([A-Za-z0-9_]+))";
+
+            var modifiedLines = new List<string>();
+            var lines = File.ReadAllLines(filePath);
+            foreach (var ln in lines)
+            {
+                var line = ln.Trim();
+                string modifiedCode = Regex.Replace(line, pattern, "$1NDto:ITNDto");
+                modifiedLines.Add(modifiedCode);
+            }
+
+
+            File.WriteAllLines(outputFilePath, modifiedLines);
+        }
 
     public static void Run(string filePath= "NSwageCode.txt",string outputFilePath= "..\\Infrastructure\\DataSource\\ApiClientFactory\\Nswag\\WebClientApi2.cs")
         {
-            ExtractDtoClasses();
+
+
+
+
+            ExtractNDtoClasses();
 
             if(classNames.Any() && classNamesEdinty.Any())
             {
@@ -77,12 +98,12 @@ namespace LAHJA
 
                 //foreach (var item in classNames)
                 //{
-                //    text= text.Replace(item.Trim(), $"{item.Trim()}Dso");
+                //    text= text.Replace(item.Trim(), $"{item.Trim()}NDto");
                 //}
 
                 //foreach (var item in classNamesEdinty)
                 //{
-                //    text=text.Replace(item.Trim(), $"{item.Trim()}Dso : ITDso");
+                //    text=text.Replace(item.Trim(), $"{item.Trim()}NDto : ITNDto");
                 //}
 
 
@@ -96,7 +117,7 @@ namespace LAHJA
         public static void ProcessFile(string filePath = "NSwageCode.txt",
        string outputFilePath = "..\\Infrastructure\\DataSource\\ApiClientFactory\\Nswag\\WebClientApi2.cs")
         {
-            //var symbole = "_ITDso";
+            //var symbole = "_ITNDto";
             // قراءة جميع الأسطر من الملف
             var lines = File.ReadAllLines(filePath);
 
@@ -108,7 +129,7 @@ namespace LAHJA
             {
                 var line = ln.Trim();
 
-                if (Regex.IsMatch(line, pattern)) 
+                //if (Regex.IsMatch(line, pattern)) 
                 {
                     if (line.Contains("class"))
                     {
@@ -116,10 +137,10 @@ namespace LAHJA
                         foreach (var symbole in classNamesEdinty)
                         {
 
-                            if (line.Contains(symbole) && !line.EndsWith("Dso") && !line.Contains(':'))
+                            if (line.Contains(symbole) && !line.EndsWith("NDto") && !line.Contains(':'))
                             {
 
-                                line += "Dso : ITDso";
+                                line += "NDto : ITNDto";
 
                                 break;
                             }
@@ -131,9 +152,9 @@ namespace LAHJA
                     {
                         foreach (var symbole in classNames)
                         {
-                            if (line.Contains(symbole) && !line.EndsWith("Dso"))
+                            if (line.Contains(symbole) && !line.EndsWith("NDto"))
                             {
-                                line = line.Replace(symbole, $"{symbole}Dso");
+                                line = line.Replace(symbole, $"{symbole}NDto");
                                 break;
                             }
 
@@ -145,7 +166,7 @@ namespace LAHJA
             }
 
 
-            //var newLines = AddDsoIfNotPresent(classNames, modifiedLines);
+            //var newLines = AddNDtoIfNotPresent(classNames, modifiedLines);
 
             //newLines.AddRange(classNames);
             //if (File.Exists(outputFilePath))
@@ -159,7 +180,8 @@ namespace LAHJA
         public static void ProcessFile1(string filePath = "NSwageCode.txt",
            string outputFilePath = "..\\Infrastructure\\DataSource\\ApiClientFactory\\Nswag\\WebClientApi2.cs")
         {
-            var symbole = "_ITDso";
+
+            var symbole = "_ITNDto";
             // قراءة جميع الأسطر من الملف
             var lines = File.ReadAllLines(filePath);
 
@@ -180,21 +202,21 @@ namespace LAHJA
                         if(!classNames.Contains(cname))
                             classNames.Add(cname);
                     }
-                    // إضافة ":ITDso" إلى نهاية السطر المعدل
-                    modifiedLine += "Dso : ITDso";
+                    // إضافة ":ITNDto" إلى نهاية السطر المعدل
+                    modifiedLine += "NDto : ITNDto";
 
                     // إضافة السطر المعدل إلى القائمة
                     modifiedLines.Add(modifiedLine);
                 }
                 else
                 {
-                    // إذا لم يحتوي السطر على "{ITDso}"، إضافة السطر كما هو
+                    // إذا لم يحتوي السطر على "{ITNDto}"، إضافة السطر كما هو
                     modifiedLines.Add(line);
                 }
             }
 
 
-            var newLines = AddDsoIfNotPresent(classNames, modifiedLines);
+            var newLines = AddNDtoIfNotPresent(classNames, modifiedLines);
 
             //newLines.AddRange(classNames);
             //if (File.Exists(outputFilePath))
@@ -206,7 +228,7 @@ namespace LAHJA
         }
     
 
-    static List<string> AddDsoIfNotPresent(List<string> classNames, List<string> modifiedLines)
+    static List<string> AddNDtoIfNotPresent(List<string> classNames, List<string> modifiedLines)
         {
             var newLines = new List<string>();
             foreach (var line in modifiedLines)
@@ -215,7 +237,7 @@ namespace LAHJA
                 {
                     if (line.Contains(cname))
                     {
-                        line.Replace(cname,$"{cname}Dso");
+                        line.Replace(cname,$"{cname}NDto");
                     }
                 }
                 newLines.Add(line);

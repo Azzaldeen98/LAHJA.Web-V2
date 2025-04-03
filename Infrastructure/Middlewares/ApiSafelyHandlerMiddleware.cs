@@ -9,10 +9,15 @@ using Shared.Middleware.HandlerException;
 namespace Infrastructure.Middlewares
 {
 
-    public interface IApiSafelyHandlerMiddleware : IExceptionHandlerMiddleware
+    public interface IApiSafelyHandlerMiddleware 
     {
         public bool ShouldRetry(BaseExceptionApp ex);
-        public void HandlerThrowException(string message, int stateCode, ref int attempt, int _maxRetries);
+        public  Task InvokeAsync(Func<Task> action);
+        public Task<T> InvokeAsync<T>(Func<Task<T>> action);
+        public  void HandleThrowException(string message, int stateCode, ref int attempt, int _maxRetries);
+
+
+
     }
     public class ApiSafelyHandlerMiddleware : ExceptionHandlerMiddleware, IApiSafelyHandlerMiddleware
     {
@@ -22,8 +27,23 @@ namespace Infrastructure.Middlewares
         public ApiSafelyHandlerMiddleware(ILogger<ApiSafelyHandlerMiddleware> logger)
         {
             _logger = logger;
+      
+        }
+   
+
+
+        public override async Task InvokeAsync(Func<Task> action) {
+
+
+                     await InvokeAsync<object?>(async() =>
+                     {
+                         await action();
+                         return  null;
+                     });
+              
         }
 
+   
         public override async Task<T> InvokeAsync<T>(Func<Task<T>> action)
         {
             int _maxRetries = 3;
@@ -39,7 +59,7 @@ namespace Infrastructure.Middlewares
 
 
 
-                    HandlerThrowException(ex.Message, (int)ex.StatusCode,ref attempt,_maxRetries);
+                    HandleThrowException(ex.Message, (int)ex.StatusCode,ref attempt,_maxRetries);
 
                     //if (ShouldRetry(GetExceptionTypeByStateCode((int)ex.StatusCode)))
                     //{
@@ -81,7 +101,7 @@ namespace Infrastructure.Middlewares
                 catch (ApiException ex)
                 {
 
-                    HandlerThrowException(ex.Message, (int)ex.StatusCode, ref attempt, _maxRetries);
+                    HandleThrowException(ex.Message, (int)ex.StatusCode, ref attempt, _maxRetries);
 
 
                 }
@@ -93,7 +113,7 @@ namespace Infrastructure.Middlewares
                     {
                         stateCode = DetectErrorTypeByMessage(ex.Message);
                     }
-                    HandlerThrowException(ex.Message, stateCode, ref attempt, _maxRetries);
+                    HandleThrowException(ex.Message, stateCode, ref attempt, _maxRetries);
                     //if (ShouldRetry(GetExceptionTypeByStateCode(stateCode)))
                     //{
                     //    attempt++;
@@ -116,7 +136,7 @@ namespace Infrastructure.Middlewares
             throw new MaxRetryAttemptsReachedException("Max retry attempts reached.");
         }
 
-        public void HandlerThrowException(string message,int stateCode,ref int attempt,int _maxRetries)
+        public   void HandleThrowException(string message,int stateCode,ref int attempt,int _maxRetries)
         {
 
             _logger.LogError($"StatusCode ({stateCode}): {message}");
@@ -143,6 +163,8 @@ namespace Infrastructure.Middlewares
             var retryExceptions = new List<Type>
             {
                 typeof(TimeoutExceptionApp),            // Timeout
+                typeof(UnauthorizedException),            // Unauthorized
+                typeof(BadGatewayException),            // BadGateway
                 typeof(ServiceUnavailableException),    // الخدمة غير متاحة
                 typeof(TooManyRequestsException)        // عدد كبير جداً من الطلبات
             };

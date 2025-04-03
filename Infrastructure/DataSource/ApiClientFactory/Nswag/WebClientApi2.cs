@@ -4,7 +4,7 @@
 // </auto-generated>
 //----------------------
 
-using Infrastructure.Models.Interface;
+using Infrastructure.Interface;
 
 #pragma warning disable 108 // Disable "CS0108 '{derivedDto}.ToJson()' hides inherited member '{dtoBase}.ToJson()'. Use the new keyword if hiding was intended."
 #pragma warning disable 114 // Disable "CS0114 '{derivedDto}.RaisePropertyChanged(String)' hides inherited member 'dtoBase.RaisePropertyChanged(String)'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword."
@@ -15,20 +15,18 @@ using Infrastructure.Models.Interface;
 #pragma warning disable 3016 // Disable "CS3016 Arrays as attribute arguments is not CLS-compliant"
 #pragma warning disable 8603 // Disable "CS8603 Possible null reference return"
 
-namespace Infrastructure.Nswag2
+namespace Infrastructure.Nswag
 {
     using System = global::System;
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class AuthClient
     {
-        private string _baseUrl = "";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
 
-        public AuthClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public AuthClient(System.Net.Http.HttpClient httpClient)
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings);
         }
@@ -38,12 +36,6 @@ namespace Infrastructure.Nswag2
             var settings = new System.Text.Json.JsonSerializerOptions();
             UpdateJsonSerializerSettings(settings);
             return settings;
-        }
-
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
         }
 
         protected System.Text.Json.JsonSerializerOptions JsonSerializerSettings { get { return _settings.Value; } }
@@ -70,7 +62,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("body");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/logout");
+            urlBuilder_.Append("api/logout");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -145,7 +137,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("body");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/register");
+            urlBuilder_.Append("api/register");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -230,7 +222,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("body");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/login?");
+            urlBuilder_.Append("api/login?");
             if (useCookies != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("useCookies") + "=").Append(System.Uri.EscapeDataString(ConvertToString(useCookies, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -330,7 +322,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("body");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/refresh");
+            urlBuilder_.Append("api/refresh");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -411,7 +403,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("body");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/confirmEmail");
+            urlBuilder_.Append("api/confirmEmail");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -486,7 +478,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("body");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/resendConfirmationEmail");
+            urlBuilder_.Append("api/resendConfirmationEmail");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -577,7 +569,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("body");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/forgotPassword");
+            urlBuilder_.Append("api/forgotPassword");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -662,7 +654,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("body");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/resetPassword");
+            urlBuilder_.Append("api/resetPassword");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -744,7 +736,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task ExternalLoginAsync(string provider, string returnUrl, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ExternalLogin?");
+            urlBuilder_.Append("api/ExternalLogin?");
             if (provider != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("provider") + "=").Append(System.Uri.EscapeDataString(ConvertToString(provider, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -831,7 +823,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task ExternalLoginCallbackAsync(string returnUrl, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ExternalLoginCallback?");
+            urlBuilder_.Append("api/ExternalLoginCallback?");
             if (returnUrl != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("returnUrl") + "=").Append(System.Uri.EscapeDataString(ConvertToString(returnUrl, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -994,13 +986,11 @@ namespace Infrastructure.Nswag2
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class AuthorizationSessionClient
     {
-        private string _baseUrl = "";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
 
-        public AuthorizationSessionClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public AuthorizationSessionClient(System.Net.Http.HttpClient httpClient)
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings);
         }
@@ -1010,12 +1000,6 @@ namespace Infrastructure.Nswag2
             var settings = new System.Text.Json.JsonSerializerOptions();
             UpdateJsonSerializerSettings(settings);
             return settings;
-        }
-
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
         }
 
         protected System.Text.Json.JsonSerializerOptions JsonSerializerSettings { get { return _settings.Value; } }
@@ -1045,7 +1029,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<SessionVm>> GetSessionsAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/AuthorizationSession");
+            urlBuilder_.Append("api/AuthorizationSession");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1145,7 +1129,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<AuthorizationSessionWebResponse> CreateAuthorizationSessionAsync(CreateAuthorizationWebRequest body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/AuthorizationSession");
+            urlBuilder_.Append("api/AuthorizationSession");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1252,7 +1236,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/AuthorizationSession/{id}");
+            urlBuilder_.Append("api/AuthorizationSession/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -1356,7 +1340,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/AuthorizationSession/{id}");
+            urlBuilder_.Append("api/AuthorizationSession/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -1460,7 +1444,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("token");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/AuthorizationSession/SessionByToken/{token}");
+            urlBuilder_.Append("api/AuthorizationSession/SessionByToken/{token}");
             urlBuilder_.Replace("{token}", System.Uri.EscapeDataString(ConvertToString(token, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -1561,7 +1545,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<SessionVm> GetActiveSessionAsync(string userId, string type, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/AuthorizationSession/activeSession?");
+            urlBuilder_.Append("api/AuthorizationSession/activeSession?");
             if (userId != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("userId") + "=").Append(System.Uri.EscapeDataString(ConvertToString(userId, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -1670,7 +1654,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<AuthorizationSessionCoreResponse> AuthorizationSessionAsync(ValidateTokenRequest body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/AuthorizationSession/validate");
+            urlBuilder_.Append("api/AuthorizationSession/validate");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1784,7 +1768,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<AuthorizationSessionWebResponse> CreateForDashboardAsync(CreateAuthorizationForDashboard body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/AuthorizationSession/CreateForDashboard");
+            urlBuilder_.Append("api/AuthorizationSession/CreateForDashboard");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1888,7 +1872,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<AuthorizationSessionWebResponse> CreateForListServicesAsync(CreateAuthorizationForListServices body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/AuthorizationSession/CreateForListServices");
+            urlBuilder_.Append("api/AuthorizationSession/CreateForListServices");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1992,7 +1976,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<AuthorizationSessionWebResponse> CreateForAllServicesAsync(CreateAuthorizationForServices body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/AuthorizationSession/CreateForAllServices");
+            urlBuilder_.Append("api/AuthorizationSession/CreateForAllServices");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2090,7 +2074,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<TokenVm> EncryptFromWebAsync(EncryptTokenRequest body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/AuthorizationSession/encryptFromWeb");
+            urlBuilder_.Append("api/AuthorizationSession/encryptFromWeb");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2168,7 +2152,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<TokenVm> EncryptFromCoreAsync(string sesstionToken, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/AuthorizationSession/encryptFromCore?");
+            urlBuilder_.Append("api/AuthorizationSession/encryptFromCore?");
             if (sesstionToken != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("sesstionToken") + "=").Append(System.Uri.EscapeDataString(ConvertToString(sesstionToken, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -2247,7 +2231,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<TokenVm> EncryptFromCore2Async(string encrptedToken, string coreToken, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/AuthorizationSession/encryptFromCore2?");
+            urlBuilder_.Append("api/AuthorizationSession/encryptFromCore2?");
             if (encrptedToken != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("encrptedToken") + "=").Append(System.Uri.EscapeDataString(ConvertToString(encrptedToken, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -2330,7 +2314,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task ValidateWebTokenAsync(string token, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/AuthorizationSession/ValidateWebTokenAsync?");
+            urlBuilder_.Append("api/AuthorizationSession/ValidateWebTokenAsync?");
             if (token != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("token") + "=").Append(System.Uri.EscapeDataString(ConvertToString(token, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -2403,7 +2387,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task ValidateCreateTokenAsync(string token, string coreToken, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/AuthorizationSession/ValidateCreateToken?");
+            urlBuilder_.Append("api/AuthorizationSession/ValidateCreateToken?");
             if (token != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("token") + "=").Append(System.Uri.EscapeDataString(ConvertToString(token, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -2480,7 +2464,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task ValidateCoreTokenAsync(string token, string coreToken, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/AuthorizationSession/ValidateCoreToken?");
+            urlBuilder_.Append("api/AuthorizationSession/ValidateCoreToken?");
             if (token != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("token") + "=").Append(System.Uri.EscapeDataString(ConvertToString(token, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -2566,7 +2550,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/AuthorizationSession/pause/{id}");
+            urlBuilder_.Append("api/AuthorizationSession/pause/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -2671,7 +2655,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/AuthorizationSession/resume/{id}");
+            urlBuilder_.Append("api/AuthorizationSession/resume/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -2857,13 +2841,11 @@ namespace Infrastructure.Nswag2
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class CheckoutClient
     {
-        private string _baseUrl = "";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
 
-        public CheckoutClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public CheckoutClient(System.Net.Http.HttpClient httpClient)
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings);
         }
@@ -2873,12 +2855,6 @@ namespace Infrastructure.Nswag2
             var settings = new System.Text.Json.JsonSerializerOptions();
             UpdateJsonSerializerSettings(settings);
             return settings;
-        }
-
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
         }
 
         protected System.Text.Json.JsonSerializerOptions JsonSerializerSettings { get { return _settings.Value; } }
@@ -2902,7 +2878,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<CheckoutResponse> CreateCheckoutAsync(CheckoutOptions body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Checkout");
+            urlBuilder_.Append("api/Checkout");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -3000,7 +2976,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<CheckoutResponse> ManageAsync(SessionCreate body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Checkout/manage");
+            urlBuilder_.Append("api/Checkout/manage");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -3188,13 +3164,11 @@ namespace Infrastructure.Nswag2
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class DashboardClient
     {
-        private string _baseUrl = "";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
 
-        public DashboardClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public DashboardClient(System.Net.Http.HttpClient httpClient)
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings);
         }
@@ -3204,12 +3178,6 @@ namespace Infrastructure.Nswag2
             var settings = new System.Text.Json.JsonSerializerOptions();
             UpdateJsonSerializerSettings(settings);
             return settings;
-        }
-
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
         }
 
         protected System.Text.Json.JsonSerializerOptions JsonSerializerSettings { get { return _settings.Value; } }
@@ -3239,7 +3207,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<StatisticsUsedRequests>> ServiceUsageDataAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Dashboard/ServiceUsageData");
+            urlBuilder_.Append("api/Dashboard/ServiceUsageData");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -3339,7 +3307,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ServiceUsersCount>> ServiceUsersCountAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Dashboard/ServiceUsersCount");
+            urlBuilder_.Append("api/Dashboard/ServiceUsersCount");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -3439,7 +3407,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<StatisticsUsedRequests>> ServiceUsageAndRemainingAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Dashboard/ServiceUsageAndRemaining");
+            urlBuilder_.Append("api/Dashboard/ServiceUsageAndRemaining");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -3539,7 +3507,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<StatisticsUsedRequests> UsageAndRemainingRequestsAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Dashboard/UsageAndRemainingRequests");
+            urlBuilder_.Append("api/Dashboard/UsageAndRemainingRequests");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -3633,7 +3601,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<RequestData>> GetRequestsAsync(FilterBy? filterBy, System.DateTimeOffset? startDate, System.DateTimeOffset? endDate, RequestType? requestType, DateTimeFilter? groupBy, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Dashboard/GetRequests?");
+            urlBuilder_.Append("api/Dashboard/GetRequests?");
             if (filterBy != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("filterBy") + "=").Append(System.Uri.EscapeDataString(ConvertToString(filterBy, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -3748,7 +3716,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<RequestData>> GetRequestsByDatetimeAsync(FilterBy? filterBy, System.DateTimeOffset? startDate, System.DateTimeOffset? endDate, RequestType? requestType, DateTimeFilter? groupBy, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Dashboard/GetRequestsByDatetime?");
+            urlBuilder_.Append("api/Dashboard/GetRequestsByDatetime?");
             if (filterBy != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("filterBy") + "=").Append(System.Uri.EscapeDataString(ConvertToString(filterBy, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -3863,7 +3831,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ServiceDataTod>> GetRequestsByStatusAsync(FilterBy? filterBy, System.DateTimeOffset? startDate, System.DateTimeOffset? endDate, RequestType? requestType, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Dashboard/GetRequestsByStatus?");
+            urlBuilder_.Append("api/Dashboard/GetRequestsByStatus?");
             if (filterBy != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("filterBy") + "=").Append(System.Uri.EscapeDataString(ConvertToString(filterBy, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -3974,7 +3942,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ModelAiServiceData>> ModelAiServiceRequestsAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Dashboard/ModelAiServiceRequests");
+            urlBuilder_.Append("api/Dashboard/ModelAiServiceRequests");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -4158,13 +4126,11 @@ namespace Infrastructure.Nswag2
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class InvoicesClient
     {
-        private string _baseUrl = "";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
 
-        public InvoicesClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public InvoicesClient(System.Net.Http.HttpClient httpClient)
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings);
         }
@@ -4174,12 +4140,6 @@ namespace Infrastructure.Nswag2
             var settings = new System.Text.Json.JsonSerializerOptions();
             UpdateJsonSerializerSettings(settings);
             return settings;
-        }
-
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
         }
 
         protected System.Text.Json.JsonSerializerOptions JsonSerializerSettings { get { return _settings.Value; } }
@@ -4203,7 +4163,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Invoice>> GetInvoicesAsync(string customerId, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Invoices?");
+            urlBuilder_.Append("api/Invoices?");
             if (customerId != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("customerId") + "=").Append(System.Uri.EscapeDataString(ConvertToString(customerId, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -4305,7 +4265,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Invoices/{id}");
+            urlBuilder_.Append("api/Invoices/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -4490,13 +4450,11 @@ namespace Infrastructure.Nswag2
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ManageClient
     {
-        private string _baseUrl = "";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
 
-        public ManageClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public ManageClient(System.Net.Http.HttpClient httpClient)
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings);
         }
@@ -4506,12 +4464,6 @@ namespace Infrastructure.Nswag2
             var settings = new System.Text.Json.JsonSerializerOptions();
             UpdateJsonSerializerSettings(settings);
             return settings;
-        }
-
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
         }
 
         protected System.Text.Json.JsonSerializerOptions JsonSerializerSettings { get { return _settings.Value; } }
@@ -4538,7 +4490,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("body");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/manage/twofa");
+            urlBuilder_.Append("api/manage/twofa");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -4632,7 +4584,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<InfoResponse> InfoGETAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/manage/info");
+            urlBuilder_.Append("api/manage/info");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -4725,7 +4677,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("body");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/manage/info");
+            urlBuilder_.Append("api/manage/info");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -4909,13 +4861,11 @@ namespace Infrastructure.Nswag2
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class MasterClient
     {
-        private string _baseUrl = "";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
 
-        public MasterClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public MasterClient(System.Net.Http.HttpClient httpClient)
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings);
         }
@@ -4925,12 +4875,6 @@ namespace Infrastructure.Nswag2
             var settings = new System.Text.Json.JsonSerializerOptions();
             UpdateJsonSerializerSettings(settings);
             return settings;
-        }
-
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
         }
 
         protected System.Text.Json.JsonSerializerOptions JsonSerializerSettings { get { return _settings.Value; } }
@@ -4954,7 +4898,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<LanguageView>> LanguagesAllAsync(string lg, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Master/languages?");
+            urlBuilder_.Append("api/Master/languages?");
             if (lg != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("lg") + "=").Append(System.Uri.EscapeDataString(ConvertToString(lg, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -5033,7 +4977,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task LanguagesPOSTAsync(string lg, LanguageCreate body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Master/languages?");
+            urlBuilder_.Append("api/Master/languages?");
             if (lg != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("lg") + "=").Append(System.Uri.EscapeDataString(ConvertToString(lg, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -5113,7 +5057,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("code");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Master/languages/{code}?");
+            urlBuilder_.Append("api/Master/languages/{code}?");
             urlBuilder_.Replace("{code}", System.Uri.EscapeDataString(ConvertToString(code, System.Globalization.CultureInfo.InvariantCulture)));
             if (lg != null)
             {
@@ -5190,7 +5134,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("name");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Master/categories/{name}?");
+            urlBuilder_.Append("api/Master/categories/{name}?");
             urlBuilder_.Replace("{name}", System.Uri.EscapeDataString(ConvertToString(name, System.Globalization.CultureInfo.InvariantCulture)));
             if (lg != null)
             {
@@ -5264,7 +5208,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task CategoriesPOSTAsync(string lg, CategoryCreate body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Master/categories?");
+            urlBuilder_.Append("api/Master/categories?");
             if (lg != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("lg") + "=").Append(System.Uri.EscapeDataString(ConvertToString(lg, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -5344,7 +5288,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("name");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Master/types/{name}?");
+            urlBuilder_.Append("api/Master/types/{name}?");
             urlBuilder_.Replace("{name}", System.Uri.EscapeDataString(ConvertToString(name, System.Globalization.CultureInfo.InvariantCulture)));
             if (lg != null)
             {
@@ -5424,7 +5368,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<TypeModelView>> ActiveAsync(string lg, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Master/types/active?");
+            urlBuilder_.Append("api/Master/types/active?");
             if (lg != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("lg") + "=").Append(System.Uri.EscapeDataString(ConvertToString(lg, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -5503,7 +5447,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<TypeModelView> TypesPOSTAsync(string lg, TypeModelCreate body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Master/types?");
+            urlBuilder_.Append("api/Master/types?");
             if (lg != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("lg") + "=").Append(System.Uri.EscapeDataString(ConvertToString(lg, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -5589,7 +5533,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("languageId");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Master/dialect/{languageId}?");
+            urlBuilder_.Append("api/Master/dialect/{languageId}?");
             urlBuilder_.Replace("{languageId}", System.Uri.EscapeDataString(ConvertToString(languageId, System.Globalization.CultureInfo.InvariantCulture)));
             if (lg != null)
             {
@@ -5672,7 +5616,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("languageId");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Master/dialects/{languageId}?");
+            urlBuilder_.Append("api/Master/dialects/{languageId}?");
             urlBuilder_.Replace("{languageId}", System.Uri.EscapeDataString(ConvertToString(languageId, System.Globalization.CultureInfo.InvariantCulture)));
             if (lg != null)
             {
@@ -5752,7 +5696,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<DialectView> DialectsAsync(string lg, DialectCreate body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Master/dialects?");
+            urlBuilder_.Append("api/Master/dialects?");
             if (lg != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("lg") + "=").Append(System.Uri.EscapeDataString(ConvertToString(lg, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -5838,7 +5782,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Master/advertisements/{id}?");
+            urlBuilder_.Append("api/Master/advertisements/{id}?");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
             if (lg != null)
             {
@@ -5918,7 +5862,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<AdvertisementView>> Active2Async(string lg, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Master/advertisements/active?");
+            urlBuilder_.Append("api/Master/advertisements/active?");
             if (lg != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("lg") + "=").Append(System.Uri.EscapeDataString(ConvertToString(lg, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -5997,7 +5941,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task AdvertisementsPOSTAsync(string lg, AdvertisementCreate body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Master/advertisements?");
+            urlBuilder_.Append("api/Master/advertisements?");
             if (lg != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("lg") + "=").Append(System.Uri.EscapeDataString(ConvertToString(lg, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -6077,7 +6021,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Master/advertisementtab/{id}?");
+            urlBuilder_.Append("api/Master/advertisementtab/{id}?");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
             if (lg != null)
             {
@@ -6160,7 +6104,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("advertisementId");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Master/advertisementtabs/{advertisementId}?");
+            urlBuilder_.Append("api/Master/advertisementtabs/{advertisementId}?");
             urlBuilder_.Replace("{advertisementId}", System.Uri.EscapeDataString(ConvertToString(advertisementId, System.Globalization.CultureInfo.InvariantCulture)));
             if (lg != null)
             {
@@ -6240,7 +6184,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<AdvertisementTabView> AdvertisementtabsAsync(string lg, AdvertisementTabCreate body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Master/advertisementtabs?");
+            urlBuilder_.Append("api/Master/advertisementtabs?");
             if (lg != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("lg") + "=").Append(System.Uri.EscapeDataString(ConvertToString(lg, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -6413,13 +6357,11 @@ namespace Infrastructure.Nswag2
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ModelAiClient
     {
-        private string _baseUrl = "";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
 
-        public ModelAiClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public ModelAiClient(System.Net.Http.HttpClient httpClient)
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings);
         }
@@ -6429,12 +6371,6 @@ namespace Infrastructure.Nswag2
             var settings = new System.Text.Json.JsonSerializerOptions();
             UpdateJsonSerializerSettings(settings);
             return settings;
-        }
-
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
         }
 
         protected System.Text.Json.JsonSerializerOptions JsonSerializerSettings { get { return _settings.Value; } }
@@ -6458,7 +6394,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Item>> GetStartStudioAsync(string lg, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelAi/GetStartStudio?");
+            urlBuilder_.Append("api/ModelAi/GetStartStudio?");
             if (lg != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("lg") + "=").Append(System.Uri.EscapeDataString(ConvertToString(lg, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -6547,7 +6483,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.IDictionary<string, object>> GetModelSpechStudioAsync(string lg, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelAi/GetModelSpechStudio?");
+            urlBuilder_.Append("api/ModelAi/GetModelSpechStudio?");
             if (lg != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("lg") + "=").Append(System.Uri.EscapeDataString(ConvertToString(lg, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -6636,7 +6572,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.IDictionary<string, object>> GetModelTextStudioAsync(string lg, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelAi/GetModelTextStudio?");
+            urlBuilder_.Append("api/ModelAi/GetModelTextStudio?");
             if (lg != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("lg") + "=").Append(System.Uri.EscapeDataString(ConvertToString(lg, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -6725,7 +6661,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.IDictionary<string, object>> GetModelChatStudioAsync(string lg, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelAi/GetModelChatStudio?");
+            urlBuilder_.Append("api/ModelAi/GetModelChatStudio?");
             if (lg != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("lg") + "=").Append(System.Uri.EscapeDataString(ConvertToString(lg, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -6820,7 +6756,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ModelAiResponse>> GetModelsAiAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelAi");
+            urlBuilder_.Append("api/ModelAi");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -6910,7 +6846,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<ModelAiResponse> CreateModelAiAsync(ModelAiCreate body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelAi");
+            urlBuilder_.Append("api/ModelAi");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -7017,7 +6953,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("type");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelAi/ByType/{type}");
+            urlBuilder_.Append("api/ModelAi/ByType/{type}");
             urlBuilder_.Replace("{type}", System.Uri.EscapeDataString(ConvertToString(type, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -7111,7 +7047,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("type");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelAi/CategoriesByType/{type}");
+            urlBuilder_.Append("api/ModelAi/CategoriesByType/{type}");
             urlBuilder_.Replace("{type}", System.Uri.EscapeDataString(ConvertToString(type, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -7202,7 +7138,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<ArrayResponse> GetLanguagesByAsync(string type, string category, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelAi/LanguagesBy?");
+            urlBuilder_.Append("api/ModelAi/LanguagesBy?");
             if (type != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("type") + "=").Append(System.Uri.EscapeDataString(ConvertToString(type, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -7304,7 +7240,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("category");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelAi/category/{category}");
+            urlBuilder_.Append("api/ModelAi/category/{category}");
             urlBuilder_.Replace("{category}", System.Uri.EscapeDataString(ConvertToString(category, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -7395,7 +7331,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ModelAiResponse>> FilterMaodelAiAsync(FilterModelAI body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelAi/GetFilterModel");
+            urlBuilder_.Append("api/ModelAi/GetFilterModel");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -7489,7 +7425,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ModelAiResponse>> FilterMaodelAi2Async(FilterModelAI body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelAi/GetFilterModel2");
+            urlBuilder_.Append("api/ModelAi/GetFilterModel2");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -7586,7 +7522,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("gender");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelAi/gender/{gender}");
+            urlBuilder_.Append("api/ModelAi/gender/{gender}");
             urlBuilder_.Replace("{gender}", System.Uri.EscapeDataString(ConvertToString(gender, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -7680,7 +7616,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("dialect");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelAi/dialect/{dialect}");
+            urlBuilder_.Append("api/ModelAi/dialect/{dialect}");
             urlBuilder_.Replace("{dialect}", System.Uri.EscapeDataString(ConvertToString(dialect, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -7771,7 +7707,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ModelAiResponse>> GetModelsByLanguageAndDialectAsync(string language, string dialect, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelAi/language-dialect?");
+            urlBuilder_.Append("api/ModelAi/language-dialect?");
             if (language != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("language") + "=").Append(System.Uri.EscapeDataString(ConvertToString(language, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -7870,7 +7806,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ModelAiResponse>> GetModelsByLanguageDialectTypeAsync(string language, string dialect, string type, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelAi/language-dialect-type?");
+            urlBuilder_.Append("api/ModelAi/language-dialect-type?");
             if (language != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("language") + "=").Append(System.Uri.EscapeDataString(ConvertToString(language, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -7976,7 +7912,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("isStandard");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelAi/is-standard/{isStandard}");
+            urlBuilder_.Append("api/ModelAi/is-standard/{isStandard}");
             urlBuilder_.Replace("{isStandard}", System.Uri.EscapeDataString(ConvertToString(isStandard, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -8067,7 +8003,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ModelAiResponse>> GetModelsByTypeAndGenderAsync(string type, string gender, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelAi/type-gender?");
+            urlBuilder_.Append("api/ModelAi/type-gender?");
             if (type != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("type") + "=").Append(System.Uri.EscapeDataString(ConvertToString(type, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -8169,7 +8105,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("language");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelAi/language/{language}");
+            urlBuilder_.Append("api/ModelAi/language/{language}");
             urlBuilder_.Replace("{language}", System.Uri.EscapeDataString(ConvertToString(language, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -8263,7 +8199,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelAi/{id}");
+            urlBuilder_.Append("api/ModelAi/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -8357,7 +8293,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelAi/{id}");
+            urlBuilder_.Append("api/ModelAi/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -8475,7 +8411,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelAi/{id}");
+            urlBuilder_.Append("api/ModelAi/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -8589,7 +8525,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("langage");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelAi/GetSetting/{langage}");
+            urlBuilder_.Append("api/ModelAi/GetSetting/{langage}");
             urlBuilder_.Replace("{langage}", System.Uri.EscapeDataString(ConvertToString(langage, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -8683,7 +8619,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("lg");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelAi/language{lg}");
+            urlBuilder_.Append("api/ModelAi/language{lg}");
             urlBuilder_.Replace("{lg}", System.Uri.EscapeDataString(ConvertToString(lg, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -8858,13 +8794,11 @@ namespace Infrastructure.Nswag2
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ModelGatewayClient
     {
-        private string _baseUrl = "";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
 
-        public ModelGatewayClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public ModelGatewayClient(System.Net.Http.HttpClient httpClient)
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings);
         }
@@ -8874,12 +8808,6 @@ namespace Infrastructure.Nswag2
             var settings = new System.Text.Json.JsonSerializerOptions();
             UpdateJsonSerializerSettings(settings);
             return settings;
-        }
-
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
         }
 
         protected System.Text.Json.JsonSerializerOptions JsonSerializerSettings { get { return _settings.Value; } }
@@ -8909,7 +8837,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ModelGatewayResponse>> GetModelGatwaysAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelGateway");
+            urlBuilder_.Append("api/ModelGateway");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -8999,7 +8927,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<ModelGatewayResponse> CreateModelGatewayAsync(ModelGatewayCreate body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelGateway");
+            urlBuilder_.Append("api/ModelGateway");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -9106,7 +9034,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelGateway/{id}");
+            urlBuilder_.Append("api/ModelGateway/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -9200,7 +9128,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelGateway/{id}");
+            urlBuilder_.Append("api/ModelGateway/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -9318,7 +9246,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelGateway/{id}");
+            urlBuilder_.Append("api/ModelGateway/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -9416,7 +9344,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ModelGateway/default/{id}");
+            urlBuilder_.Append("api/ModelGateway/default/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -9596,13 +9524,11 @@ namespace Infrastructure.Nswag2
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class NotifacationClient
     {
-        private string _baseUrl = "";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
 
-        public NotifacationClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public NotifacationClient(System.Net.Http.HttpClient httpClient)
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings);
         }
@@ -9612,12 +9538,6 @@ namespace Infrastructure.Nswag2
             var settings = new System.Text.Json.JsonSerializerOptions();
             UpdateJsonSerializerSettings(settings);
             return settings;
-        }
-
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
         }
 
         protected System.Text.Json.JsonSerializerOptions JsonSerializerSettings { get { return _settings.Value; } }
@@ -9641,7 +9561,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task NotifyUserByEmailAsync(string email, string subject, string htmlMessage, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/NotifyUserByEmail?");
+            urlBuilder_.Append("api/NotifyUserByEmail?");
             if (email != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("email") + "=").Append(System.Uri.EscapeDataString(ConvertToString(email, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -9732,7 +9652,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task NotifyAllUsersByEmailAsync(string subject, string htmlMessage, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/NotifyAllUsersByEmail?");
+            urlBuilder_.Append("api/NotifyAllUsersByEmail?");
             if (subject != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("subject") + "=").Append(System.Uri.EscapeDataString(ConvertToString(subject, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -9899,13 +9819,11 @@ namespace Infrastructure.Nswag2
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class PaymentClient
     {
-        private string _baseUrl = "";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
 
-        public PaymentClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public PaymentClient(System.Net.Http.HttpClient httpClient)
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings);
         }
@@ -9915,12 +9833,6 @@ namespace Infrastructure.Nswag2
             var settings = new System.Text.Json.JsonSerializerOptions();
             UpdateJsonSerializerSettings(settings);
             return settings;
-        }
-
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
         }
 
         protected System.Text.Json.JsonSerializerOptions JsonSerializerSettings { get { return _settings.Value; } }
@@ -9944,7 +9856,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<PaymentMethodResponse>> GetMethodsAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Payment/GetMethods");
+            urlBuilder_.Append("api/Payment/GetMethods");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -10038,7 +9950,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<CustomerResponse> UpdateBillingInformationAsync(BillingInformationRequest body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Payment/UpdateBillingInformation");
+            urlBuilder_.Append("api/Payment/UpdateBillingInformation");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -10139,7 +10051,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("paymentMethodId");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Payment/MakePaymentMethodDefault/{paymentMethodId}");
+            urlBuilder_.Append("api/Payment/MakePaymentMethodDefault/{paymentMethodId}");
             urlBuilder_.Replace("{paymentMethodId}", System.Uri.EscapeDataString(ConvertToString(paymentMethodId, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -10232,7 +10144,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Payment/DeleteMethod/{id}");
+            urlBuilder_.Append("api/Payment/DeleteMethod/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -10321,7 +10233,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task GetSetupIntentsAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Payment/GetSetupIntents");
+            urlBuilder_.Append("api/Payment/GetSetupIntents");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -10412,7 +10324,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Payment/cancel/{id}");
+            urlBuilder_.Append("api/Payment/cancel/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -10504,7 +10416,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Payment/Confirm/{id}");
+            urlBuilder_.Append("api/Payment/Confirm/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -10594,7 +10506,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<PaymentResponse> CreatePaymentMethodAsync(PaymentMethodsRequest body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Payment/CreatePaymentMethod");
+            urlBuilder_.Append("api/Payment/CreatePaymentMethod");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -10692,7 +10604,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<PaymentResponse> CreateCustomerSessionAsync(PaymentMethodsRequest body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Payment/CreateCustomerSession");
+            urlBuilder_.Append("api/Payment/CreateCustomerSession");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -10880,13 +10792,11 @@ namespace Infrastructure.Nswag2
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class PermissionClient
     {
-        private string _baseUrl = "";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
 
-        public PermissionClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public PermissionClient(System.Net.Http.HttpClient httpClient)
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings);
         }
@@ -10896,12 +10806,6 @@ namespace Infrastructure.Nswag2
             var settings = new System.Text.Json.JsonSerializerOptions();
             UpdateJsonSerializerSettings(settings);
             return settings;
-        }
-
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
         }
 
         protected System.Text.Json.JsonSerializerOptions JsonSerializerSettings { get { return _settings.Value; } }
@@ -10925,7 +10829,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task GetAllAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Permission/GetAll");
+            urlBuilder_.Append("api/Permission/GetAll");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -11093,13 +10997,11 @@ namespace Infrastructure.Nswag2
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class PlansClient
     {
-        private string _baseUrl = "";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
 
-        public PlansClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public PlansClient(System.Net.Http.HttpClient httpClient)
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings);
         }
@@ -11109,12 +11011,6 @@ namespace Infrastructure.Nswag2
             var settings = new System.Text.Json.JsonSerializerOptions();
             UpdateJsonSerializerSettings(settings);
             return settings;
-        }
-
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
         }
 
         protected System.Text.Json.JsonSerializerOptions JsonSerializerSettings { get { return _settings.Value; } }
@@ -11144,7 +11040,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<PlanView>> GetPlansAsync(string lg, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Plans?");
+            urlBuilder_.Append("api/Plans?");
             if (lg != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("lg") + "=").Append(System.Uri.EscapeDataString(ConvertToString(lg, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -11239,7 +11135,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<PlanResponse> CreatePlanAsync(string lg, PlanCreate body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Plans?");
+            urlBuilder_.Append("api/Plans?");
             if (lg != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("lg") + "=").Append(System.Uri.EscapeDataString(ConvertToString(lg, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -11352,7 +11248,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<PlanView>> AsGroupAsync(string langauge, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Plans/group?");
+            urlBuilder_.Append("api/Plans/group?");
             if (langauge != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("langauge") + "=").Append(System.Uri.EscapeDataString(ConvertToString(langauge, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -11450,7 +11346,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Plans/{id}?");
+            urlBuilder_.Append("api/Plans/{id}?");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
             if (lg != null)
             {
@@ -11549,7 +11445,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Plans/{id}");
+            urlBuilder_.Append("api/Plans/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -11667,7 +11563,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Plans/{id}");
+            urlBuilder_.Append("api/Plans/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -11872,13 +11768,11 @@ namespace Infrastructure.Nswag2
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class PriceClient
     {
-        private string _baseUrl = "";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
 
-        public PriceClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public PriceClient(System.Net.Http.HttpClient httpClient)
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings);
         }
@@ -11888,12 +11782,6 @@ namespace Infrastructure.Nswag2
             var settings = new System.Text.Json.JsonSerializerOptions();
             UpdateJsonSerializerSettings(settings);
             return settings;
-        }
-
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
         }
 
         protected System.Text.Json.JsonSerializerOptions JsonSerializerSettings { get { return _settings.Value; } }
@@ -11917,7 +11805,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<PriceResponse>> GetPricesAsync(string productId, bool? active, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Price?");
+            urlBuilder_.Append("api/Price?");
             if (productId != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("productId") + "=").Append(System.Uri.EscapeDataString(ConvertToString(productId, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -12020,7 +11908,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<PriceResponse> CreatePriceAsync(PriceCreate body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Price");
+            urlBuilder_.Append("api/Price");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -12121,7 +12009,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Price/{id}");
+            urlBuilder_.Append("api/Price/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -12219,7 +12107,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Price/{id}");
+            urlBuilder_.Append("api/Price/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -12318,7 +12206,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task SearchAsync(PriceSearchOptions body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Price/search");
+            urlBuilder_.Append("api/Price/search");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -12500,13 +12388,11 @@ namespace Infrastructure.Nswag2
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ProductClient
     {
-        private string _baseUrl = "";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
 
-        public ProductClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public ProductClient(System.Net.Http.HttpClient httpClient)
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings);
         }
@@ -12516,12 +12402,6 @@ namespace Infrastructure.Nswag2
             var settings = new System.Text.Json.JsonSerializerOptions();
             UpdateJsonSerializerSettings(settings);
             return settings;
-        }
-
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
         }
 
         protected System.Text.Json.JsonSerializerOptions JsonSerializerSettings { get { return _settings.Value; } }
@@ -12545,7 +12425,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ProductResponse>> GetProductsAsync(string startingAfter, string endingBefore, long? limit, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/products?");
+            urlBuilder_.Append("api/products?");
             if (startingAfter != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("startingAfter") + "=").Append(System.Uri.EscapeDataString(ConvertToString(startingAfter, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -12652,7 +12532,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<ProductResponse> CreateProductAsync(ProductCreate body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/products");
+            urlBuilder_.Append("api/products");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -12753,7 +12633,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/products/{id}");
+            urlBuilder_.Append("api/products/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -12851,7 +12731,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/products/{id}");
+            urlBuilder_.Append("api/products/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -12933,7 +12813,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/products/{id}");
+            urlBuilder_.Append("api/products/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -13028,7 +12908,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ProductResponse>> SearchAllAsync(string query, int? limit, string page, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/products/search?");
+            urlBuilder_.Append("api/products/search?");
             if (query != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("query") + "=").Append(System.Uri.EscapeDataString(ConvertToString(query, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -13205,13 +13085,11 @@ namespace Infrastructure.Nswag2
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ProfileClient
     {
-        private string _baseUrl = "";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
 
-        public ProfileClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public ProfileClient(System.Net.Http.HttpClient httpClient)
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings);
         }
@@ -13221,12 +13099,6 @@ namespace Infrastructure.Nswag2
             var settings = new System.Text.Json.JsonSerializerOptions();
             UpdateJsonSerializerSettings(settings);
             return settings;
-        }
-
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
         }
 
         protected System.Text.Json.JsonSerializerOptions JsonSerializerSettings { get { return _settings.Value; } }
@@ -13250,7 +13122,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<UserResponse> UserAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Profile/user");
+            urlBuilder_.Append("api/Profile/user");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -13334,7 +13206,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task UpdateAsync(UserRequest body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Profile/Update");
+            urlBuilder_.Append("api/Profile/Update");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -13416,7 +13288,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<CustomerResponse> GetCustomerAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Profile/GetCustomer");
+            urlBuilder_.Append("api/Profile/GetCustomer");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -13510,7 +13382,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<SubscriptionResponse>> SubscriptionsAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Profile/subscriptions");
+            urlBuilder_.Append("api/Profile/subscriptions");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -13594,7 +13466,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ModelAiResponse>> ModelAisAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Profile/modelAis");
+            urlBuilder_.Append("api/Profile/modelAis");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -13678,7 +13550,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ServiceResponse>> ServicesAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Profile/services");
+            urlBuilder_.Append("api/Profile/services");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -13765,7 +13637,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("modelAiId");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Profile/services-modelAi/{modelAiId}");
+            urlBuilder_.Append("api/Profile/services-modelAi/{modelAiId}");
             urlBuilder_.Replace("{modelAiId}", System.Uri.EscapeDataString(ConvertToString(modelAiId, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -13850,7 +13722,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<SpaceResponse>> SpacesSubscriptionAsync(string subscriptionId, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Profile/spaces-subscription?");
+            urlBuilder_.Append("api/Profile/spaces-subscription?");
             if (subscriptionId != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("subscriptionId") + "=").Append(System.Uri.EscapeDataString(ConvertToString(subscriptionId, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -13939,7 +13811,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<SpaceResponse> SpaceSubscriptionAsync(string subscriptionId, string spaceId, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Profile/space-subscription?");
+            urlBuilder_.Append("api/Profile/space-subscription?");
             if (subscriptionId != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("subscriptionId") + "=").Append(System.Uri.EscapeDataString(ConvertToString(subscriptionId, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -14032,7 +13904,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<RequestResponse>> RequestsSubscriptionAsync(string subscriptionId, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Profile/requests-subscription?");
+            urlBuilder_.Append("api/Profile/requests-subscription?");
             if (subscriptionId != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("subscriptionId") + "=").Append(System.Uri.EscapeDataString(ConvertToString(subscriptionId, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -14121,7 +13993,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<RequestResponse>> RequestsServiceAsync(string serviceId, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Profile/requests-services?");
+            urlBuilder_.Append("api/Profile/requests-services?");
             if (serviceId != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("serviceId") + "=").Append(System.Uri.EscapeDataString(ConvertToString(serviceId, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -14300,13 +14172,11 @@ namespace Infrastructure.Nswag2
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class RequestClient
     {
-        private string _baseUrl = "";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
 
-        public RequestClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public RequestClient(System.Net.Http.HttpClient httpClient)
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings);
         }
@@ -14316,12 +14186,6 @@ namespace Infrastructure.Nswag2
             var settings = new System.Text.Json.JsonSerializerOptions();
             UpdateJsonSerializerSettings(settings);
             return settings;
-        }
-
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
         }
 
         protected System.Text.Json.JsonSerializerOptions JsonSerializerSettings { get { return _settings.Value; } }
@@ -14351,7 +14215,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<RequestResponse>> GetRequests2Async(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Request");
+            urlBuilder_.Append("api/Request");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -14451,7 +14315,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<ServiceDataTod> CreateRequestAsync(RequestCreate body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Request");
+            urlBuilder_.Append("api/Request");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -14558,7 +14422,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Request/{id}");
+            urlBuilder_.Append("api/Request/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -14662,7 +14526,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Request/{id}");
+            urlBuilder_.Append("api/Request/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -14763,7 +14627,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<EventRequestResponse> CreateEventAsync(EventRequestRequest body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Request/CreateEvent");
+            urlBuilder_.Append("api/Request/CreateEvent");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -14870,7 +14734,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("serviceId");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Request/allowed/{serviceId}");
+            urlBuilder_.Append("api/Request/allowed/{serviceId}");
             urlBuilder_.Replace("{serviceId}", System.Uri.EscapeDataString(ConvertToString(serviceId, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -15055,13 +14919,11 @@ namespace Infrastructure.Nswag2
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class RolesClient
     {
-        private string _baseUrl = "";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
 
-        public RolesClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public RolesClient(System.Net.Http.HttpClient httpClient)
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings);
         }
@@ -15071,12 +14933,6 @@ namespace Infrastructure.Nswag2
             var settings = new System.Text.Json.JsonSerializerOptions();
             UpdateJsonSerializerSettings(settings);
             return settings;
-        }
-
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
         }
 
         protected System.Text.Json.JsonSerializerOptions JsonSerializerSettings { get { return _settings.Value; } }
@@ -15100,7 +14956,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<object>> RolesAllAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Roles");
+            urlBuilder_.Append("api/Roles");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -15184,7 +15040,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task RolesPOSTAsync(RoleCreate body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Roles");
+            urlBuilder_.Append("api/Roles");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -15274,7 +15130,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Roles/{id}");
+            urlBuilder_.Append("api/Roles/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -15362,7 +15218,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Roles/{id}");
+            urlBuilder_.Append("api/Roles/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -15441,7 +15297,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task AssignPermissionAsync(RolePermitionAssign body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Roles/assignPermission");
+            urlBuilder_.Append("api/Roles/assignPermission");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -15613,13 +15469,11 @@ namespace Infrastructure.Nswag2
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ServiceClient
     {
-        private string _baseUrl = "";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
 
-        public ServiceClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public ServiceClient(System.Net.Http.HttpClient httpClient)
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings);
         }
@@ -15629,12 +15483,6 @@ namespace Infrastructure.Nswag2
             var settings = new System.Text.Json.JsonSerializerOptions();
             UpdateJsonSerializerSettings(settings);
             return settings;
-        }
-
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
         }
 
         protected System.Text.Json.JsonSerializerOptions JsonSerializerSettings { get { return _settings.Value; } }
@@ -15664,7 +15512,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ServiceResponse>> GetServicesAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Service");
+            urlBuilder_.Append("api/Service");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -15754,7 +15602,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<ServiceResponse> CreateServiceAsync(ServiceCreate body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Service");
+            urlBuilder_.Append("api/Service");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -15861,7 +15709,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Service/{id}");
+            urlBuilder_.Append("api/Service/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -15955,7 +15803,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Service/{id}");
+            urlBuilder_.Append("api/Service/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -16057,7 +15905,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Service/{id}");
+            urlBuilder_.Append("api/Service/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -16242,13 +16090,11 @@ namespace Infrastructure.Nswag2
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ServiceMethodClient
     {
-        private string _baseUrl = "";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
 
-        public ServiceMethodClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public ServiceMethodClient(System.Net.Http.HttpClient httpClient)
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings);
         }
@@ -16258,12 +16104,6 @@ namespace Infrastructure.Nswag2
             var settings = new System.Text.Json.JsonSerializerOptions();
             UpdateJsonSerializerSettings(settings);
             return settings;
-        }
-
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
         }
 
         protected System.Text.Json.JsonSerializerOptions JsonSerializerSettings { get { return _settings.Value; } }
@@ -16293,7 +16133,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ServiceMethodResponse>> GetServiceMethodsAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ServiceMethod");
+            urlBuilder_.Append("api/ServiceMethod");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -16383,7 +16223,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<ServiceMethodResponse> CreateServiceMethodsAsync(ServiceMethodCreate body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ServiceMethod");
+            urlBuilder_.Append("api/ServiceMethod");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -16490,7 +16330,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ServiceMethod/{id}");
+            urlBuilder_.Append("api/ServiceMethod/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -16584,7 +16424,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ServiceMethod/{id}");
+            urlBuilder_.Append("api/ServiceMethod/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -16702,7 +16542,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ServiceMethod/{id}");
+            urlBuilder_.Append("api/ServiceMethod/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -16897,13 +16737,11 @@ namespace Infrastructure.Nswag2
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class SettingClient
     {
-        private string _baseUrl = "";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
 
-        public SettingClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public SettingClient(System.Net.Http.HttpClient httpClient)
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings);
         }
@@ -16913,12 +16751,6 @@ namespace Infrastructure.Nswag2
             var settings = new System.Text.Json.JsonSerializerOptions();
             UpdateJsonSerializerSettings(settings);
             return settings;
-        }
-
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
         }
 
         protected System.Text.Json.JsonSerializerOptions JsonSerializerSettings { get { return _settings.Value; } }
@@ -16948,7 +16780,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<object>> SettingAllAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Setting");
+            urlBuilder_.Append("api/Setting");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -17028,7 +16860,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<ServiceResponse> SettingPOSTAsync(SettingCreate body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Setting");
+            urlBuilder_.Append("api/Setting");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -17115,7 +16947,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("name");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Setting/{name}");
+            urlBuilder_.Append("api/Setting/{name}");
             urlBuilder_.Replace("{name}", System.Uri.EscapeDataString(ConvertToString(name, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -17199,7 +17031,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("name");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Setting/{name}");
+            urlBuilder_.Append("api/Setting/{name}");
             urlBuilder_.Replace("{name}", System.Uri.EscapeDataString(ConvertToString(name, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -17281,7 +17113,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("name");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Setting/{name}");
+            urlBuilder_.Append("api/Setting/{name}");
             urlBuilder_.Replace("{name}", System.Uri.EscapeDataString(ConvertToString(name, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -17440,13 +17272,11 @@ namespace Infrastructure.Nswag2
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class SpaceClient
     {
-        private string _baseUrl = "";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
 
-        public SpaceClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public SpaceClient(System.Net.Http.HttpClient httpClient)
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings);
         }
@@ -17456,12 +17286,6 @@ namespace Infrastructure.Nswag2
             var settings = new System.Text.Json.JsonSerializerOptions();
             UpdateJsonSerializerSettings(settings);
             return settings;
-        }
-
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
         }
 
         protected System.Text.Json.JsonSerializerOptions JsonSerializerSettings { get { return _settings.Value; } }
@@ -17491,7 +17315,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<SpaceResponse>> GetSpacesAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Space");
+            urlBuilder_.Append("api/Space");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -17581,7 +17405,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<SpaceResponse> CreateSpaceAsync(CreateSpaceRequest body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Space");
+            urlBuilder_.Append("api/Space");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -17688,7 +17512,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Space/{id}");
+            urlBuilder_.Append("api/Space/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -17782,7 +17606,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Space/{id}");
+            urlBuilder_.Append("api/Space/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -17900,7 +17724,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Space/{id}");
+            urlBuilder_.Append("api/Space/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -18008,7 +17832,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("token");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Space/GetByToken/{token}");
+            urlBuilder_.Append("api/Space/GetByToken/{token}");
             urlBuilder_.Replace("{token}", System.Uri.EscapeDataString(ConvertToString(token, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -18086,7 +17910,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("subscriptionId");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Space/GetBySubscriptionId/{subscriptionId}");
+            urlBuilder_.Append("api/Space/GetBySubscriptionId/{subscriptionId}");
             urlBuilder_.Replace("{subscriptionId}", System.Uri.EscapeDataString(ConvertToString(subscriptionId, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -18164,7 +17988,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("ram");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Space/GetSpacesByRamAsync/{ram}");
+            urlBuilder_.Append("api/Space/GetSpacesByRamAsync/{ram}");
             urlBuilder_.Replace("{ram}", System.Uri.EscapeDataString(ConvertToString(ram, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -18329,13 +18153,11 @@ namespace Infrastructure.Nswag2
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class SubscriptionsClient
     {
-        private string _baseUrl = "";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
 
-        public SubscriptionsClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public SubscriptionsClient(System.Net.Http.HttpClient httpClient)
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings);
         }
@@ -18345,12 +18167,6 @@ namespace Infrastructure.Nswag2
             var settings = new System.Text.Json.JsonSerializerOptions();
             UpdateJsonSerializerSettings(settings);
             return settings;
-        }
-
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
         }
 
         protected System.Text.Json.JsonSerializerOptions JsonSerializerSettings { get { return _settings.Value; } }
@@ -18374,7 +18190,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<SubscriptionResponse>> GetSubscriptionsAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Subscriptions");
+            urlBuilder_.Append("api/Subscriptions");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -18458,7 +18274,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<SubscriptionCreateResponse> CreateSubscriptionAsync(SubscriptionCreateRequest body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Subscriptions");
+            urlBuilder_.Append("api/Subscriptions");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -18569,7 +18385,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Subscriptions/{id}");
+            urlBuilder_.Append("api/Subscriptions/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -18657,7 +18473,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Subscriptions/PauseCollection/{id}");
+            urlBuilder_.Append("api/Subscriptions/PauseCollection/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -18753,7 +18569,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Subscriptions/ResumeCollection/{id}");
+            urlBuilder_.Append("api/Subscriptions/ResumeCollection/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -18846,7 +18662,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Subscriptions/cancel/{id}");
+            urlBuilder_.Append("api/Subscriptions/cancel/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -18938,7 +18754,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Subscriptions/CancelAtEnd/{id}");
+            urlBuilder_.Append("api/Subscriptions/CancelAtEnd/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -19031,7 +18847,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Subscriptions/Renew/{id}");
+            urlBuilder_.Append("api/Subscriptions/Renew/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -19124,7 +18940,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Subscriptions/resume/{id}");
+            urlBuilder_.Append("api/Subscriptions/resume/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -19220,7 +19036,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Subscriptions/resetRequests/{id}");
+            urlBuilder_.Append("api/Subscriptions/resetRequests/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -19313,7 +19129,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Subscriptions/resetSpaces/{id}");
+            urlBuilder_.Append("api/Subscriptions/resetSpaces/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -19493,13 +19309,11 @@ namespace Infrastructure.Nswag2
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class UserClient
     {
-        private string _baseUrl = "";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
 
-        public UserClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public UserClient(System.Net.Http.HttpClient httpClient)
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings);
         }
@@ -19509,12 +19323,6 @@ namespace Infrastructure.Nswag2
             var settings = new System.Text.Json.JsonSerializerOptions();
             UpdateJsonSerializerSettings(settings);
             return settings;
-        }
-
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
         }
 
         protected System.Text.Json.JsonSerializerOptions JsonSerializerSettings { get { return _settings.Value; } }
@@ -19541,7 +19349,7 @@ namespace Infrastructure.Nswag2
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/User/{id}");
+            urlBuilder_.Append("api/User/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -19626,7 +19434,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<UserResponse> AssignServiceAsync(AssignService body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/User/assign-service");
+            urlBuilder_.Append("api/User/assign-service");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -19714,7 +19522,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<UserResponse> AssignModelAiAsync(AssignModelAi body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/User/assign-modelAi");
+            urlBuilder_.Append("api/User/assign-modelAi");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -19802,7 +19610,7 @@ namespace Infrastructure.Nswag2
         public virtual async System.Threading.Tasks.Task<UserResponse> AssignRoleAsync(RoleAssign body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/User/assignRole");
+            urlBuilder_.Append("api/User/assignRole");
 
             var client_ = _httpClient;
             var disposeClient_ = false;

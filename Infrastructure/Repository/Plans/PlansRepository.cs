@@ -53,7 +53,7 @@ namespace Infrastructure.Repository.Plans
         {
 
        
-            var response = await ExecutorAppMode.ExecuteAsync<Result<IEnumerable<SubscriptionPlanModel>>>(
+            var response = await ExecutorAppMode.ExecuteAsync(
             async () => await plansApiClient.GetPlansAsync(filter),
             async () =>
             {

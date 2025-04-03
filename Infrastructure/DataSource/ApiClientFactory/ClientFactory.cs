@@ -1,6 +1,7 @@
 ﻿using IdentityModel.Client;
 using Microsoft.AspNetCore.Http;
 using Shared.Constants;
+using Shared.Exceptions;
 using Shared.Helpers;
 using System.Net.Http.Headers;
 
@@ -67,13 +68,10 @@ namespace Infrastructure.DataSource.ApiClientFactory
 
                 var httpClient = _httpClientFactory.CreateClient(clientName);
 
-                if (!string.IsNullOrEmpty(token) && token != "$$$$")
+                if (!string.IsNullOrEmpty(token) && token != "$$$$") //token.Length>=255
                     httpClient.SetBearerToken(token);
-                //throw new Exception("invalid token!!");
-
-
-
-
+                else
+                    throw new UnauthorizedException("invalid token!!");
 
 
                 if (Activator.CreateInstance(typeof(TClient), httpClient) is TClient client)
@@ -133,7 +131,7 @@ namespace Infrastructure.DataSource.ApiClientFactory
 
 
                 if (string.IsNullOrEmpty(token) || token=="$$$$")
-                    throw new Exception("invalid token!!");
+                    throw new UnauthorizedException("invalid token!!");
 
                 var httpClient = _httpClientFactory.CreateClient(clientName);
           

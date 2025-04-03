@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Domain.Entities.Subscriptions.Request;
 using Domain.Exceptions;
 using Domain.ShareData.Base;
 using Domain.Wrapper;
@@ -23,135 +22,86 @@ namespace Infrastructure.DataSource.ApiClient.Payment
    
         public async Task<Result<List<SubscriptionResponseModel>>> getAllAsync()
         {
-            try
+            return await apiSafelyHandler.InvokeAsync(async () =>
             {
                 //var model = _mapper.Map<CheckoutOptions>(request);
                 var client = await GetApiClient();
                 var response = await client.GetSubscriptionsAsync();
 
-
                 var resModel = _mapper.Map<List<SubscriptionResponseModel>>(response);
                 return Result<List<SubscriptionResponseModel>>.Success(resModel);
 
-            }
-            catch (ApiException e)
-            {
-
-                return Result<List<SubscriptionResponseModel>>.Fail(e.Response, httpCode: e.StatusCode);
-
-            }
+            });
 
 
 
         }
         public async Task<SubscriptionCreateResponseModel> CreateSubscriptionAsync(SubscriptionCreateModel request)
         {
-            try
+            return await apiSafelyHandler.InvokeAsync(async () => 
             {
-                var model = _mapper.Map<Nswag.SubscriptionCreate>(request);
-                var client = await GetApiClient();
-                var response=await apiSafelyHandler.InvokeAsync(async () =>
-                {
+                    var model = _mapper.Map<Nswag.SubscriptionCreateRequest>(request);
+                    var client = await GetApiClient();
+
                     var response = await client.CreateSubscriptionAsync(model);
-                    return response;
-                });
-             
-                
 
+                    var resModel = _mapper.Map<SubscriptionCreateResponseModel>(response);
+                    return resModel;
 
-                var resModel = _mapper.Map<SubscriptionCreateResponseModel>(response);
-                return resModel;
-
-            }
-            catch (ApiException e)
-            {
-
-               throw new ServerException(e.Message, e.StatusCode);
-
-            }
-            catch (Exception e)
-            {
-
-                throw;
-
-            }
+            });
+            
         }
         public async Task<Result<SubscriptionResponseModel>> PauseAsync(string id)
         {
-            try
-            {
-                //var model = _mapper.Map<ProductUpdate>(request);
+
+                return await apiSafelyHandler.InvokeAsync(async () => {
+                 var model= new SubscriptionUpdateRequest();
                 var client = await GetApiClient();
-                var response = await client.PauseAsync(id);
+                await client.PauseCollectionAsync(id, model);
+                return Result<SubscriptionResponseModel>.Success();
 
+            });
 
-                var resModel = _mapper.Map<SubscriptionResponseModel>(response);
-                return Result<SubscriptionResponseModel>.Success(resModel);
-
-            }
-            catch (ApiException e)
-            {
-
-                return Result<SubscriptionResponseModel>.Fail(e.Response, httpCode: e.StatusCode);
-
-            }
-
+       
 
 
         }
         public async Task<SubscriptionResponseModel> GetSubscriptionAsync(FilterResponseData filter)
         {
-            try
-            {
-                //var model = _mapper.Map<ProductUpdate>(request);
-                var client = await GetApiClient();
-              
-
-                var response = await apiSafelyHandler.InvokeAsync(async () =>
+   
+                return await apiSafelyHandler.InvokeAsync(async () =>
                 {
-                    var response = await client.GetSubscriptionAsync(filter.Id);
-                    return response;
+                    var client = await GetApiClient();
+
+
+                    var response = await apiSafelyHandler.InvokeAsync(async () =>
+                    {
+                        var response = await client.GetSubscriptionAsync(filter.Id);
+                        return response;
+                    });
+
+                    var resModel = _mapper.Map<SubscriptionResponseModel>(response);
+                    return resModel;
                 });
 
-                var resModel = _mapper.Map<SubscriptionResponseModel>(response);
-                return resModel;
-
-            }
-            catch (ApiException e)
-            {
-
-                throw;
-
-            }
-            catch (Exception e)
-            {
-
-                throw;
-
-            }
+           
 
 
 
         }
         public async Task<Result<SubscriptionResponseModel>> ResumeAsync(string id)
         {
-            try
+            return await apiSafelyHandler.InvokeAsync(async () =>
             {
-                //var model = _mapper.Map<ProductCreate>(request);
+                var model = _mapper.Map<SubscriptionResumeRequest>(new SubscriptionResumeRequestModel { ProrationBehavior = "create_prorations" });
                 var client = await GetApiClient();
-                var response = await client.ResumeAsync(id);
+                await client.ResumeAsync(id, model);
 
 
-                var resModel = _mapper.Map<SubscriptionResponseModel>(response);
-                return Result<SubscriptionResponseModel>.Success(resModel);
+                //var resModel = _mapper.Map<SubscriptionResponseModel>(response);
+                return Result<SubscriptionResponseModel>.Success();
 
-            }
-            catch (ApiException e)
-            {
-
-                return Result<SubscriptionResponseModel>.Fail(e.Response, httpCode: e.StatusCode);
-
-            }
+            });
 
 
 
@@ -159,23 +109,17 @@ namespace Infrastructure.DataSource.ApiClient.Payment
 
         public async Task<Result<SubscriptionResponseModel>> CancelAsync(string id)
         {
-            try
+            return await apiSafelyHandler.InvokeAsync(async () =>
             {
-              
+
                 var client = await GetApiClient();
-                var response = await client.CancelSubscriptionAsync(id);
+                 await client.CancelSubscriptionAsync(id);
 
 
-                var resModel = _mapper.Map<SubscriptionResponseModel>(response);
-                return Result<SubscriptionResponseModel>.Success(resModel);
+                //var resModel = _mapper.Map<SubscriptionResponseModel>(response);
+                return Result<SubscriptionResponseModel>.Success();
 
-            }
-            catch (ApiException e)
-            {
-
-                return Result<SubscriptionResponseModel>.Fail(e.Response, httpCode: e.StatusCode);
-
-            }
+            });
 
 
 
@@ -183,22 +127,15 @@ namespace Infrastructure.DataSource.ApiClient.Payment
 
         public async Task<Result<SubscriptionResponseModel>> DeleteAsync(string id)
         {
-            try
+            return await apiSafelyHandler.InvokeAsync(async () =>
             {
 
                 var client = await GetApiClient();
-                var response = await client.CancelSubscriptionAsync(id);
-                var resModel = _mapper.Map<SubscriptionResponseModel>(response);
-                return Result<SubscriptionResponseModel>.Success(resModel);
+                await client.CancelSubscriptionAsync(id);
+                //var resModel = _mapper.Map<SubscriptionResponseModel>(response);
+                return Result<SubscriptionResponseModel>.Success();
 
-            }
-            catch (ApiException e)
-            {
-
-                return Result<SubscriptionResponseModel>.Fail(e.Response, httpCode: e.StatusCode);
-
-            }
-
+            });
 
 
         }

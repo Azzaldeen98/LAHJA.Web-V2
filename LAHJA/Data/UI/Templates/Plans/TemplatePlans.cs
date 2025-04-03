@@ -1,5 +1,6 @@
 ﻿
 
+using ApexCharts;
 using AutoMapper;
 using Domain.Entities.Plans.Response;
 using Domain.ShareData.Base;
@@ -13,6 +14,7 @@ using LAHJA.Data.UI.Templates.Base;
 using LAHJA.Helpers.Services;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
+using MudBlazor.Extensions;
 using Shared.Constants.Router;
 using System.Collections.Generic;
 using System.Linq;
@@ -301,66 +303,95 @@ namespace LAHJA.Data.UI.Templates.Plans
         private async Task<Result<List<SubscriptionPlanInfo>>> getPlansAsync(DataBuildPlansBase buildData)
         {
 
-            List<SubscriptionPlanInfo> allPlans;
-            var response =  await safelyHandler.InvokeAsync(async () => await builderApi.GetPlansAsync(new FilterResponseData { lg = buildData.Lg }));
-         
-            //var response = await builderApi.GetPlansAsync(new FilterResponseData { lg=buildData.Lg});
-            if (response.Succeeded)
+            //List<SubscriptionPlanInfo> allPlans;
+            //var response =  await safelyHandler.InvokeAsync(async () => await builderApi.GetPlansAsync(new FilterResponseData { lg = buildData.Lg }));
+            try
             {
-               
-                if (buildData.PremiumPlanNumber > 0 && (buildData.Take > 0))
-                {
-                    allPlans = response.Data.Take(buildData.Take).ToList();
-                    if (allPlans.Count() > buildData.PremiumPlanNumber)
-                    {
-                        allPlans[buildData.PremiumPlanNumber].ClassImport = "plan-import-card";
-                        allPlans[buildData.PremiumPlanNumber].HeaderImport = "textHeader";
-                    }
-                }
-                else
-                {
-                    allPlans = response.Data;
-
-                }
-
-                return Result<List<SubscriptionPlanInfo>>.Success(allPlans);
-
-
+                return await getSubscriptionsPlansAsync(buildData.Take, buildData.PremiumPlanNumber, buildData.Lg);
             }
-            else
+            catch(Exception e)
             {
-                return response;
+                return Result<List<SubscriptionPlanInfo>>.Fail(e.Message);
             }
        
         }
-        public async Task getAllSubscriptionsPlansAsync(FilterResponseData filter, int premiumPlanNumber = 0)
+        private async Task<Result<List<SubscriptionPlanInfo>>> getSubscriptionsPlansAsync(int take , int premiumPlanNumber = 0,string lg="en")
         {
 
-            var response = await safelyHandler.InvokeAsync(async () => await builderApi.GetPlansAsync(filter));
-            if (response.Succeeded)
+            try
             {
-                if (premiumPlanNumber > 0 && filter.Take > 0)
+
+                var response = await safelyHandler.InvokeAsync(async () =>
                 {
-                    _allPlans = response.Data.Take(filter.Take).ToList();
-                    if (_allPlans.Count() > premiumPlanNumber)
+                    var response = await builderApi.GetPlansAsync(new FilterResponseData { lg = lg });
+                    if (response.Succeeded)
                     {
-                        _allPlans[premiumPlanNumber].ClassImport = "plan-import-card";
-                        _allPlans[premiumPlanNumber].HeaderImport = "textHeader";
+
+                        if (premiumPlanNumber > 0 && take > 0)
+                        {
+                            var allPlans = response.Data.Take(take).ToList();
+                            if (allPlans.Count() > premiumPlanNumber)
+                            {
+                                allPlans[premiumPlanNumber].ClassImport = "plan-import-card";
+                                allPlans[premiumPlanNumber].HeaderImport = "textHeader";
+                            }
+                        }
+                        else
+                        {
+
+                            return Result<List<SubscriptionPlanInfo>>.Success(response.Data);
+
+
+                        }
+
+                        return Result<List<SubscriptionPlanInfo>>.Success(response.Data);
+
+
                     }
-                }
-                else
-                {
+                    else
+                    {
+                        return response;
+                    }
+                });
 
-                    _allPlans = response.Data;
-                }
-
-        ;
+                return response;
             }
-            else
+            catch (Exception e)
             {
-                _errors = response.Messages;
+                return Result<List<SubscriptionPlanInfo>>.Fail(e.Message);
             }
+            
+        }
+        public async Task<Result<List<SubscriptionPlanInfo>>> getAllSubscriptionsPlansAsync(FilterResponseData filter, int premiumPlanNumber = 0)
+        {
 
+            //var response = await safelyHandler.InvokeAsync(async () => await builderApi.GetPlansAsync(filter));
+            //var response = await builderApi.GetPlansAsync(filter);
+            //if (response.Succeeded)
+            //{
+            //    if (premiumPlanNumber > 0 && filter.Take > 0)
+            //    {
+            //        _allPlans = response.Data.Take(filter.Take).ToList();
+            //        if (_allPlans.Count() > premiumPlanNumber)
+            //        {
+            //            _allPlans[premiumPlanNumber].ClassImport = "plan-import-card";
+            //            _allPlans[premiumPlanNumber].HeaderImport = "textHeader";
+            //        }
+            //    }
+            //    else
+            //    {
+            //        _allPlans = response.Data;
+            //    }
+
+            //    return Result<List<SubscriptionPlanInfo>>.Success(_allPlans);
+            //}
+            //else
+            //{
+            //    _errors = response.Messages;
+            //    return Result<List<SubscriptionPlanInfo>>.Fail(response.Messages);
+            //}
+
+            return await getSubscriptionsPlansAsync(filter.Take, premiumPlanNumber, filter.lg);
 
         }
         private async Task OnSubmitCreatePlans(DataBuildPlansBase dataBuildPlansBase)
