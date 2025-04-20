@@ -3,6 +3,7 @@ using Domain.Entities.ModelAi;
 using Domain.Exceptions;
 using Infrastructure.DataSource.ApiClient.Base;
 using Infrastructure.DataSource.ApiClientFactory;
+using Infrastructure.Middlewares;
 using Infrastructure.Nswag;
 using Microsoft.Extensions.Configuration;
 
@@ -11,7 +12,8 @@ namespace Infrastructure.DataSource.ApiClient.Payment
     public class ModelAiApiClient : BuildApiClient<ModelAiClient>
     {
 
-        public ModelAiApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config) : base(clientFactory, mapper, config)
+        public ModelAiApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, IApiSafelyHandlerMiddleware apiSafelyHandler)
+            : base(clientFactory, mapper, config, apiSafelyHandler)
         {
         }
 

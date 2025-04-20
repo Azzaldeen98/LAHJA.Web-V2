@@ -6,6 +6,7 @@ using Infrastructure.Models.Checkout.Response;
 using Infrastructure.Nswag;
 using Microsoft.Extensions.Configuration;
 using Infrastructure.DataSource.ApiClient.Base;
+using Infrastructure.Middlewares;
 
 
 namespace Infrastructure.DataSource.ApiClient.Payment
@@ -14,7 +15,8 @@ namespace Infrastructure.DataSource.ApiClient.Payment
     {
 
 
-        public CheckoutApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config) : base(clientFactory, mapper, config)
+        public CheckoutApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, IApiSafelyHandlerMiddleware apiSafelyHandler) 
+            : base(clientFactory, mapper, config, apiSafelyHandler)
         {
         }
 

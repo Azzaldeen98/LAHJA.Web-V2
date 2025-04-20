@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Shared.Exceptions.Server;
 using Shared.Constants;
 using Shared.Exceptions.Base;
+using Shared.Exceptions.Subscription;
 
 namespace Shared.Middleware.HandlerException
 {
@@ -21,6 +22,8 @@ namespace Shared.Middleware.HandlerException
         public TimeSpan GetRetryDelay(int attempt);
         public int ExtractStateCode(string message);
         public   void HandleAndThrowException(Exception ex);
+        public BaseExceptionApp GetExceptionTypeByStateCode(int stateCode);
+        public BaseExceptionApp GetExceptionTypeByStateCode(string errorMessage, int stateCode);
     }
 
 
@@ -40,28 +43,15 @@ namespace Shared.Middleware.HandlerException
                 ex.StatusCode == System.Net.HttpStatusCode.Unauthorized ||         // 401
                 ex.StatusCode == System.Net.HttpStatusCode.Forbidden;// 403
         }
+
+
         public BaseExceptionApp GetExceptionTypeByStateCode(int stateCode)
         {
-
-            switch (stateCode)
-            {
-                case 400: return new BadRequestException();
-                case 401: return new UnauthorizedException();
-                case 403: return new ForbiddenException();
-                case 404: return new NotFoundException();
-                case 408: return new TimeoutExceptionApp();
-                case 409: return new ConflictException();
-                case 429: return new TooManyRequestsException();
-                case 500: return new InternalServerException();
-                case 502: return new BadGatewayException();
-                case 503: return new ServiceUnavailableException();
-                default: return new UnknownException();
-            }
+            return GetExceptionTypeByStateCode("",stateCode);
         }
-
-        public BaseExceptionApp GetExceptionFromStateCode(string errorMessage,int stateCode)
+        public BaseExceptionApp GetExceptionTypeByStateCode(string errorMessage,int stateCode)
         {
-            string errorCode = $"{stateCode}";
+            string errorCode = stateCode.ToString()??"";
             switch (stateCode)
             {
                 case 400: return new BadRequestException(errorMessage, errorCode);
@@ -74,12 +64,14 @@ namespace Shared.Middleware.HandlerException
                 case 500: return new InternalServerException(errorMessage, errorCode);
                 case 502: return new BadGatewayException(errorMessage, errorCode);
                 case 503: return new ServiceUnavailableException(errorMessage, errorCode);
-                default: return new UnknownException(errorMessage, "Unknown");
+                case 904: return new SubscriptionUnavailableException(errorMessage, errorCode);
+                case 905: return new SubscriptionExpiredException(errorMessage, errorCode);
+                default: return new UnknownException(errorMessage, "-1");
             }
         }
         public  void ThrowMappedException(string errorMessage,int stateCode)
         {
-            throw GetExceptionTypeByStateCode(stateCode).SetMessage(errorMessage,$"{stateCode}");
+            throw GetExceptionTypeByStateCode(errorMessage,stateCode);
       
         }
 
@@ -91,7 +83,7 @@ namespace Shared.Middleware.HandlerException
 
                 if (stateCode == -1) // إذا لم يتم العثور على رقم خطأ، استخدم البحث عن الكلمات الرئيسية
                 {
-                    stateCode = DetectErrorTypeByMessage(errorMessage);
+                    stateCode = DetectExceptionTypeByMessage(errorMessage);
                 }
 
                 ThrowMappedException(errorMessage, stateCode);
@@ -105,32 +97,41 @@ namespace Shared.Middleware.HandlerException
             return match.Success ? int.Parse(match.Value) : -1; // إرجاع الرقم أو -1 إذا لم يتم العثور عليه
         }
 
-        public int DetectErrorTypeByMessage(string message)
+        public int DetectExceptionTypeByMessage(string message)
         {
             message=message.ToLower();
 
             if (message.Contains("bad request", StringComparison.OrdinalIgnoreCase))
                 return 400;
-            if (message.Contains("conflict detected", StringComparison.OrdinalIgnoreCase))
-                return 409;
             if (message.Contains("unauthorized", StringComparison.OrdinalIgnoreCase))
                 return 401;
             if (message.Contains("not found", StringComparison.OrdinalIgnoreCase))
                 return 404;
             if (message.Contains("timeout", StringComparison.OrdinalIgnoreCase))
-                return 408; 
+                return 408;
+            if (message.Contains("conflict detected", StringComparison.OrdinalIgnoreCase))
+                return 409; 
             if (message.Contains("too many requests", StringComparison.OrdinalIgnoreCase))
                 return 429;
-            if (message.Contains("bad gateway", StringComparison.OrdinalIgnoreCase))
-                return 502;
             if (message.Contains("internal server error", StringComparison.OrdinalIgnoreCase))
                 return 500;
+            if (message.Contains("bad gateway", StringComparison.OrdinalIgnoreCase))
+                return 502;
             if (message.Contains("service unavailable", StringComparison.OrdinalIgnoreCase))
-                return 503;      
+                return 503;        
+            if (contain(message, "subscription") && contain(message, "unavailable"))
+                return 904;        
+            if (contain(message, "subscription") && contain(message, "expired"))
+                return 905;      
 
             return -1; // في حال لم يتم العثور على تطابق
         }
 
+
+        private bool contain(string message,string value)
+        {
+            return message.Contains(value, StringComparison.OrdinalIgnoreCase);
+        }
         
 
 

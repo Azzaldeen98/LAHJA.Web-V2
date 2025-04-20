@@ -11,6 +11,7 @@ using Domain.Entities.Billing.Request;
 using Domain.ShareData.Base;
 using Infrastructure.Models.Billing.Request;
 using Infrastructure.Models.BaseFolder.Response;
+using Infrastructure.Middlewares;
 
 namespace Infrastructure.DataSource.ApiClient.Billing
 {
@@ -22,7 +23,8 @@ namespace Infrastructure.DataSource.ApiClient.Billing
         private readonly IMapper _mapper;
         private readonly IConfiguration _config;
 
-        public BillingApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config) : base(clientFactory, mapper, config)
+        public BillingApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, IApiSafelyHandlerMiddleware apiSafelyHandler) 
+            : base(clientFactory, mapper, config, apiSafelyHandler)
         {
         }
 

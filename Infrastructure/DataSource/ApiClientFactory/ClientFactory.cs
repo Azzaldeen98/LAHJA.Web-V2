@@ -70,8 +70,7 @@ namespace Infrastructure.DataSource.ApiClientFactory
 
                 if (!string.IsNullOrEmpty(token) && token != "$$$$") //token.Length>=255
                     httpClient.SetBearerToken(token);
-                else
-                    throw new UnauthorizedException("invalid token!!");
+   
 
 
                 if (Activator.CreateInstance(typeof(TClient), httpClient) is TClient client)

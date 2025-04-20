@@ -19,6 +19,8 @@ using ResetPasswordRequest = Infrastructure.Nswag.ResetPasswordRequest;
 using RegisterRequest = Infrastructure.Nswag.RegisterRequest;
 using Infrastructure.Models.Auth.Response;
 using Domain.Entities;
+using Infrastructure.DataSource.ApiClient.Base;
+using Infrastructure.Middlewares;
 
 
 //using Microsoft.AspNetCore.Http;
@@ -26,36 +28,29 @@ using Domain.Entities;
 namespace Infrastructure.DataSource.ApiClient.Auth
 {
 
-
-  
-
-    public class AuthApiClient
+    public class AuthApiClient: BuildApiClient<AuthClient>
     {
 
 
-        private readonly ClientFactory _clientFactory;
-        private readonly IMapper _mapper;
-        private readonly IConfiguration _config;
-        public AuthApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config)
+        public AuthApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, IApiSafelyHandlerMiddleware apiSafelyHandler)
+            :base(clientFactory,mapper,config,apiSafelyHandler)
         {
-            _clientFactory = clientFactory;
-            _mapper = mapper;
-            _config = config;
+       
         }
 
-        private  async Task<AuthClient> GetApiClient()
-        {
+        //private  async Task<AuthClient> GetApiClient()
+        //{
 
-            var client = await _clientFactory.CreateClientAsync<AuthClient>("ApiClient");
-            return client;
-        }
+        //    var client = await _clientFactory.CreateClientAsync<AuthClient>("ApiClient");
+        //    return client;
+        //}
 
-        private async Task<AuthClient> GetApiClientWithAuth()
-        {
+        //private async Task<AuthClient> GetApiClientWithAuth()
+        //{
 
-            var client = await _clientFactory.CreateClientWithAuthAsync<AuthClient>("ApiClient");
-            return client;
-        }
+        //    var client = await _clientFactory.CreateClientWithAuthAsync<AuthClient>("ApiClient");
+        //    return client;
+        //}
         /// TODO : link to Api
         /// <summary>
         /// TODO
@@ -180,7 +175,7 @@ namespace Infrastructure.DataSource.ApiClient.Auth
         {
             try
             {
-                var client = await GetApiClientWithAuth();
+                var client = await GetApiClient();
                 await client.LogoutAsync("");
                 return Result<string>.Success();
             }
@@ -202,7 +197,7 @@ namespace Infrastructure.DataSource.ApiClient.Auth
             {
                 var model = _mapper.Map<RefreshRequest>(request);
             
-                var client = await GetApiClientWithAuth();
+                var client = await GetApiClient();
                 var response=  await client.RefreshAsync(model);
 
                 return Result<AccessTokenResponseModel>.Success(_mapper.Map<AccessTokenResponseModel>(response));

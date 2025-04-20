@@ -3,6 +3,7 @@ using Domain.ShareData.Base;
 using Domain.Wrapper;
 using Infrastructure.DataSource.ApiClient.Base;
 using Infrastructure.DataSource.ApiClientFactory;
+using Infrastructure.Middlewares;
 using Infrastructure.Models.BaseFolder.Response;
 using Infrastructure.Models.Price.Request;
 using Infrastructure.Models.Price.Response;
@@ -16,7 +17,7 @@ namespace Infrastructure.DataSource.ApiClient.Payment
     public class ProductApiClient: BuildApiClient<ProductClient>
     {
 
-        public ProductApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config) : base(clientFactory, mapper, config)
+        public ProductApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, IApiSafelyHandlerMiddleware apiSafelyHandler) : base(clientFactory, mapper, config,apiSafelyHandler)
         {
         }
 

@@ -12,6 +12,9 @@ namespace Infrastructure.DataSource.ApiClient.Plans
     using Domain.ShareData.Base;
     using Infrastructure.DataSource.ApiClient.Base;
     using Infrastructure.Middlewares;
+    using Shared.Exceptions;
+    using Shared.Exceptions.Server;
+    using Shared.Exceptions.Subscription;
     using System.Collections.Generic;
     using System.Reflection;
 
@@ -75,28 +78,20 @@ namespace Infrastructure.DataSource.ApiClient.Plans
         
         public async Task<Result<SubscriptionPlanModel>> UpdatePlanAsync(PlanUpdateModel request)
         {
-            try
-            {
-                var model = _mapper.Map<PlanUpdate>(request);
-          
-            
 
-                var response = await apiSafelyHandler.InvokeAsync(async () =>
+
+              return await apiSafelyHandler.InvokeAsync(async () =>
                 {
+                    var model = _mapper.Map<PlanUpdate>(request);
                     var client = await GetApiClient();
-                    return await client.UpdatePlanAsync(request.Id, model);
+                    var response= await client.UpdatePlanAsync(request.Id, model);
+                    var resModel = _mapper.Map<SubscriptionPlanModel>(response);
+                    return Result<SubscriptionPlanModel>.Success();
                 });
 
-                var resModel = _mapper.Map<SubscriptionPlanModel>(response);
-                return Result<SubscriptionPlanModel>.Success();
+                
 
-            }
-            catch (ApiException e)
-            {
-
-                return Result<SubscriptionPlanModel>.Fail(e.Response, httpCode: e.StatusCode);
-
-            }
+  
 
 
 
@@ -159,9 +154,12 @@ namespace Infrastructure.DataSource.ApiClient.Plans
                 response = response.OrderBy(p => p.Amount).ToList();
 
                 var resModel = _mapper.Map<IEnumerable<SubscriptionPlanModel>>(response);
+        
                 return Result<IEnumerable<SubscriptionPlanModel>>.Success(resModel);
 
             });
+
+           
 
             return response;
 

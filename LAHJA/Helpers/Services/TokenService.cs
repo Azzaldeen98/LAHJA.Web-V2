@@ -336,7 +336,7 @@ namespace LAHJA.Helpers.Services
                    new CookieOptions
                    {
                        HttpOnly = true,  // جعل الكوكيز غير قابلة للوصول عبر JavaScript
-                       //Secure = true,    // إرسال الكوكيز فقط عبر HTTPS
+                       Secure = false,    // إرسال الكوكيز فقط عبر HTTPS
                        Expires = DateTimeOffset.UtcNow.AddDays(30),  // مدة صلاحية الكوكي
                        SameSite = SameSiteMode.Strict,  // حماية ضد هجمات CSRF
 
@@ -351,7 +351,7 @@ namespace LAHJA.Helpers.Services
                    new CookieOptions
                    {
                        HttpOnly = true,  // جعل الكوكيز غير قابلة للوصول عبر JavaScript
-                       //Secure = true,    // إرسال الكوكيز فقط عبر HTTPS
+                       Secure = false,    // إرسال الكوكيز فقط عبر HTTPS
                        Expires = DateTimeOffset.UtcNow.AddDays(30),  // مدة صلاحية الكوكي
                        SameSite = SameSiteMode.Strict,  // حماية ضد هجمات CSRF
 

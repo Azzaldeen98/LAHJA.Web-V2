@@ -4,6 +4,7 @@ using Domain.ShareData.Base;
 using Domain.Wrapper;
 using Infrastructure.DataSource.ApiClient.Base;
 using Infrastructure.DataSource.ApiClientFactory;
+using Infrastructure.Middlewares;
 using Infrastructure.Models.Subscriptions.Request;
 using Infrastructure.Models.Subscriptions.Response;
 using Infrastructure.Nswag;
@@ -13,9 +14,12 @@ namespace Infrastructure.DataSource.ApiClient.Payment
 {
     public class SubscriptionsApiClient : BuildApiClient<SubscriptionsClient>
     {
+      
 
-        public SubscriptionsApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config) : base(clientFactory, mapper, config)
+        public SubscriptionsApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, 
+            IApiSafelyHandlerMiddleware apiSafelyHandler) : base(clientFactory, mapper, config,apiSafelyHandler)
         {
+           
         }
 
     
@@ -73,12 +77,7 @@ namespace Infrastructure.DataSource.ApiClient.Payment
                 {
                     var client = await GetApiClient();
 
-
-                    var response = await apiSafelyHandler.InvokeAsync(async () =>
-                    {
-                        var response = await client.GetSubscriptionAsync(filter.Id);
-                        return response;
-                    });
+                     var response = await client.GetSubscriptionAsync(filter.Id);
 
                     var resModel = _mapper.Map<SubscriptionResponseModel>(response);
                     return resModel;

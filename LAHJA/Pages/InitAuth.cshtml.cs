@@ -27,7 +27,7 @@ namespace LAHJA.Pages
                 var option = new CookieOptions
                 {
                     HttpOnly = true,
-                    Secure = true,
+                    Secure = false,
                     Expires = DateTimeOffset.UtcNow.AddDays(30),
                     SameSite = SameSiteMode.Strict,
                 };

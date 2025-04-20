@@ -3,6 +3,7 @@ using Domain.ShareData.Base;
 using Domain.Wrapper;
 using Infrastructure.DataSource.ApiClient.Base;
 using Infrastructure.DataSource.ApiClientFactory;
+using Infrastructure.Middlewares;
 using Infrastructure.Models.BaseFolder.Response;
 using Infrastructure.Models.Price.Request;
 using Infrastructure.Models.Price.Response;
@@ -19,12 +20,13 @@ namespace Infrastructure.DataSource.ApiClient.Payment
     public class SettingsApiClient : BuildApiClient<SettingClient>
     {
 
-        public SettingsApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config) : base(clientFactory, mapper, config)
+        public SettingsApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, IApiSafelyHandlerMiddleware apiSafelyHandler) : base(clientFactory, mapper, config, apiSafelyHandler)
         {
+         
         }
 
-    
-   
+
+
         public async Task<Result<List<SettingResponseModel>>> getAllAsync()
         {
             try

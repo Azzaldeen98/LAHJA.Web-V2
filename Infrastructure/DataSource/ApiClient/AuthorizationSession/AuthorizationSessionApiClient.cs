@@ -8,6 +8,7 @@ using Domain.ShareData.Base;
 using Domain.Wrapper;
 using Newtonsoft.Json.Linq;
 using Domain.Exceptions;
+using Infrastructure.Middlewares;
 
 
 
@@ -20,7 +21,8 @@ namespace Infrastructure.DataSource.ApiClient.AuthorizationSession
 
 
 
-        public AuthorizationSessionApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config) : base(clientFactory, mapper, config)
+        public AuthorizationSessionApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, IApiSafelyHandlerMiddleware apiSafelyHandler) 
+            : base(clientFactory, mapper, config, apiSafelyHandler)
         {
 
         }

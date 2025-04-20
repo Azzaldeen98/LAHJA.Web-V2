@@ -3,6 +3,7 @@ using Domain.Exceptions;
 using Domain.Wrapper;
 using Infrastructure.DataSource.ApiClient.Base;
 using Infrastructure.DataSource.ApiClientFactory;
+using Infrastructure.Middlewares;
 using Infrastructure.Models.BaseFolder.Response;
 using Infrastructure.Models.Service.Request;
 using Infrastructure.Models.Service.Response;
@@ -14,8 +15,10 @@ namespace Infrastructure.DataSource.ApiClient.Service
     public class ServiceApiClient : BuildApiClient<ServiceClient>
     {
 
-        public ServiceApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config) : base(clientFactory, mapper, config)
+        public ServiceApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, IApiSafelyHandlerMiddleware apiSafelyHandler) 
+            : base(clientFactory, mapper, config, apiSafelyHandler)
         {
+
         }
 
         public async Task<List<ServiceResponseModel>> GetAllAsync()

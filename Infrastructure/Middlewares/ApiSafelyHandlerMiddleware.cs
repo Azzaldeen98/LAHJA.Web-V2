@@ -4,6 +4,7 @@ using Shared.Exceptions;
 using Shared.Exceptions.Base;
 using Shared.Exceptions.General;
 using Shared.Exceptions.Others;
+using Shared.Exceptions.Server;
 using Shared.Middleware.HandlerException;
 
 namespace Infrastructure.Middlewares
@@ -11,7 +12,7 @@ namespace Infrastructure.Middlewares
 
     public interface IApiSafelyHandlerMiddleware 
     {
-        public bool ShouldRetry(BaseExceptionApp ex);
+        public bool IsShouldRetry(BaseExceptionApp ex);
         public  Task InvokeAsync(Func<Task> action);
         public Task<T> InvokeAsync<T>(Func<Task<T>> action);
         public  void HandleThrowException(string message, int stateCode, ref int attempt, int _maxRetries);
@@ -52,6 +53,7 @@ namespace Infrastructure.Middlewares
             {
                 try
                 {
+                  
                     return await action();
                 }
                 catch (HttpRequestException ex)
@@ -100,7 +102,7 @@ namespace Infrastructure.Middlewares
                 }
                 catch (ApiException ex)
                 {
-
+                    _logger.LogError($"ApiException error occurred: {ex.Message}", ex);
                     HandleThrowException(ex.Message, (int)ex.StatusCode, ref attempt, _maxRetries);
 
 
@@ -111,7 +113,7 @@ namespace Infrastructure.Middlewares
                     var stateCode = ExtractStateCode(ex.Message);
                     if (stateCode == -1 )
                     {
-                        stateCode = DetectErrorTypeByMessage(ex.Message);
+                        stateCode = DetectExceptionTypeByMessage(ex.Message);
                     }
                     HandleThrowException(ex.Message, stateCode, ref attempt, _maxRetries);
                     //if (ShouldRetry(GetExceptionTypeByStateCode(stateCode)))
@@ -139,8 +141,9 @@ namespace Infrastructure.Middlewares
         public   void HandleThrowException(string message,int stateCode,ref int attempt,int _maxRetries)
         {
 
+            _logger.LogError($"Retry Attempt ({attempt})");
             _logger.LogError($"StatusCode ({stateCode}): {message}");
-            if (ShouldRetry(GetExceptionTypeByStateCode(stateCode)))
+            if (IsShouldRetry(GetExceptionTypeByStateCode(stateCode)))
             {
                 attempt++;
 
@@ -157,16 +160,18 @@ namespace Infrastructure.Middlewares
                 ThrowMappedException(message, stateCode);
             }
         }
-        public bool ShouldRetry(BaseExceptionApp ex)
+        public bool IsShouldRetry(BaseExceptionApp ex)
         {
 
             var retryExceptions = new List<Type>
             {
-                typeof(TimeoutExceptionApp),            // Timeout
-                typeof(UnauthorizedException),            // Unauthorized
-                typeof(BadGatewayException),            // BadGateway
-                typeof(ServiceUnavailableException),    // الخدمة غير متاحة
-                typeof(TooManyRequestsException)        // عدد كبير جداً من الطلبات
+                //typeof(BadRequestException),           
+                typeof(TimeoutExceptionApp),           
+                typeof(UnauthorizedException),         
+                typeof(BadGatewayException),          
+                typeof(InternalServerException),        
+                typeof(ServiceUnavailableException),    
+                typeof(TooManyRequestsException)        
             };
 
             return retryExceptions.Contains(ex.GetType());

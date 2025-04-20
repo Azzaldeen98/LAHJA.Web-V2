@@ -60,7 +60,7 @@ else{
         {
 
             var response = await Template.BuilderComponents.GetPlans(data);
-            if (response.Succeeded)
+            if (response!=null && response.Succeeded)
             {
                 var _dataBuilds = response.Data;
                 var res = await TemplateProfile.GetDataBuildSubscriptions(new FilterResponseData { lg = lg });

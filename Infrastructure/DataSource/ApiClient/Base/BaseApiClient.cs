@@ -87,6 +87,13 @@ namespace Infrastructure.DataSource.ApiClient.Base
             this.apiSafelyHandler = apiSafelyHandler;
         }
 
+        public async Task<T> GetApiClient()
+        {
+            var client = await _clientFactory.CreateClientWithAuthAsync<T>("ApiClient");
+            return client;
+        }
+
+
         //public async Task<T> ExecuteWithRetryAsync<T>(Func<Task<T>> action)
         //{
 
@@ -135,12 +142,7 @@ namespace Infrastructure.DataSource.ApiClient.Base
         //    return TimeSpan.FromSeconds(Math.Pow(2, attempt)); // Exponential backoff (2, 4, 8 seconds)
         //}
 
-        public  async Task<T>  GetApiClient()
-        {
-            var client = await _clientFactory.CreateClientWithAuthAsync<T>("ApiClient");
-            return client;
-        }
 
-      
+
     }
 }

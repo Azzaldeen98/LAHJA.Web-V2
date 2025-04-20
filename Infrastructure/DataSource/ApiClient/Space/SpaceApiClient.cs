@@ -6,6 +6,7 @@ using Infrastructure.DataSource.ApiClient.Base;
 using Domain.Wrapper;
 using Domain.Entities.Profile;
 using Domain.ShareData.Base;
+using Infrastructure.Middlewares;
 
 
 
@@ -13,9 +14,10 @@ namespace Infrastructure.DataSource.ApiClient.AuthorizationSession
 {
     public class SpaceApiClient : BuildApiClient<SpaceClient>
     {
-
-        public SpaceApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config) : base(clientFactory, mapper, config)
+       
+        public SpaceApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, IApiSafelyHandlerMiddleware apiSafelyHandler) : base(clientFactory, mapper, config, apiSafelyHandler)
         {
+           
         }
 
         public async Task<Result<List<ProfileSpaceResponse>>> GetSpacesAsync(FilterResponseData? filter=null)

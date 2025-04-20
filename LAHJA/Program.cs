@@ -31,6 +31,8 @@ builder.Logging.AddDebug(); // تسجيل الأخطاء في نافذة الت�
 
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
+
+
 builder.Services.AddRazorPages()
     .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
     .AddDataAnnotationsLocalization();

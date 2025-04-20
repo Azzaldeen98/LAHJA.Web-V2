@@ -8,6 +8,7 @@ using Infrastructure.Models.BaseFolder.Response;
 using Domain.ShareData.Base;
 using Infrastructure.Models.ModelGateway;
 using Infrastructure.Nswag;
+using Infrastructure.Middlewares;
 
 
 namespace Infrastructure.DataSource.ApiClient.ModelGateway
@@ -17,7 +18,8 @@ namespace Infrastructure.DataSource.ApiClient.ModelGateway
     public class ModelGatewayApiClient : BuildApiClient<ModelGatewayClient>
     {
 
-        public ModelGatewayApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config) : base(clientFactory, mapper, config)
+        public ModelGatewayApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, IApiSafelyHandlerMiddleware apiSafelyHandler) 
+            : base(clientFactory, mapper, config,apiSafelyHandler)
         {
         }
 

@@ -7,6 +7,12 @@
 .w24{
     width:24% !important;
 }
+
+.loading-overlay {
+    transition: opacity 10s ease-in-out;
+}
+
+
 .plan-RenderComponent {
     max-height: 1000px;
     position: absolute;
