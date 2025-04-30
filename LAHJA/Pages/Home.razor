@@ -11,10 +11,13 @@
 @using LAHJA.UI.Templates.CategoriesPlan
 @using LAHJA.UI.Templates.Plans
 @using Microsoft.AspNetCore.Authorization
+@using global::Shared.Services.Infrastructure
+@using global::Shared.Services.Infrastructure.Extensions
 
 @inject NavigationManager navigation;
 @inject LanguageService languageService
 @inject IManageLanguageService _manageLanguageService
+@inject ILoggingService LoggingService
 
 @* @attribute [Authorize(Roles = "Admin")] *@
 @attribute [AllowAnonymous]
@@ -84,22 +87,27 @@
     }
     protected override void OnInitialized()
     {
-        lg = CultureInfo.CurrentUICulture.Name;
+
+
+              lg = CultureInfo.CurrentUICulture.Name;
+
+      
+
     }
 
-    protected override async void OnAfterRender(bool firstRender)
+    // protected override async void OnAfterRender(bool firstRender)
 
-    {
-        if (firstRender)
-        {
+    // {
+    //     if (firstRender)
+    //     {
    
-            isLoading = false;
-            StateHasChanged();
+    //         isLoading = false;
+    //         StateHasChanged();
 
-        }
+    //     }
      
 
-    }
+    // }
     
     
     private static readonly Dictionary<string, Dictionary<string, string>> TranslationsLST = new()

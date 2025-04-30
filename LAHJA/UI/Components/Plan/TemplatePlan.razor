@@ -14,17 +14,10 @@
 @if (dataBuild != null)
 {
 
-
-    @* plan - card *@
     <div class="p-0 m2">
 
         <MudCard Class="@("p-0  position-relative m-auto "+@dataBuild.ClassImport)">
 
-            @*    @if (_isLoading)
-            {
-                <Loading IsLoading="_isLoading" />
-
-            }else{ *@
             <MudText Typo="Typo.h6" Class="@(dataBuild.HeaderImport+" w-100")"> @dataBuild.Name</MudText>
             <small class="mx-3">@dataBuild.Description</small>
             <MudCardContent>
@@ -81,27 +74,6 @@
                         }
                     }
 
-                    @* @if (!dataBuild.IsActive && dataBuild.IsSubscriptionAllowed && !dataBuild.IsUpgradeAllowed) *@
-                    @* { *@
-                    @*     <MudCardActions> *@
-                    @*         <MudButton style="width:100%" Variant="Variant.Filled" Color="@AppColors.BASE_COLOR_ENUM" OnClick="@(()=>Submit(@dataBuild))" Class="@AppTextStyle.TEXT_TRANSFORM_NORMAL">@GetTranslation("Select Plan")</MudButton> *@
-                    @*     </MudCardActions> *@
-
-                    @* } *@
-                    @* else if (!dataBuild.IsActive && dataBuild.IsUpgradeAllowed) *@
-                    @* { *@
-                    @*     <MudCardActions> *@
-                    @*         <MudButton style="width:100%" Variant="Variant.Filled" Color="@AppColors.BASE_COLOR_ENUM" OnClick="@(()=>OpenSubscription(@dataBuild))" *@
-                    @*                    Class="@AppTextStyle.TEXT_TRANSFORM_NORMAL">@GetTranslation("Upgrade")</MudButton> *@
-                    @*     </MudCardActions> *@
-                    @* }   *@
-                    @* else if (dataBuild.IsActive) *@
-                    @* { *@
-                    @*     <MudCardActions> *@
-                    @*         <MudButton style="width:100%" Variant="Variant.Filled" Color="@AppColors.BASE_COLOR_ENUM" OnClick="@(()=>OpenSubscription(@dataBuild))" *@
-                    @*                    Class="@AppTextStyle.TEXT_TRANSFORM_NORMAL">@GetTranslation("Open Subscription")</MudButton> *@
-                    @*     </MudCardActions> *@
-                    @* } *@
                     <MudDivider />
                     @if (dataBuild.Features != null && dataBuild.Features.Count() > 0)
                     {

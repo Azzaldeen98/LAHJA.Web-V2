@@ -9,6 +9,7 @@ using Infrastructure.DataSource.ApiClient.Plans;
 using Infrastructure.DataSource.Seeds;
 using Infrastructure.Models.Plans;
 using Infrastructure.Models.Plans.Response;
+
 using Shared.Settings;
 
 namespace Infrastructure.Repository.Plans
@@ -18,6 +19,7 @@ namespace Infrastructure.Repository.Plans
         private readonly SeedsPlans seedsPlans;
         private readonly PlansApiClient plansApiClient;
         private readonly IManageLanguageService manageLanguageService;
+        private readonly Infrastructure.Repositories.IProfileRepository planRepository;
 
         private readonly SeedsPlansContainers seedsPlansContainers;
         private readonly SeedsSubscriptionsPlans seedsSubscriptionsPlans;
@@ -31,17 +33,20 @@ namespace Infrastructure.Repository.Plans
             SeedsPlansContainers seedsPlansContainers,
             PlansApiClient plansApiClient,
             IManageLanguageService manageLanguageService,
-            SeedsSubscriptionsPlans seedsSubscriptionsPlans)
+            SeedsSubscriptionsPlans seedsSubscriptionsPlans,
+            Repositories.IProfileRepository planRepository)
         {
 
             //seedsPlans = new SeedsPlans();
             _mapper = mapper;
+     
             this.seedsPlans = seedsPlans;
             this.appModeService = appModeService;
             this.seedsPlansContainers = seedsPlansContainers;
             this.plansApiClient = plansApiClient;
             this.manageLanguageService = manageLanguageService;
             this.seedsSubscriptionsPlans = seedsSubscriptionsPlans;
+            this.planRepository = planRepository;
         }
         /// <summary>
         /// Work
@@ -52,7 +57,7 @@ namespace Infrastructure.Repository.Plans
         public async Task<Result<IEnumerable<SubscriptionPlan>>> GetPlansAsync(FilterResponseData filter)
         {
 
-       
+            //var plans=await planRepository.UserAsync(CancellationToken.None);
             var response = await ExecutorAppMode.ExecuteAsync(
             async () => await plansApiClient.GetPlansAsync(filter),
             async () =>

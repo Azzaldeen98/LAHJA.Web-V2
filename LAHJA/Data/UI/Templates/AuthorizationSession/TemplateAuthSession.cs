@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using Domain.Entities.AuthorizationSession;
-using Domain.Entities.Space.Request;
 using Domain.ShareData.Base;
 using Domain.Wrapper;
 using LAHJA.ApplicationLayer.AuthorizationSession;
 using LAHJA.Data.UI.Components;
-using LAHJA.Data.UI.Components.Plan;
-using LAHJA.Data.UI.Models;
+using LAHJA.Data.UI.Models.SessionTokenAuth;
 using LAHJA.Data.UI.Templates.Base;
 using LAHJA.Helpers.Services;
 using Microsoft.AspNetCore.Components;

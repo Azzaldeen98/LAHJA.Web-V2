@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Domain.Entities.ModelAi;
 using Domain.Repository.ModelAi;
-using Infrastructure.Repository.Base;
+using Infrastructure.Core.Repositories.Base;
 using Shared.Settings;
 
 namespace Infrastructure.DataSource.ApiClient.Payment

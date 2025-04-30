@@ -4,12 +4,12 @@ using Domain.Entities.AuthorizationSession;
 using Domain.Repository.AuthorizationSession;
 using Domain.ShareData.Base;
 using Domain.Wrapper;
+using Infrastructure.Core.Repositories.Base;
 using Infrastructure.DataSource.ApiClient.AuthorizationSession;
 using Infrastructure.DataSource.ApiClient.Payment;
 using Infrastructure.Models.AuthorizationSession;
 using Infrastructure.Models.Price.Request;
 using Infrastructure.Models.Price.Response;
-using Infrastructure.Repository.Base;
 using Shared.Settings;
 using System.Reflection;
 

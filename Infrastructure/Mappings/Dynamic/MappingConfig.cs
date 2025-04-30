@@ -1,6 +1,6 @@
 ﻿
 using AutoMapper;
-using Infrastructure.Interface;
+using Shared.AutoGenerator.Interfaces;
 using System.Reflection;
 
 namespace Infrastructure.Mappings.Dynamic
@@ -28,7 +28,7 @@ namespace Infrastructure.Mappings.Dynamic
             //var models = assembly.GetTypes().Where(t => typeof(ITModel).IsAssignableFrom(t) && t.IsClass).ToList();
             //var dtos = assembly.GetTypes().Where(t => typeof(ITBuildDto).IsAssignableFrom(t) && t.IsClass).ToList();
             var vms = assembly.GetTypes().Where(t => typeof(ITModel).IsAssignableFrom(t) && t.IsClass).ToList();
-            var dsos = assembly.GetTypes().Where(t => typeof(ITNDto).IsAssignableFrom(t) && t.IsClass).ToList();
+            //var dsos = assembly.GetTypes().Where(t => typeof(ITNDto).IsAssignableFrom(t) && t.IsClass).ToList();
 
  
             // map daynamic  Model and DTO
@@ -62,20 +62,20 @@ namespace Infrastructure.Mappings.Dynamic
 
             //  map daynamic  VM and DSO
 
-            foreach (var dso in dsos)
-            {
-                if (!CheckIgnoreAutomateMapper(dso))
-                {
-                    var vmMatches = vms.Where(v => v.Name.Contains(dso.Name.Replace("NDto", "").Replace("NDto", ""), StringComparison.OrdinalIgnoreCase)).ToList();
-                    foreach (var vm in vmMatches)
-                    {
-                        if (!CheckIgnoreAutomateMapper(vm))
-                        {
-                            CreateMap(dso, vm).ReverseMap();
-                        }
-                    }
-                }
-            }
+            //foreach (var dso in dsos)
+            //{
+            //    if (!CheckIgnoreAutomateMapper(dso))
+            //    {
+            //        var vmMatches = vms.Where(v => v.Name.Contains(dso.Name.Replace("NDto", "").Replace("NDto", ""), StringComparison.OrdinalIgnoreCase)).ToList();
+            //        foreach (var vm in vmMatches)
+            //        {
+            //            if (!CheckIgnoreAutomateMapper(vm))
+            //            {
+            //                CreateMap(dso, vm).ReverseMap();
+            //            }
+            //        }
+            //    }
+            //}
         }
     }
 }

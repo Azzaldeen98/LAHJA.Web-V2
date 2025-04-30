@@ -21,7 +21,6 @@ using LAHJA.Data.UI.Templates.Services;
 using LAHJA.ApiClient.Models;
 using Domain.Entities.Request.Request;
 using Domain.Entities.Event.Request;
-using LAHJA.Data.UI.Components;
 using Domain.Entities.Profile.Response;
 using Domain.Entities.Auth.Response;
 using Domain.Entities.AuthorizationSession;
@@ -32,6 +31,9 @@ using LAHJA.Data.UI.Components.ServiceCard;
 using Domain.Entities.ModelAi;
 using LAHJA.Helpers;
 using LAHJA.Data.UI.Components.Render;
+using LAHJA.Data.UI.Models.Profile;
+using LAHJA.Data.UI.Models.Space;
+using LAHJA.Data.UI.Models.SessionTokenAuth;
 
 namespace LAHJA.Mappings
 {

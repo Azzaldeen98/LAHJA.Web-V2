@@ -16,19 +16,34 @@ namespace LAHJA.ErrorHandling
 
     public interface IErrorHandlingService
     {
-        public Task HandleException(Exception ex);
-        public Task HandleUnauthorizedError(UnauthorizedException ex);
-        public Task HandleServiceUnavailableError(ServiceUnavailableException ex);
-        public Task HandleInternalServerError(InternalServerException ex);
-        public Task HandleTooManyRequestsError(TooManyRequestsException ex);
-        public Task HandleForbiddenError(ForbiddenException ex);
-        public Task HandleSubscriptionUnavailableError(SubscriptionUnavailableException ex);
-        public Task HandleSubscriptionExpiredError(SubscriptionExpiredException ex);
-        public Task HandleTimeoutError(TimeoutExceptionApp ex);
-        public Task HandleBadRequestError(BadRequestException ex);
-        public Task HandleNotFoundError(NotFoundException ex);
+        public Task HandleExceptionAsync(Exception ex);
+        public Task HandleUnauthorizedErrorAsync(UnauthorizedException ex);
+        public Task HandleServiceUnavailableErrorAsync(ServiceUnavailableException ex);
+        public Task HandleInternalServerErrorAsync(InternalServerException ex);
+        public Task HandleTooManyRequestsErrorAsync(TooManyRequestsException ex);
+        public Task HandleForbiddenErrorAsync(ForbiddenException ex);
+        public Task HandleSubscriptionUnavailableErrorAsync(SubscriptionUnavailableException ex);
+        public Task HandleSubscriptionExpiredErrorAsync(SubscriptionExpiredException ex);
+        public Task HandleTimeoutErrorAsync(TimeoutExceptionApp ex);
+        public Task HandleBadRequestErrorAsync(BadRequestException ex);
+        public Task HandleNotFoundErrorAsync(NotFoundException ex);
     }
 
+    public interface IBuildErrorHandlingServiceEvent
+    {
+        public Func<Exception, Task> HandleException { get; set; }
+        public Func<UnauthorizedException, Task> HandleUnauthorizedError { get; set; }
+        public Func<ServiceUnavailableException, Task> HandleServiceUnavailableError { get; set; }
+        public Func<InternalServerException, Task> HandleInternalServerError { get; set; }
+        public Func<TooManyRequestsException, Task> HandleTooManyRequestsError { get; set; }
+        public Func<ForbiddenException, Task> HandleForbiddenError { get; set; }
+        public Func<SubscriptionUnavailableException, Task> HandleSubscriptionUnavailableError { get; set; }
+        public Func<SubscriptionExpiredException, Task> HandleSubscriptionExpiredError { get; set; }
+        public Func<TimeoutExceptionApp, Task> HandleTimeoutError { get; set; }
+        public Func<BadRequestException, Task> HandleBadRequestError { get; set; }
+        public Func<NotFoundException, Task> HandleNotFoundError { get; set; }
+
+    }
 
     public class ErrorHandlingService : IErrorHandlingService
     {
@@ -46,26 +61,26 @@ namespace LAHJA.ErrorHandling
         }
 
 
-        public async Task HandleException(Exception ex)
+        public async Task HandleExceptionAsync(Exception ex)
         {
             //throw new NotImplementedException();
         }
 
-        public async Task HandleTooManyRequestsError(TooManyRequestsException? ex = null)
+        public async Task HandleTooManyRequestsErrorAsync(TooManyRequestsException? ex = null)
         {
             var message = localizerHttpError.GetLocalizedString("TooManyRequests409");
             var result = await userActionService.ShowMessageBox(message:message, yesText: localizerShared.GetLocalizedString("yes"), noText: localizerShared.GetLocalizedString("no"));
             if (result == true) { }
             else { }
         }
-        public async Task HandleServiceUnavailableError(ServiceUnavailableException? ex = null)
+        public async Task HandleServiceUnavailableErrorAsync(ServiceUnavailableException? ex = null)
         {
             var message = localizerHttpError.GetLocalizedString("ServiceUnavailable503");
             var result = await userActionService.ShowMessageBox(message:message, yesText: localizerShared.GetLocalizedString("yes"), noText: localizerShared.GetLocalizedString("no"));
             if (result == true) { }
             else { }
         }     
-        public async Task HandleForbiddenError(ForbiddenException? ex = null)
+        public async Task HandleForbiddenErrorAsync(ForbiddenException? ex = null)
         {
             var message = localizerHttpError.GetLocalizedString("Forbidden403");
             var result = await userActionService.ShowMessageBox(message: message, yesText: localizerShared.GetLocalizedString("yes"), noText: localizerShared.GetLocalizedString("no"));
@@ -73,20 +88,21 @@ namespace LAHJA.ErrorHandling
             else { }
         }
 
-        public async Task HandleInternalServerError(InternalServerException? ex = null)
+        public async Task HandleInternalServerErrorAsync(InternalServerException? ex = null)
         {
             var message = localizerHttpError.GetLocalizedString("InternalServer500");
             var result = await userActionService.ShowMessageBox(message: message, yesText: localizerShared.GetLocalizedString("yes"), noText: localizerShared.GetLocalizedString("no"));
+
             if (result == true) { }
             else { }
         }
 
-        public async Task HandleUnauthorizedError(UnauthorizedException? ex = null)
+        public async Task HandleUnauthorizedErrorAsync(UnauthorizedException? ex = null)
         {
             userActionService.NavigationTo($"{RouterPage.LOGOUT}/");
         }
 
-        public async Task HandleSubscriptionUnavailableError(SubscriptionUnavailableException? ex=null)
+        public async Task HandleSubscriptionUnavailableErrorAsync(SubscriptionUnavailableException? ex=null)
         {
      
             var message = localizerHttpError.GetLocalizedString("SubscriptionUnavailable904");
@@ -98,19 +114,19 @@ namespace LAHJA.ErrorHandling
             
         }
 
-        public async Task HandleTimeoutError(TimeoutExceptionApp? ex = null)
+        public async Task HandleTimeoutErrorAsync(TimeoutExceptionApp? ex = null)
         {
             var message = localizerHttpError.GetLocalizedString("GatewayTimeout504");
             userActionService.ShowSnackBar(message);
         }
 
-        public async Task HandleNotFoundError(NotFoundException? ex = null)
+        public async Task HandleNotFoundErrorAsync(NotFoundException? ex = null)
         {
             var message = localizerHttpError.GetLocalizedString("NotFound404");
             userActionService.ShowSnackBar(message);
         }
 
-        public async Task HandleSubscriptionExpiredError(SubscriptionExpiredException? ex = null)
+        public async Task HandleSubscriptionExpiredErrorAsync(SubscriptionExpiredException? ex = null)
         {
             var message = localizerHttpError.GetLocalizedString("SubscriptionExpired905");
             var result = await userActionService.ShowMessageBox(message, yesText: localizerShared.GetLocalizedString("yes"), noText: localizerShared.GetLocalizedString("no"));
@@ -121,9 +137,10 @@ namespace LAHJA.ErrorHandling
             
         }
 
-        public async Task HandleBadRequestError(BadRequestException ex)
+        public async Task HandleBadRequestErrorAsync(BadRequestException ex)
         {
             var message = localizerHttpError.GetLocalizedString("BadRequest400");
+
             var result = await userActionService.ShowMessageBox(message: message, yesText: localizerShared.GetLocalizedString("yes"), noText: localizerShared.GetLocalizedString("no"));
             if (result == true)
             {

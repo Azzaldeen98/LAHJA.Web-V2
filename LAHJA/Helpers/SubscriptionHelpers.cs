@@ -1,5 +1,5 @@
 ﻿using LAHJA.Data.UI.Components.Plan;
-using LAHJA.Data.UI.Components;
+using LAHJA.Data.UI.Models.Profile;
 
 namespace LAHJA.Helpers
 {

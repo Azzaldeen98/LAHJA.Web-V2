@@ -14,20 +14,20 @@ namespace Infrastructure.Middlewares
     {
         public Task<T> InvokeAsync<T>(Func<Task<T>> action);
         public Task<Result<object>> InvokeAsync(Func<Task> action);
-        public Task HandleException(Exception ex);
+        public Task HandleExceptionAsync(Exception ex);
     }
 
     public class ClientSafelyHandlerException : IClientSafelyHandlerException
     {
         private readonly ILogger<ClientSafelyHandlerException> _logger;
 
-        public readonly IErrorHandlingService errorHandlingService;
+        public readonly IErrorHandlingService _errorHandlingService;
 
         public ClientSafelyHandlerException(ILogger<ClientSafelyHandlerException> logger,
             IErrorHandlingService errorHandlingService)
         {
             _logger = logger;
-            this.errorHandlingService = errorHandlingService;
+            _errorHandlingService = errorHandlingService;
         }
 
         public  async Task<Result<object>> InvokeAsync(Func<Task> action)
@@ -40,17 +40,11 @@ namespace Infrastructure.Middlewares
             }
             catch (Exception ex)
             {
-               await HandleException(ex);
+               await HandleExceptionAsync(ex);
                 return default;
 
             }
-            //catch (Exception e)
-            //{
-            //    return default;
-            //}
 
-
-            //return Result<object>.Fail("An unexpected error occurred while processing the request.");
         }
         public  async Task<T> InvokeAsync<T>(Func<Task<T>> action)
         {
@@ -62,91 +56,83 @@ namespace Infrastructure.Middlewares
             }
             catch(Exception ex)
             {
-                await HandleException(ex);
+                await HandleExceptionAsync(ex);
                 return default;
 
             }
-            //catch (Exception e)
-            //{
-            //    return default;
-            //}
+  
 
 
         }
 
-        public async Task HandleException(Exception ex)
+        public async Task HandleExceptionAsync(Exception ex)
         {
             switch (ex)
             {
                 case BadRequestException badEx:
-                    _logger.LogError($"Client Timeout Exception Caught: {badEx.Message} | StateCode: {badEx.ErrorCode}");
-                    await errorHandlingService.HandleBadRequestError(badEx);
-                    break;          
-                
+                    _logger.LogError($"🟠 BadRequestException: {badEx.Message} | ErrorCode: {badEx.ErrorCode}");
+                    await _errorHandlingService.HandleBadRequestErrorAsync(badEx);
+                    break;
+
                 case TimeoutExceptionApp timeoutEx:
-                    _logger.LogError($"Client Timeout Exception Caught: {timeoutEx.Message} | StateCode: {timeoutEx.ErrorCode}");
-                    await errorHandlingService.HandleTimeoutError(timeoutEx);
-                    break;  
-                    
+                    _logger.LogError($"⏱️ TimeoutExceptionApp: {timeoutEx.Message} | ErrorCode: {timeoutEx.ErrorCode}");
+                    await _errorHandlingService.HandleTimeoutErrorAsync(timeoutEx);
+                    break;
+
                 case InternalServerException serverEx:
-                    _logger.LogError($"Internal Server Exception Caught: {serverEx.Message} | StateCode: {serverEx.ErrorCode}");
-                    await errorHandlingService.HandleInternalServerError(serverEx);
+                    _logger.LogError($"🔥 InternalServerException: {serverEx.Message} | ErrorCode: {serverEx.ErrorCode}");
+                    await _errorHandlingService.HandleInternalServerErrorAsync(serverEx);
                     break;
 
                 case ServiceUnavailableException serviceEx:
-                    _logger.LogError($"Client Service Unavailable Exception Caught: {serviceEx.Message} | StateCode: {serviceEx.ErrorCode}");
-                    await errorHandlingService.HandleServiceUnavailableError(serviceEx);
+                    _logger.LogError($"🔌 ServiceUnavailableException: {serviceEx.Message} | ErrorCode: {serviceEx.ErrorCode}");
+                    await _errorHandlingService.HandleServiceUnavailableErrorAsync(serviceEx);
                     break;
 
                 case TooManyRequestsException tooManyRequestsEx:
-                    _logger.LogError($"Client Too Many Requests Exception Caught: {tooManyRequestsEx.Message} | StateCode: {tooManyRequestsEx.ErrorCode}");
-                    await errorHandlingService.HandleTooManyRequestsError(tooManyRequestsEx);
+                    _logger.LogError($"🚫 TooManyRequestsException: {tooManyRequestsEx.Message} | ErrorCode: {tooManyRequestsEx.ErrorCode}");
+                    await _errorHandlingService.HandleTooManyRequestsErrorAsync(tooManyRequestsEx);
                     break;
 
                 case UnauthorizedException unauthorizedEx:
-                    _logger.LogError($"Client Unauthorized Exception Caught: {unauthorizedEx.Message} | StateCode: {unauthorizedEx.ErrorCode}");
-                    await errorHandlingService.HandleUnauthorizedError(unauthorizedEx);
+                    _logger.LogError($"🔒 UnauthorizedException: {unauthorizedEx.Message} | ErrorCode: {unauthorizedEx.ErrorCode}");
+                    await _errorHandlingService.HandleUnauthorizedErrorAsync(unauthorizedEx);
                     break;
 
                 case ForbiddenException forbiddenEx:
-                    _logger.LogError($"Client Forbidden Exception Caught: {forbiddenEx.Message} | StateCode: {forbiddenEx.ErrorCode}");
-                    await errorHandlingService.HandleForbiddenError(forbiddenEx);
+                    _logger.LogError($"🚫 ForbiddenException: {forbiddenEx.Message} | ErrorCode: {forbiddenEx.ErrorCode}");
+                    await _errorHandlingService.HandleForbiddenErrorAsync(forbiddenEx);
                     break;
 
                 case NotFoundException notFoundEx:
-                    _logger.LogError($"Client Not Found Exception Caught: {notFoundEx.Message} | StateCode: {notFoundEx.ErrorCode}");
-                    await errorHandlingService.HandleNotFoundError(notFoundEx);
+                    _logger.LogError($"🔍 NotFoundException: {notFoundEx.Message} | ErrorCode: {notFoundEx.ErrorCode}");
+                    await _errorHandlingService.HandleNotFoundErrorAsync(notFoundEx);
                     break;
 
-
-                case SubscriptionUnavailableException subException:
-                    _logger.LogError($"Subscription Unavailable Exception Caught: {subException.Message} | StateCode: {subException.ErrorCode}");
-                    await errorHandlingService.HandleSubscriptionUnavailableError(subException);
+                case SubscriptionUnavailableException subEx:
+                    _logger.LogError($"📴 SubscriptionUnavailableException: {subEx.Message} | ErrorCode: {subEx.ErrorCode}");
+                    await _errorHandlingService.HandleSubscriptionUnavailableErrorAsync(subEx);
                     break;
 
-                case SubscriptionExpiredException expireSubEx:
-                    _logger.LogError($"Subscription Unavailable Exception Caught: {expireSubEx.Message} | StateCode: {expireSubEx.ErrorCode}");
-                    await errorHandlingService.HandleSubscriptionExpiredError(expireSubEx);
+                case SubscriptionExpiredException expireEx:
+                    _logger.LogError($"📅 SubscriptionExpiredException: {expireEx.Message} | ErrorCode: {expireEx.ErrorCode}");
+                    await _errorHandlingService.HandleSubscriptionExpiredErrorAsync(expireEx);
                     break;
 
-
-                ///-------------------------------------------------------------------------------------------
                 case BaseExceptionApp baseEx:
-                    _logger.LogError($"Client Base Exception App Caught: {baseEx.Message} | StateCode: {baseEx.ErrorCode}");
+                    _logger.LogError($"📌 BaseExceptionApp: {baseEx.Message} | ErrorCode: {baseEx.ErrorCode}");
                     break;
 
                 case Exception e:
-                    _logger.LogError($"Client General Exception Caught: {e.Message}");
+                    _logger.LogError($"⚠️ General Exception: {e.Message}");
                     break;
 
                 default:
-                    _logger.LogError(ex?.Message);
+                    _logger.LogError($"❓ Unknown Exception Type: {ex?.GetType().Name} - {ex?.Message}");
                     break;
-
-          
             }
         }
 
-   
+
     }
 }

@@ -19,14 +19,64 @@ using LAHJA.Notification;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Blazored.LocalStorage;
 
+using LAHJA.Services.Infrastructure.Extensions;
+using Castle.DynamicProxy;
+using Shared.Services.Infrastructure.Extensions;
+using LAHJA.Data.UI.Templates.Plans;
+using Infrastructure.Middlewares;
+using Infrastructure.DataSource.ApiClient.Plans;
+using Infrastructure.DataSource.ApiClient.Profile;
+using FluentValidation;
+using LAHJA.Validators;
+using LAHJA.Data.UI.Components.Base;
+using Shared.ExtractedNSwagCode;
+using Shared.Generator.Code;
+using System.Reflection;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+//ExtractedClassInfo.ReadInfoFromFile("ITApiClient",
+//    "..\\Infrastructure\\DataSource\\ApiClientFactory\\Nswag\\WebClientApi2.cs",
+//    "NSwageCode.txt");
+
+
+
+
+
+//builder.Services.AddSingleton<ProxyGenerator>();
+//builder.Services.AddSingleton<RequestHandlingInterceptor>();
+//builder.Services.AddScoped<ErrorHandlingInterceptor>();
+
+
+
+
+////////////////////////////////////////////////////
+
+//  Register (AddSingleton - AddScoped - AddTransient)
+builder.Services.RegisterServicesByLifetime();
+
+builder.Services.AddScoped<TokenService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<ISessionUserManager, SessionUserManager>();
+builder.Services.AddScoped<ProtectedLocalStorage>();
+builder.Services.AddScoped<ProtectedSessionStorage>();
+builder.Services.AddScoped<IUserClaimsHelper, UserClaimsHelper>();
+////////////////////////////////////////////////////
+
+builder.Services.InstallSharedConfigServices();
+builder.Services.InstallInfrastructureConfigServices(configuration: builder.Configuration);
+builder.Services.InstallApplicationConfigServices();
+builder.Services.InstallLAHJAConfigServices();
+builder.Services.InstallApiClientConfigServices();
 
 // تهيئة التسجيل (Logging)
 builder.Logging.ClearProviders(); // مسح مقدمي الخدمة الافتراضيين
 builder.Logging.AddConsole(); // إضافة تسجيل في وحدة التحكم
 builder.Logging.AddDebug(); // تسجيل الأخطاء في نافذة التصحيح
+
+
 
 
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
@@ -51,9 +101,6 @@ builder.Services.AddAuthorization();  // تسجيل خدمات التفويض ب
 builder.Services.AddCascadingAuthenticationState();  // تسجيل حالة المصادقة
 builder.Services.AddScoped<CustomAuthenticationStateProvider>();  // تسجيل موفر حالة المصادقة المخصص
 builder.Services.AddScoped<AuthenticationStateProvider>(sp => sp.GetRequiredService<CustomAuthenticationStateProvider>());
-//builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
-
-
 
 
 
@@ -62,13 +109,6 @@ var jwtSettings = builder.Configuration.GetSection("JWTSettings").Get<JWTSetting
 builder.Services.AddSingleton<JWTSettings>(jwtSettings);
 
 
-////////////////////////////////////////////////////
-///
-builder.Services.InstallSharedConfigServices();
-builder.Services.InstallInfrastructureConfigServices(configuration: builder.Configuration);
-builder.Services.InstallApplicationConfigServices();
-builder.Services.InstallLAHJAConfigServices();
-builder.Services.InstallApiClientConfigServices();
 
 builder.Services.Configure<ReCaptchaSettings>(builder.Configuration.GetSection("ReCaptchaSettings"));
 builder.Services.AddOptions<ReCaptchaSettings>().BindConfiguration("ReCaptchaSettings");
@@ -76,26 +116,11 @@ builder.Services.AddOptions<ReCaptchaSettings>().BindConfiguration("ReCaptchaSet
 ///////////////////////////////////////////////////
 
 
+builder.Services.AddValidatorsFromAssemblyContaining<Program>(); // تسجيل الـ Validators من نفس التجميع
+builder.Services.AddScoped<IValidator<DataBuildAuthBase>, LoginModelValidator>();
 
-builder.Services.AddScoped<IUserClaimsHelper, UserClaimsHelper>();
 
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//}).AddJwtBearer(options =>
-//{
-//    options.TokenValidationParameters = new TokenValidationParameters
-//    {
-//        ValidateIssuer = true,
-//        ValidateAudience = true,
-//        ValidateLifetime = true,
-//        ValidateIssuerSigningKey = true,
-//        ValidIssuer = jwtSettings.Issuer,
-//        ValidAudience = jwtSettings.Audience,
-//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key))
-//    };
-//});
+
 
 
 
@@ -129,11 +154,7 @@ builder.Services
 
 
 
-builder.Services.AddScoped<TokenService>();
-builder.Services.AddScoped<ITokenService, TokenService>();
-builder.Services.AddScoped<ISessionUserManager, SessionUserManager>();
-builder.Services.AddScoped<ProtectedLocalStorage>();
-builder.Services.AddScoped<ProtectedSessionStorage>();
+
 
 builder.Services.AddMudBlazorSnackbar(config =>
 {
@@ -176,6 +197,7 @@ builder.Services.AddSession(options =>
 builder.Services.AddSignalR();
 builder.Services.AddSingleton<UserContextService>();  // ����� UserContextService
 builder.Services.AddSingleton<NotificationService>();
+
 builder.WebHost.ConfigureKestrel(options =>
 {
     options.ConfigureHttpsDefaults(o => o.AllowAnyClientCertificate());
@@ -187,6 +209,7 @@ builder.Services.AddResponseCompression(opts =>
         ["application/octet-stream"]);
 });
 
+//builder.Services.RegisterInterceptorServices<ITInterceptor, ErrorHandlingInterceptor>();
 
 //builder.Services.AddSingleton<NavigationManager>(sp => sp.GetRequiredService<NavigationManager>());
 
@@ -197,10 +220,14 @@ var app = builder.Build();
 
 // الحصول على `ILogger` من DI (Dependency Injection)
 var logger = app.Services.GetRequiredService<ILogger<Program>>();
-logger.LogInformation("التطبيق بدأ التشغيل...");
+logger.LogInformation("The application started running...");
+
+
+//app.UseMiddleware<ApiSafelyHandlerMiddleware>();
 
 
 //app.UseMiddleware<ErrorHandlerMiddleware>();
+
 //app.UseMiddleware<AuthMiddleware>();
 //NavigationHelper.Init(app.Services);
 

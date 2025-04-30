@@ -6,18 +6,29 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Models\Plans\**" />
+    <EmbeddedResource Remove="Models\Plans\**" />
+    <None Remove="Models\Plans\**" />
+  </ItemGroup>
+
 
 	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="12.0.1" />
 		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+		<PackageReference Include="Castle.Core" Version="5.2.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.1" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.13.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.4" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
 
 		
 	</ItemGroup>
 
 
 	<ItemGroup>
-	  <Folder Include="Models\Plans\" />
+	  <Folder Include="AutoGenerator\Code\Infrastructure\ApiClient\" />
+	  <Folder Include="AutoGenerator\Code\Infrastructure\Repositiry\" />
 	</ItemGroup>
 
 </Project>

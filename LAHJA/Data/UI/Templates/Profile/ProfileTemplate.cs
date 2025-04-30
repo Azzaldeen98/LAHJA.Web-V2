@@ -1,7 +1,5 @@
-﻿using Application.Services.Profile;
-using AutoMapper;
+﻿using AutoMapper;
 using Domain.Entities.AuthorizationSession;
-using Domain.Entities.Plans.Response;
 using Domain.Entities.Profile;
 using Domain.Entities.Profile.Request;
 using Domain.Entities.Profile.Response;
@@ -9,34 +7,21 @@ using Domain.Entities.Space.Request;
 using Domain.ShareData.Base;
 using Domain.Wrapper;
 using LAHJA.ApplicationLayer.Profile;
-using LAHJA.ApplicationLayer.Profile;
-using LAHJA.Data.UI.Components;
-using LAHJA.Data.UI.Components.Plan;
 using LAHJA.Data.UI.Components.ProFileModel;
 using LAHJA.Data.UI.Models;
+using LAHJA.Data.UI.Models.Profile;
+using LAHJA.Data.UI.Models.SessionTokenAuth;
+using LAHJA.Data.UI.Models.Space;
 using LAHJA.Data.UI.Templates.Base;
-using LAHJA.Data.UI.Templates.Profile;
 using LAHJA.Helpers.Services;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using Shared.Constants.Localization;
-using System;
-using static MudBlazor.CategoryTypes;
-using static MudBlazor.Colors;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace LAHJA.Data.UI.Templates.Profile
 {
-    //public class DataBuildUserProfile
-    //{
-    //    public string Id { get; set; }
-    //    public string Email { get; set; }
-    //}
+
     public interface IBuilderProfileComponent<T> : IBuilderComponents<T>
     {
-
-
-
 
         //public Func<T, Task> SubmitSearch { get; set; }
         public Func<T, Task> SubmitCreate { get; set; }
@@ -56,14 +41,11 @@ namespace LAHJA.Data.UI.Templates.Profile
     {
 
         Task<Result<ProfileUserResponse>> UpdateProfileUserAsync(DataBuildUserProfile data);
-     
         Task<Result<ProfileResponse>> GetProfileAsync();
         Task<Result<ProfileUserResponse>> GetProfileUserAsync();
-
         Task<Result<ProfileResponse>> CreateAsync(T data);
         Task<Result<DeleteResponse>> DeleteAsync(T data);
         Task<Result<ProfileResponse>> UpdateAsync(T data);
-
         Task<Result<AuthorizationSessionWebResponse>> CreateSpaceAsync(SpaceRequest request);
         Task<ICollection<ProfileSubscriptionResponse>> SubscriptionsAsync();
 
@@ -432,8 +414,8 @@ namespace LAHJA.Data.UI.Templates.Profile
         public async Task<Result<List<DataBuildUserSubscriptionInfo>>> GetDataBuildSubscriptions(FilterResponseData filter)
         {
 
-            try
-            {
+            //try
+            //{
                 
                 var data = await builderApi.SubscriptionsAsync();
 
@@ -441,10 +423,10 @@ namespace LAHJA.Data.UI.Templates.Profile
 
                 return  Result<List<DataBuildUserSubscriptionInfo>>.Success(rev);
 
-            }catch(Exception e)
-            {
-                return Result<List<DataBuildUserSubscriptionInfo>>.Fail(e.Message);
-            }
+            //}catch(Exception e)
+            //{
+            //    return Result<List<DataBuildUserSubscriptionInfo>>.Fail(e.Message);
+            //}
 
 
         }

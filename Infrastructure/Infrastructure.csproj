@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Core\ApiClient\" />
     <Folder Include="DataSource\ApiClient\RequestEvent\" />
     <Folder Include="DataSource\ApiClient\User\" />
     <Folder Include="DataSource\ApiClient\Request\" />
@@ -35,6 +36,7 @@
     <Folder Include="Models\ServiceMethod\Response\" />
     <Folder Include="Models\User\Request\" />
     <Folder Include="Models\User\Response\" />
+    <Folder Include="Repository\Base\" />
     <Folder Include="Repository\ModelGateway\" />
     <Folder Include="Repository\RequestEvent\" />
     <Folder Include="Repository\Roles\" />

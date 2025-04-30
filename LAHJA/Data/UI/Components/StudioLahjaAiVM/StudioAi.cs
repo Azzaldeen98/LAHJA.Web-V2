@@ -1,5 +1,6 @@
 ﻿using Domain.ShareData.Base;
 using LAHJA.ContextServices;
+using LAHJA.Data.UI.Models.SessionTokenAuth;
 using LAHJA.Data.UI.Templates.AuthSession;
 using LAHJA.Data.UI.Templates.Services;
 using LAHJA.Data.UI.Templates.Subscription;

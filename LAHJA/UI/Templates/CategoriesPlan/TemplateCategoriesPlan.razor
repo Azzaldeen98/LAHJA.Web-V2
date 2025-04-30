@@ -1,11 +1,12 @@
 ﻿
 @using Domain.ShareData
 @using LAHAJ.Loading
+@using LAHJA.Data.UI.Components.Category
 @using LAHJA.UI.Components.Category
 @using LAHJA.UI.Components.Plan
 @using LAHJA.UI.Templates.Plans
 
- 
+
  @inject IManageLanguageService _manageLanguageService
 
 @inject LAHJA.Data.UI.Templates.Plans.TemplatePlans Template
@@ -22,19 +23,19 @@
 else
 {
 
-    @if (Template != null)
+    @if (Template != null && categories?.Any()==true)
     {
 
-        <MainCategory  DataBuild="Template.Categories" OnSubmit="Template.BuilderComponents.SubmitContainerPlans" />
+        <MainCategory DataBuild="categories" OnSubmit="Template.BuilderComponents.SubmitContainerPlans" />
 
-        @if (Template.SubscriptionPlans != null && Template.SubscriptionPlans.Count() > 0)
-        {
+        @* @if (Template.SubscriptionPlans != null && Template.SubscriptionPlans.Count() > 0) *@
+        @* { *@
 
-            <MainPlan DataBuilds="Template.SubscriptionPlans" IsDialog="true"  OnSubmit="Template.BuilderComponents.SubmitSubscriptionPlan" />
+        @*     <MainPlan DataBuilds="Template.SubscriptionPlans" IsDialog="true"  OnSubmit="Template.BuilderComponents.SubmitSubscriptionPlan" /> *@
 
 
 
-        }
+        @* } *@
 
 
     }
@@ -42,7 +43,7 @@ else
 
 }
 
- 
+
 @code
 {
 
@@ -51,26 +52,37 @@ else
 
     private bool isLoading = true;
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    private List<CategoryComponent> categories;
+
+    protected override async Task OnInitializedAsync()
     {
-
-
-
-        if (firstRender)
+        var response = await Template.GetAllCategoriesAsync();
+        if (response.Succeeded)
         {
-
-            var CurrentLanguage = await _manageLanguageService.GetLanguageAsync();
-
-
-
-            await Template.OnInitialize();
-
-            isLoading = false;
-            StateHasChanged();
-
+            categories = response.Data;
         }
 
-        // var temp= Template.BuilderComponents.Categories;
-
+        isLoading = false;
+        StateHasChanged();
     }
+
+    // protected override async Task OnAfterRenderAsync(bool firstRender)
+    // {
+
+
+
+    //     if (firstRender)
+    //     {
+
+       
+
+
+
+ 
+
+    //     }
+
+    //     var temp= Template.BuilderComponents.Categories;
+
+    // }
 }

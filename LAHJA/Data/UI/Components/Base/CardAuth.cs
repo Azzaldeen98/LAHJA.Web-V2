@@ -2,6 +2,7 @@
 using Blazorise;
 using Blazorise.Captcha.ReCaptcha;
 using Domain.Entities;
+using FluentValidation;
 using IdentityModel.Client;
 using LAHJA.UI.Components.Auth;
 using Microsoft.AspNetCore.Components;
@@ -12,6 +13,7 @@ using Shared.Constants.Router;
 using Shared.Enums;
 using Shared.Models;
 using Shared.Wrapper;
+using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 
 namespace LAHJA.Data.UI.Components.Base
@@ -68,6 +70,7 @@ namespace LAHJA.Data.UI.Components.Base
     {
         [Inject] NavigationManager Navigation { get; set; }
         [Inject] IDialogService DialogService { get; set; }
+        [Inject] IValidator<DataBuildAuthBase> loginValidator { get; set; }
 
         public override TypeComponentCard Type => throw new NotImplementedException();
 
@@ -76,7 +79,22 @@ namespace LAHJA.Data.UI.Components.Base
             DataBuild = db;
         }
 
+      private async Task<string[]> ValidateField(Expression<Func<T>> expression)
+      {
+            if (DataBuild != null)
+            {
+                var context = new ValidationContext<T>(DataBuild);
+                var result = await loginValidator.ValidateAsync(context);
+                var propertyName = ((MemberExpression)expression.Body).Member.Name;
 
+                return result.Errors
+                             .Where(e => e.PropertyName == propertyName)
+                             .Select(e => e.ErrorMessage)
+                             .ToArray();
+            }
+
+          return default;
+        }
         [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
         [Parameter] public EventCallback<ExternalLoginRequest> OnSubmitExternalLogin { get; set; }
@@ -172,12 +190,7 @@ namespace LAHJA.Data.UI.Components.Base
             //StateHasChanged();
         }
 
-    
-
-     
-
-     
-
+   
         protected  void onCloseDialog()
         {
             //MudDialog.Cancel();
@@ -195,29 +208,6 @@ namespace LAHJA.Data.UI.Components.Base
 
     }
 
-    public class InputFieldProperties
-    {
-        public string T { set; get; } = "string";
-        public bool Disabled { get; set; } = false;
-        public bool Required { get; set; } = true;
-        public string Label { get; set; } = string.Empty;
-        public string RequiredError { get; set; } = string.Empty;
-    }
 
-    public interface ICardInput
-    {
-        InputFieldProperties Properties { set; get; }
-    }
-    public class CardInput<T> : ComponentBaseCard<T>, ICardInput
-    {
-        public override TypeComponentCard Type => throw new NotImplementedException();
-
-        public InputFieldProperties Properties { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public override void Build(T db)
-        {
-            DataBuild = db;
-        }
-    }
 
 }

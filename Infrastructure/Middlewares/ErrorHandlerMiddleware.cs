@@ -6,6 +6,7 @@ using HttpStatusCode = Infrastructure.Nswag.HttpStatusCode;
 
 namespace Infrastructure.Middlewares
 {
+
     public class ErrorHandlerMiddleware
     {
         private readonly RequestDelegate _next;
@@ -18,11 +19,6 @@ namespace Infrastructure.Middlewares
         public async Task Invoke(HttpContext context)
         {
             try
-            
-            
-            
-            
-            
             {
                 await _next(context);
             }

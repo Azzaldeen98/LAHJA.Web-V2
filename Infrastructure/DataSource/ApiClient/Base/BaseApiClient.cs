@@ -16,6 +16,7 @@ namespace Infrastructure.DataSource.ApiClient.Base
 
 
 
+
     public interface IBuildApiClient<T> {
 
         public string DevelopmentMessage { get; }
@@ -27,36 +28,6 @@ namespace Infrastructure.DataSource.ApiClient.Base
 
 
 
-    //public static class ExceptionHandler
-    //{
-    //    public static void ExecuteSafely(Action action)
-    //    {
-    //        try
-    //        {
-    //            action();
-    //        }
-    //        catch (Exception ex) // التقاط أي استثناء عام
-    //        {
-    //            var stateCode = ExtractStateCode(ex.Message); // استخراج رقم الخطأ
-
-    //            if (stateCode == 401)
-    //                throw new UnauthorizedException("المستخدم غير مخول للوصول إلى هذا المورد.");
-    //            else if (stateCode == 408)
-    //                throw new TimeoutExceptionApp("انتهت مهلة الاتصال بالخادم.");
-    //            else if (stateCode == 500)
-    //                throw new InternalServerException("حدث خطأ داخلي في الخادم.");
-    //            else
-    //                throw new UnknownException($"حدث خطأ غير متوقع: {ex.Message}"); // استثناء عام للأخطاء غير المعروفة
-    //        }
-    //    }
-
-    //    // دالة لاستخراج كود الخطأ من نص الرسالة
-    //    private static int ExtractStateCode(string message)
-    //    {
-    //        var match = Regex.Match(message, @"\b(\d{3})\b"); // البحث عن رقم مكون من 3 خانات
-    //        return match.Success ? int.Parse(match.Value) : -1; // إرجاع الرقم أو -1 إذا لم يتم العثور عليه
-    //    }
-    //}
 
     public class BuildApiClient<T>: IBuildApiClient<T> where T : class
     {

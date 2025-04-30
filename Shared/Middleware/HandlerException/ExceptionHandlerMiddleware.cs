@@ -15,8 +15,10 @@ namespace Shared.Middleware.HandlerException
 {
     public  interface IExceptionHandlerMiddleware
     {
-        public  Task<T> InvokeAsync<T>(Func<Task<T>> action);
+        public  Task<T> InvokeAsync<T>(Func<Task<T>> action, CancellationToken cancellationToken, int _maxRetries = 3);
+        public  Task<T> InvokeAsync<T>(Func<Task<T>> action, int _maxRetries = 3);
         public  Task InvokeAsync(Func<Task> action);
+        public  Task InvokeAsync(Func<Task> action, CancellationToken cancellationToken);
         public bool IsTransientError(HttpRequestException ex);
 
         public TimeSpan GetRetryDelay(int attempt);
@@ -29,8 +31,10 @@ namespace Shared.Middleware.HandlerException
 
     public abstract class ExceptionHandlerMiddleware : IExceptionHandlerMiddleware
     {
-        public abstract  Task<T> InvokeAsync<T>(Func<Task<T>> action);
+        public abstract Task<T> InvokeAsync<T>(Func<Task<T>> action, CancellationToken cancellationToken, int _maxRetries = 3);
+        public abstract Task<T> InvokeAsync<T>(Func<Task<T>> action, int _maxRetries = 3);
         public abstract  Task InvokeAsync(Func<Task> action);
+        public abstract  Task InvokeAsync(Func<Task> action, CancellationToken cancellationToken);
 
         public TimeSpan GetRetryDelay(int attempt)
         {

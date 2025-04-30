@@ -5,8 +5,6 @@ using Infrastructure.DataSource.ApiClient.Base;
 using Infrastructure.DataSource.ApiClientFactory;
 using Infrastructure.Middlewares;
 using Infrastructure.Models.BaseFolder.Response;
-using Infrastructure.Models.Price.Request;
-using Infrastructure.Models.Price.Response;
 using Infrastructure.Models.Product.Request;
 using Infrastructure.Models.Product.Response;
 using Infrastructure.Nswag;

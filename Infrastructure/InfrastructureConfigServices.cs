@@ -1,4 +1,4 @@
-﻿using Domain.Repository.Auth;
+using Domain.Repository.Auth;
 using Domain.Repository.AuthorizationSession;
 using Domain.Repository.Billing;
 using Domain.Repository.CreditCard;
@@ -40,16 +40,32 @@ using Microsoft.Extensions.DependencyInjection;
 using Domain.Repository.ModelAi;
 using Infrastructure.Mappings.Dynamic;
 using Infrastructure.Middlewares;
+using Infrastructure.Shared.ApiInvoker;
+using AutoGenerator;
+using Shared.Generator.AppFolder;
+using System.Reflection;
+using Shared.Generator.Code;
+using Shared.AutoGenerator.Code;
+using Shared.AutoGenerator.Interfaces;
+using Infrastructure.Config;
+using Shared.Constants.ArchitecturalLayers;
 
 namespace Infrastructure
 {
     public static class InfrastructureConfigServices
     {
+        //private static string thisFilePath = $"{ArchitecturalLayers.InfrastructureRoot}\\InfrastructureConfigServices.cs";
         public static void InstallInfrastructureConfigServices(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
+            //InfrastructureGenerator.GenerateApiClientTemplates();
+            //InfrastructureGenerator.GenerateRepositoryTemplates();
 
-     
+            //DependencyInjectionRegistrar.RegisterScopedDependencies<ITBaseRepository>(assemblies, thisFilePath, "serviceCollection");
+            serviceCollection.RegisterScopedDependencies<ITBaseApiClient>(assemblies);
+            serviceCollection.RegisterScopedDependencies<ITBaseRepository>(assemblies);
+
             InstallConfiguration(serviceCollection,configuration);
             InstallApiClients(serviceCollection);
             InstallSeeds(serviceCollection);
@@ -70,6 +86,7 @@ namespace Infrastructure
 
             serviceCollection.AddScoped<ClientFactory>();
             serviceCollection.AddScoped<IApiSafelyHandlerMiddleware, ApiSafelyHandlerMiddleware>();
+            serviceCollection.AddScoped<IApiInvoker, ApiInvoker>();
             //serviceCollection.AddScoped<ITokenProvider, TokenProvider>();
 
         }

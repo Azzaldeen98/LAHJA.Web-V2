@@ -25,17 +25,6 @@
     <None Remove="UI\Teamplat\**" />
     <None Remove="wwwroot\js\NewFolder\**" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="NSwageCodePrism.txt">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="NSwageCode.txt">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-  </ItemGroup>
 	<ItemGroup>
 
 		<PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
@@ -43,6 +32,12 @@
 		<PackageReference Include="Blazorise.Captcha" Version="1.6.2" />
 
 		<PackageReference Include="Blazorise.Captcha.ReCaptcha" Version="1.6.2" />
+
+		<PackageReference Include="Castle.Core" Version="5.2.1" />
+
+		<PackageReference Include="FluentValidation" Version="11.11.0" />
+
+		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
 
 		<PackageReference Include="Microsoft.Extensions.Localization" Version="9.0.0" />
 
@@ -67,6 +62,7 @@
 	  <Folder Include="ApplicationLayer\ServiceMethod\" />
 	  <Folder Include="ApplicationLayer\Setting\" />
 	  <Folder Include="Data\UI\Components\Profile\" />
+	  <Folder Include="Data\UI\Templates\User\" />
 	  <Folder Include="Data\UI\Templates\Request\" />
 	  <Folder Include="Data\UI\Templates\Setting\" />
 	  <Folder Include="UI\Components\FeatureServices\" />

@@ -1,4 +1,6 @@
-﻿namespace LAHJA.Data.UI.Components.ProFileModel
+﻿using LAHJA.Data.UI.Models.Profile;
+
+namespace LAHJA.Data.UI.Components.ProFileModel
 {
     public class DataBuildUserProfile
     {

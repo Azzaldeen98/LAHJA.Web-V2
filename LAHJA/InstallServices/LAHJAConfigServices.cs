@@ -34,7 +34,9 @@ using LAHJA.Data.UI.Templates.ModelAi;
 using LAHJA.ContextServices;
 using Infrastructure.Middlewares;
 using LAHJA.ErrorHandling;
-
+using LAHJA.Services.Infrastructure.Extensions;
+using LAHJA.Data.UI.Models.Profile;
+using LAHJA.Data.UI.Models.SessionTokenAuth;
 
 namespace LAHJA
 {
@@ -68,10 +70,10 @@ namespace LAHJA
         private static void InstallHelperServices(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<IUiStateService, UiStateService>();
-            serviceCollection.AddTransient<IUserActionService, UserActionService>();
-            serviceCollection.AddTransient<IErrorHandlingService, ErrorHandlingService>();
-            serviceCollection.AddTransient<IManageLanguageService,ManageLanguageService>();
-            serviceCollection.AddTransient<IClientSafelyHandlerException, ClientSafelyHandlerException>();
+            serviceCollection.AddScoped<IUserActionService, UserActionService>();
+            serviceCollection.AddScoped<IErrorHandlingService, ErrorHandlingService>();
+            serviceCollection.AddScoped<IManageLanguageService,ManageLanguageService>();
+            serviceCollection.AddScoped<IClientSafelyHandlerException, ClientSafelyHandlerException>();
             serviceCollection.AddScoped<SessionUserManager>();
             serviceCollection.AddScoped<LanguageService>();
             serviceCollection.AddScoped<MessageBox>();
@@ -94,6 +96,7 @@ namespace LAHJA
             serviceCollection.AddScoped<IBuilderPlansComponent<DataBuildPlansBase>, BuilderPlansComponent<DataBuildPlansBase>>();
             serviceCollection.AddScoped<TemplatePlansShare<PlansClientService, DataBuildPlansBase>>();
             serviceCollection.AddScoped<TemplatePlans>();
+
 
             //// Payment
             serviceCollection.AddScoped<IBuilderCheckoutApi<DataBuildPaymentBase>, BuilderCheckoutApiClient>();

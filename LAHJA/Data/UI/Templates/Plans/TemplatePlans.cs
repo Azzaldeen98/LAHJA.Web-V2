@@ -16,8 +16,7 @@ using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using MudBlazor.Extensions;
 using Shared.Constants.Router;
-using System.Collections.Generic;
-using System.Linq;
+
 
 namespace LAHJA.Data.UI.Templates.Plans
 {
@@ -247,6 +246,8 @@ namespace LAHJA.Data.UI.Templates.Plans
 
     public class TemplatePlans : TemplatePlansShare<PlansClientService, DataBuildPlansBase>
     {
+
+        private readonly TemplatePlans _self;
         public List<CategoryComponent> Categories { get => _categories; }
         public List<SubscriptionPlanInfo> SubscriptionPlans { get => _plans; }
         public List<SubscriptionPlanInfo> AllSubscriptionPlans { get => _allPlans; }
@@ -262,7 +263,8 @@ namespace LAHJA.Data.UI.Templates.Plans
             NavigationManager navigation,
             IDialogService dialogService,
             ISnackbar snackbar,
-            IClientSafelyHandlerException safelyHandler) 
+            IClientSafelyHandlerException safelyHandler,
+           IServiceProvider provider)
             : base(mapper, AuthService, client, builderComponents, navigation, dialogService, snackbar, safelyHandler)
         {
             this.BuilderComponents.GetPlans = getPlansAsync;
@@ -273,8 +275,7 @@ namespace LAHJA.Data.UI.Templates.Plans
 
             this.builderApi = new BuilderPlansApiClient(mapper, client);
 
-            Task.FromResult(OnInitialize());
-
+            //_self = provider.GetRequiredService<TemplatePlans>();
         }
 
 
@@ -286,18 +287,11 @@ namespace LAHJA.Data.UI.Templates.Plans
 
         //public  IBuilderPlansComponent<DataBuildPlansBase, DataBuildPlansBase> BuilderPlansComponent { get => builderPlansComponents; }
 
-        public async Task OnInitialize()
+        public async Task<Result<List<CategoryComponent>>> GetAllCategoriesAsync()
         {
 
-            var response = await builderApi.GetAllCategories();
-            if (response.Succeeded)
-            {
-                _categories=response.Data;  
-            }
-            else
-            {
-                _errors = response.Messages;
-            }
+            return await builderApi.GetAllCategories();
+           
 
         }
         private async Task<Result<List<SubscriptionPlanInfo>>> getPlansAsync(DataBuildPlansBase buildData)
@@ -305,24 +299,23 @@ namespace LAHJA.Data.UI.Templates.Plans
 
             //List<SubscriptionPlanInfo> allPlans;
             //var response =  await safelyHandler.InvokeAsync(async () => await builderApi.GetPlansAsync(new FilterResponseData { lg = buildData.Lg }));
-            try
-            {
+      
                 return await getSubscriptionsPlansAsync(buildData.Take, buildData.PremiumPlanNumber, buildData.Lg);
-            }
-            catch(Exception e)
-            {
-                return Result<List<SubscriptionPlanInfo>>.Fail(e.Message);
-            }
+     
        
         }
         private async Task<Result<List<SubscriptionPlanInfo>>> getSubscriptionsPlansAsync(int take , int premiumPlanNumber = 0,string lg="en")
         {
 
+
+            //throw new Exception("Exception Plans");
+
             try
             {
 
-                var response = await safelyHandler.InvokeAsync(async () =>
-                {
+
+                //var response = await safelyHandler.InvokeAsync(async () =>
+                //{
                     var response = await builderApi.GetPlansAsync(new FilterResponseData { lg = lg });
                     if (response.Succeeded)
                     {
@@ -352,15 +345,15 @@ namespace LAHJA.Data.UI.Templates.Plans
                     {
                         return response;
                     }
-                });
+                //});
 
-                return response;
+                //return response;
             }
             catch (Exception e)
             {
                 return Result<List<SubscriptionPlanInfo>>.Fail(e.Message);
             }
-            
+
         }
         public async Task<Result<List<SubscriptionPlanInfo>>> getAllSubscriptionsPlansAsync(FilterResponseData filter, int premiumPlanNumber = 0)
         {

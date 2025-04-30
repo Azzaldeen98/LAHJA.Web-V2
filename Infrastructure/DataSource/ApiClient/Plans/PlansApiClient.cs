@@ -6,18 +6,12 @@ using Infrastructure.Models.Plans;
 using Infrastructure.Models.Plans.Response;
 using Infrastructure.Nswag;
 using Microsoft.Extensions.Configuration;
+using Domain.ShareData.Base;
+using Infrastructure.DataSource.ApiClient.Base;
+using Infrastructure.Middlewares; 
 
 namespace Infrastructure.DataSource.ApiClient.Plans
 {
-    using Domain.ShareData.Base;
-    using Infrastructure.DataSource.ApiClient.Base;
-    using Infrastructure.Middlewares;
-    using Shared.Exceptions;
-    using Shared.Exceptions.Server;
-    using Shared.Exceptions.Subscription;
-    using System.Collections.Generic;
-    using System.Reflection;
-
     public class PlansApiClient:BuildApiClient<PlansClient>
     {
         public PlansApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, 
