@@ -10,6 +10,6 @@ namespace Shared.Constants.ArchitecturalLayers
     {
         public static string InfrastructureRoot = "..\\Infrastructure";
         public static string DomainRoot = "..\\Domain";
-        public static string ApplicationLayerRoot = "..\\ApplicationLayer";
+        public static string ApplicationRoot = "..\\Application";
     }
 }

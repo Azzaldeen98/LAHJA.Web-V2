@@ -9,6 +9,7 @@ using Domain.Wrapper;
 using Newtonsoft.Json.Linq;
 using Domain.Exceptions;
 using Infrastructure.Middlewares;
+using Infrastructure.Shared.ApiInvoker;
 
 
 
@@ -21,7 +22,7 @@ namespace Infrastructure.DataSource.ApiClient.AuthorizationSession
 
 
 
-        public AuthorizationSessionApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, IApiSafelyHandlerMiddleware apiSafelyHandler) 
+        public AuthorizationSessionApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, IApiInvoker apiSafelyHandler) 
             : base(clientFactory, mapper, config, apiSafelyHandler)
         {
 

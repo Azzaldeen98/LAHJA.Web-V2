@@ -5,7 +5,9 @@
 //----------------------
 
 
-using Shared.AutoGenerator.Interfaces;
+
+using Shared.Interfaces;
+
 
 
 
@@ -392,15 +394,15 @@ namespace Infrastructure.Nswag
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task CustomMapIdentityApiApi_confirmEmailAsync(ConfirmEmailRequest body)
+        public virtual System.Threading.Tasks.Task ConfirmEmailAsync(ConfirmEmailRequest body)
         {
-            return CustomMapIdentityApiApi_confirmEmailAsync(body, System.Threading.CancellationToken.None);
+            return ConfirmEmailAsync(body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task CustomMapIdentityApiApi_confirmEmailAsync(ConfirmEmailRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task ConfirmEmailAsync(ConfirmEmailRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");

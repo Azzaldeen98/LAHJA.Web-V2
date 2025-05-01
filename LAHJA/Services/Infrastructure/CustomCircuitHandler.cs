@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.Server.Circuits;
-using Shared.AutoGenerator.Interfaces;
+using Shared.Interfaces;
 
 
 namespace LAHJA.Services.Infrastructure

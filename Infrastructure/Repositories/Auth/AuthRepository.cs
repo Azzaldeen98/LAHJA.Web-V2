@@ -3,8 +3,8 @@ using  System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Infrastructure.Nswag;
-using Shared.AutoGenerator.Interfaces;
-using Infrastructure.DataSource.ApiClient2.Base;
+using Shared.Interfaces;
+using Infrastructure.DataSource.ApiClientBase;
 using Infrastructure.DataSource.ApiClient2;
 using Microsoft.Extensions.Configuration;
 namespace Infrastructure.Repositories;
@@ -62,12 +62,12 @@ public class AuthRepository : IAuthRepository {
    }
 
 
-    public async Task CustomMapIdentityApiApi_confirmEmailAsync(ConfirmEmailRequest body, CancellationToken cancellationToken)
+    public async Task ConfirmEmailAsync(ConfirmEmailRequest body, CancellationToken cancellationToken)
    {
 
     
                 
-      await _apiClient.CustomMapIdentityApiApi_confirmEmailAsync(body, cancellationToken);
+      await _apiClient.ConfirmEmailAsync(body, cancellationToken);
                 
 
    }

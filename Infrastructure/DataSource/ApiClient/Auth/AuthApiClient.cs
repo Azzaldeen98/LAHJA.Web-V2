@@ -21,6 +21,7 @@ using Infrastructure.Models.Auth.Response;
 using Domain.Entities;
 using Infrastructure.DataSource.ApiClient.Base;
 using Infrastructure.Middlewares;
+using Infrastructure.Shared.ApiInvoker;
 
 
 //using Microsoft.AspNetCore.Http;
@@ -32,7 +33,7 @@ namespace Infrastructure.DataSource.ApiClient.Auth
     {
 
 
-        public AuthApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, IApiSafelyHandlerMiddleware apiSafelyHandler)
+        public AuthApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, IApiInvoker apiSafelyHandler)
             :base(clientFactory,mapper,config,apiSafelyHandler)
         {
        
@@ -129,7 +130,7 @@ namespace Infrastructure.DataSource.ApiClient.Auth
             {
                 var model = _mapper.Map<ConfirmEmailRequest>(request);
                 var client = await GetApiClient();
-                await client.CustomMapIdentityApiApi_confirmEmailAsync(model);
+                await client.ConfirmEmailAsync(model);
 
                 return Result<string>.Success();
 

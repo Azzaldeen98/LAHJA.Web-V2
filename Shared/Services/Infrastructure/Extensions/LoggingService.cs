@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.Extensions.Logging;
-using Shared.AutoGenerator.Interfaces;
+using Shared.Interfaces;
+
 
 
 namespace Shared.Services.Infrastructure.Extensions

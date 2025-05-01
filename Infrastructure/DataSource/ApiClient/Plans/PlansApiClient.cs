@@ -8,14 +8,15 @@ using Infrastructure.Nswag;
 using Microsoft.Extensions.Configuration;
 using Domain.ShareData.Base;
 using Infrastructure.DataSource.ApiClient.Base;
-using Infrastructure.Middlewares; 
+using Infrastructure.Middlewares;
+using Infrastructure.Shared.ApiInvoker;
 
 namespace Infrastructure.DataSource.ApiClient.Plans
 {
     public class PlansApiClient:BuildApiClient<PlansClient>
     {
         public PlansApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, 
-            IApiSafelyHandlerMiddleware apiSafelyHandler) : base(clientFactory, mapper, config, apiSafelyHandler)
+            IApiInvoker apiSafelyHandler) : base(clientFactory, mapper, config, apiSafelyHandler)
         {
 
         }

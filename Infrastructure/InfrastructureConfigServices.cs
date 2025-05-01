@@ -41,14 +41,10 @@ using Domain.Repository.ModelAi;
 using Infrastructure.Mappings.Dynamic;
 using Infrastructure.Middlewares;
 using Infrastructure.Shared.ApiInvoker;
-using AutoGenerator;
-using Shared.Generator.AppFolder;
-using System.Reflection;
-using Shared.Generator.Code;
-using Shared.AutoGenerator.Code;
-using Shared.AutoGenerator.Interfaces;
 using Infrastructure.Config;
-using Shared.Constants.ArchitecturalLayers;
+using Shared.Interfaces;
+using Shared.Extensions;
+
 
 namespace Infrastructure
 {
@@ -63,8 +59,9 @@ namespace Infrastructure
             //InfrastructureGenerator.GenerateRepositoryTemplates();
 
             //DependencyInjectionRegistrar.RegisterScopedDependencies<ITBaseRepository>(assemblies, thisFilePath, "serviceCollection");
-            serviceCollection.RegisterScopedDependencies<ITBaseApiClient>(assemblies);
-            serviceCollection.RegisterScopedDependencies<ITBaseRepository>(assemblies);
+            serviceCollection.RegisterDependencies<ITBaseApiClient>(ServiceCollectionServiceExtensions.AddScoped,assemblies);            
+            serviceCollection.RegisterDependencies<ITBaseRepository>(ServiceCollectionServiceExtensions.AddScoped,assemblies);
+
 
             InstallConfiguration(serviceCollection,configuration);
             InstallApiClients(serviceCollection);
@@ -85,8 +82,9 @@ namespace Infrastructure
             serviceCollection.AddHttpClient("ApiClient", client => { client.BaseAddress = new Uri(baseUrl.Api); });
 
             serviceCollection.AddScoped<ClientFactory>();
-            serviceCollection.AddScoped<IApiSafelyHandlerMiddleware, ApiSafelyHandlerMiddleware>();
+
             serviceCollection.AddScoped<IApiInvoker, ApiInvoker>();
+
             //serviceCollection.AddScoped<ITokenProvider, TokenProvider>();
 
         }

@@ -11,6 +11,7 @@ using Infrastructure.Models.Plans;
 using Infrastructure.Models.Profile.Response;
 using Infrastructure.Models.Request.Response;
 using Infrastructure.Nswag;
+using Infrastructure.Shared.ApiInvoker;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace Infrastructure.DataSource.ApiClient.Profile
     {
 
 
-        public ProfileApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, IApiSafelyHandlerMiddleware apiSafelyHandler)
+        public ProfileApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, IApiInvoker apiSafelyHandler)
             : base(clientFactory, mapper, config, apiSafelyHandler)
         {
 

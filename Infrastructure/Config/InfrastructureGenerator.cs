@@ -1,11 +1,8 @@
-﻿using Infrastructure.DataSource.ApiClient2.Base;
-using Microsoft.Extensions.DependencyInjection;
-using Shared.AutoGenerator.Code;
-using Shared.AutoGenerator.Interfaces;
+﻿using AutoGenerator.Code;
+using Shared.Interfaces;
 using Shared.Constants.ArchitecturalLayers;
-using Shared.Generator.Code;
 using Shared.Helpers;
-using System.Reflection;
+
 
 namespace Infrastructure.Config
 {
@@ -25,8 +22,8 @@ namespace Infrastructure.Config
             var files=FileScanner.GetAllCsFilePaths($"{appRoot}\\DataSource\\ApiClient2");
             foreach(var file in files)
             {
-                if(file.Contains("BaseApiClient") || file.Contains("IBuildApiClient"))
-                    continue;
+                //if(file.Contains("BaseApiClient") || file.Contains("IBuildApiClient"))
+                //    continue;
 
                 GenerateAllRepositoryTemplates(file);
             }
@@ -60,8 +57,8 @@ namespace Infrastructure.Config
                     "Infrastructure.Nswag",
                     "Infrastructure.Shared.ApiInvoker",
                      "AutoMapper",
-                     "Shared.AutoGenerator.Interfaces",
-                     "Infrastructure.DataSource.ApiClient2.Base",
+                     "Shared.Interfaces",
+                     "Infrastructure.DataSource.ApiClientBase",
                      "Infrastructure.DataSource.ApiClientFactory",
                      "Infrastructure.Shared.ApiInvoker",
                      "Microsoft.Extensions.Configuration",
@@ -109,8 +106,8 @@ namespace Infrastructure.Config
                     "System.Net.Http",
                     "System.Threading.Tasks",
                     "Infrastructure.Nswag",
-                    "Shared.AutoGenerator.Interfaces",
-                     "Infrastructure.DataSource.ApiClient2.Base",
+                    "Shared.Interfaces",
+                     "Infrastructure.DataSource.ApiClientBase",
                      "Infrastructure.DataSource.ApiClient2",
                      "Microsoft.Extensions.Configuration",
         },
@@ -128,15 +125,7 @@ namespace Infrastructure.Config
             });
         }
 
-        public  void ReadAllFiles(string rootDirectory, Func<Task> action)
-        {
-            string[] csFiles = Directory.GetFiles(rootDirectory, "*.cs", SearchOption.AllDirectories);
-
-            // طباعة كل رابط (مسار كامل) للملفات
-            foreach (string file in csFiles)
-            {
-                Console.WriteLine(file);
-            }
-        }
+        
+        
     }
 }

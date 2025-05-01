@@ -8,6 +8,7 @@ using Infrastructure.Models.BaseFolder.Response;
 using Infrastructure.Models.Service.Request;
 using Infrastructure.Models.Service.Response;
 using Infrastructure.Nswag;
+using Infrastructure.Shared.ApiInvoker;
 using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.DataSource.ApiClient.Service
@@ -15,7 +16,7 @@ namespace Infrastructure.DataSource.ApiClient.Service
     public class ServiceApiClient : BuildApiClient<ServiceClient>
     {
 
-        public ServiceApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, IApiSafelyHandlerMiddleware apiSafelyHandler) 
+        public ServiceApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, IApiInvoker apiSafelyHandler) 
             : base(clientFactory, mapper, config, apiSafelyHandler)
         {
 

@@ -8,6 +8,7 @@ using Infrastructure.Middlewares;
 using Infrastructure.Models.Subscriptions.Request;
 using Infrastructure.Models.Subscriptions.Response;
 using Infrastructure.Nswag;
+using Infrastructure.Shared.ApiInvoker;
 using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.DataSource.ApiClient.Payment
@@ -17,7 +18,7 @@ namespace Infrastructure.DataSource.ApiClient.Payment
       
 
         public SubscriptionsApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, 
-            IApiSafelyHandlerMiddleware apiSafelyHandler) : base(clientFactory, mapper, config,apiSafelyHandler)
+            IApiInvoker apiSafelyHandler) : base(clientFactory, mapper, config,apiSafelyHandler)
         {
            
         }

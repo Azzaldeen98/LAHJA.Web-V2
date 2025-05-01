@@ -8,6 +8,7 @@ using Infrastructure.Models.BaseFolder.Response;
 using Infrastructure.Models.Product.Request;
 using Infrastructure.Models.Product.Response;
 using Infrastructure.Nswag;
+using Infrastructure.Shared.ApiInvoker;
 using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.DataSource.ApiClient.Payment
@@ -15,7 +16,7 @@ namespace Infrastructure.DataSource.ApiClient.Payment
     public class ProductApiClient: BuildApiClient<ProductClient>
     {
 
-        public ProductApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, IApiSafelyHandlerMiddleware apiSafelyHandler) : base(clientFactory, mapper, config,apiSafelyHandler)
+        public ProductApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, IApiInvoker apiSafelyHandler) : base(clientFactory, mapper, config,apiSafelyHandler)
         {
         }
 

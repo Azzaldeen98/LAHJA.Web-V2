@@ -19,7 +19,7 @@ namespace Infrastructure.Repository.Plans
         private readonly SeedsPlans seedsPlans;
         private readonly PlansApiClient plansApiClient;
         private readonly IManageLanguageService manageLanguageService;
-        private readonly Infrastructure.Repositories.IProfileRepository planRepository;
+
 
         private readonly SeedsPlansContainers seedsPlansContainers;
         private readonly SeedsSubscriptionsPlans seedsSubscriptionsPlans;
@@ -33,8 +33,7 @@ namespace Infrastructure.Repository.Plans
             SeedsPlansContainers seedsPlansContainers,
             PlansApiClient plansApiClient,
             IManageLanguageService manageLanguageService,
-            SeedsSubscriptionsPlans seedsSubscriptionsPlans,
-            Repositories.IProfileRepository planRepository)
+            SeedsSubscriptionsPlans seedsSubscriptionsPlans)
         {
 
             //seedsPlans = new SeedsPlans();
@@ -46,7 +45,7 @@ namespace Infrastructure.Repository.Plans
             this.plansApiClient = plansApiClient;
             this.manageLanguageService = manageLanguageService;
             this.seedsSubscriptionsPlans = seedsSubscriptionsPlans;
-            this.planRepository = planRepository;
+
         }
         /// <summary>
         /// Work

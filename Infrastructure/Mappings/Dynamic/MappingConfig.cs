@@ -1,6 +1,6 @@
 ﻿
 using AutoMapper;
-using Shared.AutoGenerator.Interfaces;
+using Shared.Interfaces;
 using System.Reflection;
 
 namespace Infrastructure.Mappings.Dynamic

@@ -13,6 +13,7 @@ using Infrastructure.Models.Setting.Request;
 using Infrastructure.Models.Setting.Response;
 using Infrastructure.Models.Subscriptions.Request;
 using Infrastructure.Nswag;
+using Infrastructure.Shared.ApiInvoker;
 using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.DataSource.ApiClient.Payment
@@ -20,7 +21,7 @@ namespace Infrastructure.DataSource.ApiClient.Payment
     public class SettingsApiClient : BuildApiClient<SettingClient>
     {
 
-        public SettingsApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, IApiSafelyHandlerMiddleware apiSafelyHandler) : base(clientFactory, mapper, config, apiSafelyHandler)
+        public SettingsApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, IApiInvoker apiSafelyHandler) : base(clientFactory, mapper, config, apiSafelyHandler)
         {
          
         }

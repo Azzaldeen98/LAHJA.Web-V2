@@ -16,11 +16,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="GenerateServices\" />
     <Folder Include="Services\ModelGateway\" />
     <Folder Include="Services\RequestEvent\" />
     <Folder Include="Services\Roles\" />
     <Folder Include="Services\ServiceMethod\" />
     <Folder Include="Services\Setting\" />
+    <Folder Include="UseCases\" />
     <Folder Include="UseCase\ModelGateway\" />
     <Folder Include="UseCase\RequestEvent\" />
     <Folder Include="UseCase\Roles\" />

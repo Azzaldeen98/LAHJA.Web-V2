@@ -1,4 +1,5 @@
-﻿using Application.Services.Auth;
+﻿using Application.Config;
+using Application.Services.Auth;
 using Application.Services.AuthorizationSession;
 using Application.Services.Checkout;
 using Application.Services.ModelAi;
@@ -20,6 +21,8 @@ using Domain.ShareData.Base;
 using Infrastructure.DataSource.ApiClient.Plans;
 using Infrastructure.Mappings.Plans;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Extensions;
+using Shared.Interfaces;
 
 namespace Infrastructure
 {
@@ -27,6 +30,12 @@ namespace Infrastructure
     {
         public static void InstallApplicationConfigServices(this IServiceCollection serviceCollection)
         {
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            //ApplicationGenerator.GenerateUseCaseTemplates();
+            //ApplicationGenerator.GenerateServicesTemplates();
+
+            serviceCollection.RegisterDependencies<ITBaseUseCase>(ServiceCollectionServiceExtensions.AddScoped, assemblies);
+            serviceCollection.RegisterDependencies<ITBaseService>(ServiceCollectionServiceExtensions.AddScoped, assemblies);
 
             InstallMapping(serviceCollection);
             InstallUsaCases(serviceCollection);

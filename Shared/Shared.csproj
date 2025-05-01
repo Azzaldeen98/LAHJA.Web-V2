@@ -27,8 +27,8 @@
 
 
 	<ItemGroup>
-	  <Folder Include="AutoGenerator\Code\Infrastructure\ApiClient\" />
-	  <Folder Include="AutoGenerator\Code\Infrastructure\Repositiry\" />
+	  <Folder Include="AutoGenerator\" />
+	  <Folder Include="Middleware\" />
 	</ItemGroup>
 
 </Project>

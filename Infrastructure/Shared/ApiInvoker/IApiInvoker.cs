@@ -1,8 +1,9 @@
 ﻿using Shared.Exceptions.Base;
+using Shared.HandlerException;
 
 namespace Infrastructure.Shared.ApiInvoker
 {
-    public interface IApiInvoker
+    public interface IApiInvoker: IExceptionHandler
     {
         public bool IsShouldRetry(BaseExceptionApp ex);
         public Task<T> InvokeAsync<T>(Func<Task<T>> action, CancellationToken cancellationToken, int _maxRetries = 3);

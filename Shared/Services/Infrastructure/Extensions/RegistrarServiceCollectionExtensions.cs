@@ -1,7 +1,7 @@
 
 using Castle.DynamicProxy;
 using Microsoft.Extensions.DependencyInjection;
-using Shared.AutoGenerator.Interfaces;
+using Shared.Interfaces;
 using System.Reflection;
 
 

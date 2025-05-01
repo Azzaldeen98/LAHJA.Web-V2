@@ -5,6 +5,7 @@ using Domain.Wrapper;
 using Infrastructure.DataSource.ApiClientFactory;
 using Infrastructure.Middlewares;
 using Infrastructure.Models.Billing.Response;
+using Infrastructure.Shared.ApiInvoker;
 using Microsoft.Extensions.Configuration;
 using Shared.Exceptions;
 using Shared.Exceptions.Others;
@@ -37,7 +38,7 @@ namespace Infrastructure.DataSource.ApiClient.Base
         protected readonly ClientFactory _clientFactory;
         protected readonly IMapper _mapper;
         protected readonly IConfiguration _config;
-        protected readonly IApiSafelyHandlerMiddleware apiSafelyHandler;
+        protected readonly IApiInvoker apiSafelyHandler;
 
 
 
@@ -52,7 +53,7 @@ namespace Infrastructure.DataSource.ApiClient.Base
                         ClientFactory clientFactory,
                         IMapper mapper,
                         IConfiguration config,
-                        IApiSafelyHandlerMiddleware apiSafelyHandler) : this(clientFactory, mapper, config)
+                        IApiInvoker apiSafelyHandler) : this(clientFactory, mapper, config)
         {
 
             this.apiSafelyHandler = apiSafelyHandler;

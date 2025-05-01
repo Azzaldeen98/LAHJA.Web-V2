@@ -7,6 +7,7 @@ using Infrastructure.Models.BaseFolder.Response;
 using Infrastructure.Models.Price.Request;
 using Infrastructure.Models.Price.Response;
 using Infrastructure.Nswag;
+using Infrastructure.Shared.ApiInvoker;
 using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.DataSource.ApiClient.Payment
@@ -14,7 +15,7 @@ namespace Infrastructure.DataSource.ApiClient.Payment
     public class PriceApiClient: BuildApiClient<PriceClient>
     {
 
-        public PriceApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, IApiSafelyHandlerMiddleware apiSafelyHandler) 
+        public PriceApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, IApiInvoker apiSafelyHandler) 
             : base(clientFactory, mapper, config, apiSafelyHandler)
         {
         }

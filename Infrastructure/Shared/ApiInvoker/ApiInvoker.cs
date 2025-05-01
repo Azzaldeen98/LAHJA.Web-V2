@@ -4,10 +4,14 @@ using Shared.Exceptions;
 using Shared.Exceptions.Base;
 using Shared.Exceptions.General;
 using Shared.Exceptions.Server;
+using Shared.HandlerException;
 
 namespace Infrastructure.Shared.ApiInvoker
 {
-    public class ApiInvoker: IApiInvoker
+    /// <summary>
+    /// ResilientApiInvoker
+    /// </summary>
+    public class ApiInvoker: ExceptionHandler,IApiInvoker
     {
             private readonly ILogger<ApiInvoker> _logger;
 
@@ -162,12 +166,7 @@ namespace Infrastructure.Shared.ApiInvoker
                 return retryExceptions.Contains(ex.GetType());
             }
 
-            // Placeholders for application-specific logic:
-            private BaseExceptionApp GetExceptionTypeByStateCode(int stateCode) => new InternalServerException(); // Replace with actual logic
-            private int ExtractStateCode(string message) => -1; // Replace with actual logic
-            private int DetectExceptionTypeByMessage(string message) => 500; // Replace with actual logic
-            private void ThrowMappedException(string message, int stateCode) => throw new Exception(message); // Replace with actual logic
-            private TimeSpan GetRetryDelay(int attempt) => TimeSpan.FromSeconds(Math.Pow(2, attempt)); // Exponential backoff
+            
         }
 
 }

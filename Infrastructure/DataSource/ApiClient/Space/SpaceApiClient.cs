@@ -7,6 +7,7 @@ using Domain.Wrapper;
 using Domain.Entities.Profile;
 using Domain.ShareData.Base;
 using Infrastructure.Middlewares;
+using Infrastructure.Shared.ApiInvoker;
 
 
 
@@ -15,7 +16,7 @@ namespace Infrastructure.DataSource.ApiClient.AuthorizationSession
     public class SpaceApiClient : BuildApiClient<SpaceClient>
     {
        
-        public SpaceApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, IApiSafelyHandlerMiddleware apiSafelyHandler) : base(clientFactory, mapper, config, apiSafelyHandler)
+        public SpaceApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, IApiInvoker apiSafelyHandler) : base(clientFactory, mapper, config, apiSafelyHandler)
         {
            
         }
