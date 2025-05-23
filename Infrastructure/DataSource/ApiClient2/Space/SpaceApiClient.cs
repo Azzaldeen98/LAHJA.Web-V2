@@ -3,17 +3,17 @@ using  System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Infrastructure.Nswag;
-using Infrastructure.Shared.ApiInvoker;
+using Infrastructure.Share.Invoker;
 using AutoMapper;
 using Shared.Interfaces;
 using Infrastructure.DataSource.ApiClientBase;
 using Infrastructure.DataSource.ApiClientFactory;
-using Infrastructure.Shared.ApiInvoker;
+using Infrastructure.Share.Invoker;
 using Microsoft.Extensions.Configuration;
 namespace Infrastructure.DataSource.ApiClient2;
 
 
-public class SpaceApiClient : BuildApiClient<SpaceClient>  , ISpaceApiClient {
+ public  class SpaceApiClient : BuildApiClient<SpaceClient>  , ISpaceApiClient {
 
   
     public SpaceApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, 

@@ -1,5 +1,5 @@
 ﻿using Domain.Repository.Auth;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using Domain.Entities.Auth.Request;
 
 namespace Application.UseCase;

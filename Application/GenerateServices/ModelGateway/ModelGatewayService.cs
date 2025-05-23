@@ -11,32 +11,33 @@ namespace Application.Services;
 public class ModelGatewayService : IModelGatewayService {
 
 
-            
- private readonly CreateModelGatewayUseCase _createModelGatewayUseCase;
- private readonly DefaultModelGatewayUseCase _defaultModelGatewayUseCase;
- private readonly DeleteModelGatewayUseCase _deleteModelGatewayUseCase;
- private readonly GetModelGatewayUseCase _getModelGatewayUseCase;
- private readonly GetModelGatwaysModelGatewayUseCase _getModelGatwaysModelGatewayUseCase;
- private readonly UpdateModelGatewayUseCase _updateModelGatewayUseCase;
+        
+     private readonly CreateModelGatewayUseCase _createModelGatewayUseCase;
+     private readonly DefaultModelGatewayUseCase _defaultModelGatewayUseCase;
+     private readonly DeleteModelGatewayUseCase _deleteModelGatewayUseCase;
+     private readonly GetModelGatewayUseCase _getModelGatewayUseCase;
+     private readonly GetModelGatwaysModelGatewayUseCase _getModelGatwaysModelGatewayUseCase;
+     private readonly UpdateModelGatewayUseCase _updateModelGatewayUseCase;
 
 
-            public ModelGatewayService(
-CreateModelGatewayUseCase createModelGatewayUseCase,
-DefaultModelGatewayUseCase defaultModelGatewayUseCase,
-DeleteModelGatewayUseCase deleteModelGatewayUseCase,
-GetModelGatewayUseCase getModelGatewayUseCase,
-GetModelGatwaysModelGatewayUseCase getModelGatwaysModelGatewayUseCase,
-UpdateModelGatewayUseCase updateModelGatewayUseCase){
-                
-      _createModelGatewayUseCase=createModelGatewayUseCase;
-      _defaultModelGatewayUseCase=defaultModelGatewayUseCase;
-      _deleteModelGatewayUseCase=deleteModelGatewayUseCase;
-      _getModelGatewayUseCase=getModelGatewayUseCase;
-      _getModelGatwaysModelGatewayUseCase=getModelGatwaysModelGatewayUseCase;
-      _updateModelGatewayUseCase=updateModelGatewayUseCase;
+    public ModelGatewayService(   
+            CreateModelGatewayUseCase createModelGatewayUseCase,
+            DefaultModelGatewayUseCase defaultModelGatewayUseCase,
+            DeleteModelGatewayUseCase deleteModelGatewayUseCase,
+            GetModelGatewayUseCase getModelGatewayUseCase,
+            GetModelGatwaysModelGatewayUseCase getModelGatwaysModelGatewayUseCase,
+            UpdateModelGatewayUseCase updateModelGatewayUseCase)
+    {
+                        
+          _createModelGatewayUseCase=createModelGatewayUseCase;
+          _defaultModelGatewayUseCase=defaultModelGatewayUseCase;
+          _deleteModelGatewayUseCase=deleteModelGatewayUseCase;
+          _getModelGatewayUseCase=getModelGatewayUseCase;
+          _getModelGatwaysModelGatewayUseCase=getModelGatwaysModelGatewayUseCase;
+          _updateModelGatewayUseCase=updateModelGatewayUseCase;
 
 
-            }
+    }
 
                 
 
@@ -45,7 +46,7 @@ UpdateModelGatewayUseCase updateModelGatewayUseCase){
 
     
 
-         return    await _createModelGatewayUseCase.ExecuteAsync(body, cancellationToken);
+         return   await _createModelGatewayUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -57,7 +58,7 @@ UpdateModelGatewayUseCase updateModelGatewayUseCase){
 
     
 
-          await _defaultModelGatewayUseCase.ExecuteAsync(id, cancellationToken);
+         await _defaultModelGatewayUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -69,7 +70,7 @@ UpdateModelGatewayUseCase updateModelGatewayUseCase){
 
     
 
-         return    await _deleteModelGatewayUseCase.ExecuteAsync(id, cancellationToken);
+         return   await _deleteModelGatewayUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -81,7 +82,7 @@ UpdateModelGatewayUseCase updateModelGatewayUseCase){
 
     
 
-         return    await _getModelGatewayUseCase.ExecuteAsync(id, cancellationToken);
+         return   await _getModelGatewayUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -93,7 +94,7 @@ UpdateModelGatewayUseCase updateModelGatewayUseCase){
 
     
 
-         return    await _getModelGatwaysModelGatewayUseCase.ExecuteAsync(cancellationToken);
+         return   await _getModelGatwaysModelGatewayUseCase.ExecuteAsync(cancellationToken);
         
 
    }
@@ -105,7 +106,7 @@ UpdateModelGatewayUseCase updateModelGatewayUseCase){
 
     
 
-         return    await _updateModelGatewayUseCase.ExecuteAsync(id, body, cancellationToken);
+         return   await _updateModelGatewayUseCase.ExecuteAsync(id, body, cancellationToken);
         
 
    }

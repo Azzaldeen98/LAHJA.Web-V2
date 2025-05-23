@@ -1,7 +1,7 @@
 ﻿using Domain.Exceptions;
 using Domain.Repository.AuthorizationSession;
 using Domain.ShareData.Base;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;

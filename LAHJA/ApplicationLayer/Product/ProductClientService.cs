@@ -1,6 +1,6 @@
 ﻿using Application.Services.Plans;
 using AutoMapper;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using LAHJA.Helpers.Services;
 using Domain.Entities.Product.Response;
 using Domain.Entities.Product;
@@ -10,18 +10,19 @@ using Domain.Entities.Price.Request;
 using Domain.ShareData.Base;
 using Domain.Entities.Price.Response;
 using Application.Services.Prroduct;
+using Shared.Helpers;
 
 namespace LAHJA.ApplicationLayer.Product
 {
     public class ProductClientService
     {
         private readonly ProductService _productService;
-        private readonly TokenService tokenService;
+        private readonly ITokenService tokenService;
         private readonly IMapper _mapper;
 
 
 
-        public ProductClientService(ProductService ProductService, IMapper mapper, TokenService tokenService)
+        public ProductClientService(ProductService ProductService, IMapper mapper, ITokenService tokenService)
         {
 
             this._productService = ProductService;

@@ -10,10 +10,20 @@ namespace Infrastructure.Config
     {
         //private static string _assemblyPath = Assembly.GetExecutingAssembly().Location;
         private static string appRoot = ArchitecturalLayers.InfrastructureRoot;
+        private static string sourceFilePath = $"{ArchitecturalLayers.InfrastructureRoot}\\DataSource\\ApiClientFactory\\Nswag\\WebClientApi.cs";
+        public static void GeneratorCode()
+        {
+
+            InterfaceInjector.InjectInterface(sourceFilePath, "Shared.Interfaces.ITApiClient", "Client");
+            InterfaceInjector.InjectInterface(sourceFilePath, "Shared.Interfaces.ITDto", "Dto");
+            //GenerateApiClientTemplates();
+            //GenerateRepositoryTemplates();
+
+        }
         public static void GenerateApiClientTemplates()
         {
 
-            GenerateAllApiClientTemplates($"{appRoot}\\DataSource\\ApiClientFactory\\Nswag\\WebClientApi.cs");
+            GenerateAllApiClientTemplates(sourceFilePath);
 
         }
         public static void GenerateRepositoryTemplates()
@@ -55,12 +65,12 @@ namespace Infrastructure.Config
                     "System.Net.Http",
                     "System.Threading.Tasks",
                     "Infrastructure.Nswag",
-                    "Infrastructure.Shared.ApiInvoker",
+                    "Infrastructure.Share.Invoker",
                      "AutoMapper",
                      "Shared.Interfaces",
                      "Infrastructure.DataSource.ApiClientBase",
                      "Infrastructure.DataSource.ApiClientFactory",
-                     "Infrastructure.Shared.ApiInvoker",
+                     "Infrastructure.Share.Invoker",
                      "Microsoft.Extensions.Configuration",
                  },
                 AdditionalCode = @"

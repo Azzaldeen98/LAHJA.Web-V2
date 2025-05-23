@@ -1,7 +1,7 @@
 ﻿using Domain.Entities.Price.Request;
 using Domain.Entities.Price.Response;
 using Domain.Repository.Price;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 
 namespace Application.UseCase.Plans.Get
 {

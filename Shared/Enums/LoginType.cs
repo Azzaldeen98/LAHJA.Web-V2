@@ -1,4 +1,4 @@
-﻿namespace LAHJA.Helpers.Enum
+﻿namespace Shared.Enums
 {
     public enum LoginType
     {

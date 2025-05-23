@@ -11,47 +11,48 @@ namespace Application.Services;
 public class ProfileService : IProfileService {
 
 
-            
- private readonly GetCustomerProfileUseCase _getCustomerProfileUseCase;
- private readonly ModelAisProfileUseCase _modelAisProfileUseCase;
- private readonly RequestsServiceProfileUseCase _requestsServiceProfileUseCase;
- private readonly RequestsSubscriptionProfileUseCase _requestsSubscriptionProfileUseCase;
- private readonly ServicesModelAiProfileUseCase _servicesModelAiProfileUseCase;
- private readonly ServicesProfileUseCase _servicesProfileUseCase;
- private readonly SpacesSubscriptionProfileUseCase _spacesSubscriptionProfileUseCase;
- private readonly SpaceSubscriptionProfileUseCase _spaceSubscriptionProfileUseCase;
- private readonly SubscriptionsProfileUseCase _subscriptionsProfileUseCase;
- private readonly UpdateProfileUseCase _updateProfileUseCase;
- private readonly UserProfileUseCase _userProfileUseCase;
+        
+     private readonly GetCustomerProfileUseCase _getCustomerProfileUseCase;
+     private readonly ModelAisProfileUseCase _modelAisProfileUseCase;
+     private readonly RequestsServiceProfileUseCase _requestsServiceProfileUseCase;
+     private readonly RequestsSubscriptionProfileUseCase _requestsSubscriptionProfileUseCase;
+     private readonly ServicesModelAiProfileUseCase _servicesModelAiProfileUseCase;
+     private readonly ServicesProfileUseCase _servicesProfileUseCase;
+     private readonly SpacesSubscriptionProfileUseCase _spacesSubscriptionProfileUseCase;
+     private readonly SpaceSubscriptionProfileUseCase _spaceSubscriptionProfileUseCase;
+     private readonly SubscriptionsProfileUseCase _subscriptionsProfileUseCase;
+     private readonly UpdateProfileUseCase _updateProfileUseCase;
+     private readonly UserProfileUseCase _userProfileUseCase;
 
 
-            public ProfileService(
-GetCustomerProfileUseCase getCustomerProfileUseCase,
-ModelAisProfileUseCase modelAisProfileUseCase,
-RequestsServiceProfileUseCase requestsServiceProfileUseCase,
-RequestsSubscriptionProfileUseCase requestsSubscriptionProfileUseCase,
-ServicesModelAiProfileUseCase servicesModelAiProfileUseCase,
-ServicesProfileUseCase servicesProfileUseCase,
-SpacesSubscriptionProfileUseCase spacesSubscriptionProfileUseCase,
-SpaceSubscriptionProfileUseCase spaceSubscriptionProfileUseCase,
-SubscriptionsProfileUseCase subscriptionsProfileUseCase,
-UpdateProfileUseCase updateProfileUseCase,
-UserProfileUseCase userProfileUseCase){
-                
-      _getCustomerProfileUseCase=getCustomerProfileUseCase;
-      _modelAisProfileUseCase=modelAisProfileUseCase;
-      _requestsServiceProfileUseCase=requestsServiceProfileUseCase;
-      _requestsSubscriptionProfileUseCase=requestsSubscriptionProfileUseCase;
-      _servicesModelAiProfileUseCase=servicesModelAiProfileUseCase;
-      _servicesProfileUseCase=servicesProfileUseCase;
-      _spacesSubscriptionProfileUseCase=spacesSubscriptionProfileUseCase;
-      _spaceSubscriptionProfileUseCase=spaceSubscriptionProfileUseCase;
-      _subscriptionsProfileUseCase=subscriptionsProfileUseCase;
-      _updateProfileUseCase=updateProfileUseCase;
-      _userProfileUseCase=userProfileUseCase;
+    public ProfileService(   
+            GetCustomerProfileUseCase getCustomerProfileUseCase,
+            ModelAisProfileUseCase modelAisProfileUseCase,
+            RequestsServiceProfileUseCase requestsServiceProfileUseCase,
+            RequestsSubscriptionProfileUseCase requestsSubscriptionProfileUseCase,
+            ServicesModelAiProfileUseCase servicesModelAiProfileUseCase,
+            ServicesProfileUseCase servicesProfileUseCase,
+            SpacesSubscriptionProfileUseCase spacesSubscriptionProfileUseCase,
+            SpaceSubscriptionProfileUseCase spaceSubscriptionProfileUseCase,
+            SubscriptionsProfileUseCase subscriptionsProfileUseCase,
+            UpdateProfileUseCase updateProfileUseCase,
+            UserProfileUseCase userProfileUseCase)
+    {
+                        
+          _getCustomerProfileUseCase=getCustomerProfileUseCase;
+          _modelAisProfileUseCase=modelAisProfileUseCase;
+          _requestsServiceProfileUseCase=requestsServiceProfileUseCase;
+          _requestsSubscriptionProfileUseCase=requestsSubscriptionProfileUseCase;
+          _servicesModelAiProfileUseCase=servicesModelAiProfileUseCase;
+          _servicesProfileUseCase=servicesProfileUseCase;
+          _spacesSubscriptionProfileUseCase=spacesSubscriptionProfileUseCase;
+          _spaceSubscriptionProfileUseCase=spaceSubscriptionProfileUseCase;
+          _subscriptionsProfileUseCase=subscriptionsProfileUseCase;
+          _updateProfileUseCase=updateProfileUseCase;
+          _userProfileUseCase=userProfileUseCase;
 
 
-            }
+    }
 
                 
 
@@ -60,7 +61,7 @@ UserProfileUseCase userProfileUseCase){
 
     
 
-         return    await _getCustomerProfileUseCase.ExecuteAsync(cancellationToken);
+         return   await _getCustomerProfileUseCase.ExecuteAsync(cancellationToken);
         
 
    }
@@ -72,7 +73,7 @@ UserProfileUseCase userProfileUseCase){
 
     
 
-         return    await _modelAisProfileUseCase.ExecuteAsync(cancellationToken);
+         return   await _modelAisProfileUseCase.ExecuteAsync(cancellationToken);
         
 
    }
@@ -84,7 +85,7 @@ UserProfileUseCase userProfileUseCase){
 
     
 
-         return    await _requestsServiceProfileUseCase.ExecuteAsync(serviceId, cancellationToken);
+         return   await _requestsServiceProfileUseCase.ExecuteAsync(serviceId, cancellationToken);
         
 
    }
@@ -96,7 +97,7 @@ UserProfileUseCase userProfileUseCase){
 
     
 
-         return    await _requestsSubscriptionProfileUseCase.ExecuteAsync(subscriptionId, cancellationToken);
+         return   await _requestsSubscriptionProfileUseCase.ExecuteAsync(subscriptionId, cancellationToken);
         
 
    }
@@ -108,7 +109,7 @@ UserProfileUseCase userProfileUseCase){
 
     
 
-         return    await _servicesModelAiProfileUseCase.ExecuteAsync(modelAiId, cancellationToken);
+         return   await _servicesModelAiProfileUseCase.ExecuteAsync(modelAiId, cancellationToken);
         
 
    }
@@ -120,7 +121,7 @@ UserProfileUseCase userProfileUseCase){
 
     
 
-         return    await _servicesProfileUseCase.ExecuteAsync(cancellationToken);
+         return   await _servicesProfileUseCase.ExecuteAsync(cancellationToken);
         
 
    }
@@ -132,7 +133,7 @@ UserProfileUseCase userProfileUseCase){
 
     
 
-         return    await _spacesSubscriptionProfileUseCase.ExecuteAsync(subscriptionId, cancellationToken);
+         return   await _spacesSubscriptionProfileUseCase.ExecuteAsync(subscriptionId, cancellationToken);
         
 
    }
@@ -144,7 +145,7 @@ UserProfileUseCase userProfileUseCase){
 
     
 
-         return    await _spaceSubscriptionProfileUseCase.ExecuteAsync(subscriptionId, spaceId, cancellationToken);
+         return   await _spaceSubscriptionProfileUseCase.ExecuteAsync(subscriptionId, spaceId, cancellationToken);
         
 
    }
@@ -156,7 +157,7 @@ UserProfileUseCase userProfileUseCase){
 
     
 
-         return    await _subscriptionsProfileUseCase.ExecuteAsync(cancellationToken);
+         return   await _subscriptionsProfileUseCase.ExecuteAsync(cancellationToken);
         
 
    }
@@ -168,7 +169,7 @@ UserProfileUseCase userProfileUseCase){
 
     
 
-          await _updateProfileUseCase.ExecuteAsync(body, cancellationToken);
+         await _updateProfileUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -180,7 +181,7 @@ UserProfileUseCase userProfileUseCase){
 
     
 
-         return    await _userProfileUseCase.ExecuteAsync(cancellationToken);
+         return   await _userProfileUseCase.ExecuteAsync(cancellationToken);
         
 
    }

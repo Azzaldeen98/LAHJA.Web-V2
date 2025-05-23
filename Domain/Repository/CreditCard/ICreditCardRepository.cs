@@ -1,7 +1,8 @@
 ﻿using Domain.Entities.Billing.Request;
 using Domain.Entities.Billing.Response;
 using Domain.ShareData.Base;
-using Domain.Wrapper;
+using Domain.Wrapper; 
+using Shared.Wrapper;
 
 
 namespace Domain.Repository.CreditCard

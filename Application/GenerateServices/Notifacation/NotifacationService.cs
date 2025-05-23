@@ -11,20 +11,21 @@ namespace Application.Services;
 public class NotifacationService : INotifacationService {
 
 
-            
- private readonly NotifyAllUsersByEmailNotifacationUseCase _notifyAllUsersByEmailNotifacationUseCase;
- private readonly NotifyUserByEmailNotifacationUseCase _notifyUserByEmailNotifacationUseCase;
+        
+     private readonly NotifyAllUsersByEmailNotifacationUseCase _notifyAllUsersByEmailNotifacationUseCase;
+     private readonly NotifyUserByEmailNotifacationUseCase _notifyUserByEmailNotifacationUseCase;
 
 
-            public NotifacationService(
-NotifyAllUsersByEmailNotifacationUseCase notifyAllUsersByEmailNotifacationUseCase,
-NotifyUserByEmailNotifacationUseCase notifyUserByEmailNotifacationUseCase){
-                
-      _notifyAllUsersByEmailNotifacationUseCase=notifyAllUsersByEmailNotifacationUseCase;
-      _notifyUserByEmailNotifacationUseCase=notifyUserByEmailNotifacationUseCase;
+    public NotifacationService(   
+            NotifyAllUsersByEmailNotifacationUseCase notifyAllUsersByEmailNotifacationUseCase,
+            NotifyUserByEmailNotifacationUseCase notifyUserByEmailNotifacationUseCase)
+    {
+                        
+          _notifyAllUsersByEmailNotifacationUseCase=notifyAllUsersByEmailNotifacationUseCase;
+          _notifyUserByEmailNotifacationUseCase=notifyUserByEmailNotifacationUseCase;
 
 
-            }
+    }
 
                 
 
@@ -33,7 +34,7 @@ NotifyUserByEmailNotifacationUseCase notifyUserByEmailNotifacationUseCase){
 
     
 
-          await _notifyAllUsersByEmailNotifacationUseCase.ExecuteAsync(subject, htmlMessage, cancellationToken);
+         await _notifyAllUsersByEmailNotifacationUseCase.ExecuteAsync(subject, htmlMessage, cancellationToken);
         
 
    }
@@ -45,7 +46,7 @@ NotifyUserByEmailNotifacationUseCase notifyUserByEmailNotifacationUseCase){
 
     
 
-          await _notifyUserByEmailNotifacationUseCase.ExecuteAsync(email, subject, htmlMessage, cancellationToken);
+         await _notifyUserByEmailNotifacationUseCase.ExecuteAsync(email, subject, htmlMessage, cancellationToken);
         
 
    }

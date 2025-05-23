@@ -34,6 +34,7 @@ using LAHJA.Data.UI.Components.Render;
 using LAHJA.Data.UI.Models.Profile;
 using LAHJA.Data.UI.Models.Space;
 using LAHJA.Data.UI.Models.SessionTokenAuth;
+using Domain.Entities;
 
 namespace LAHJA.Mappings
 {
@@ -103,6 +104,8 @@ namespace LAHJA.Mappings
             
             
             CreateMap<DataBuildAuthBase, LoginRequest>().ReverseMap();
+            CreateMap<DataBuildAuthBase, RefreshRequest>().ReverseMap();
+            CreateMap<DataBuildAuthBase, ExternalLoginRequest>().ReverseMap();
             CreateMap<DataBuildAuthBase, RegisterRequest>().ReverseMap();
             CreateMap<DataBuildAuthBase, ForgetPasswordRequest>().ReverseMap();
             CreateMap<DataBuildAuthBase, ResendConfirmationEmail>().ReverseMap();

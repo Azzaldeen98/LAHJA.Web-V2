@@ -1,10 +1,9 @@
-﻿
-
 using ApexCharts;
 using AutoMapper;
 using Domain.Entities.Plans.Response;
 using Domain.ShareData.Base;
 using Domain.Wrapper;
+using Shared.Wrapper;
 using Infrastructure.Middlewares;
 using LAHJA.ApplicationLayer.Plans;
 using LAHJA.Data.UI.Components;
@@ -16,14 +15,11 @@ using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using MudBlazor.Extensions;
 using Shared.Constants.Router;
-
+using Client.Shared.Execution;
+using AutoGenerator.Attributes;
 
 namespace LAHJA.Data.UI.Templates.Plans
 {
-
-
-
-
     public interface IBuilderPlansComponent<T> : IBuilderComponents<T>
     {
         public Func<T, Task<Result<List<SubscriptionPlanInfo>>>> GetPlans { get; set; }
@@ -31,54 +27,40 @@ namespace LAHJA.Data.UI.Templates.Plans
         public Func<T, Task> SubmitCreatePlan { get; set; }
         public Func<T, Task> SubmitUpdatePlan { get; set; }
         public Func<T, Task> SubmitSubscriptionPlan { get; set; }
-
-
     }
 
     public interface IBuilderPlansApi<T> : IBuilderApi<T>
     {
-
         public Task<Result<List<CategoryComponent>>> GetAllCategories();
         public Task<Result<List<SubscriptionPlanInfo>>> GetPlansAsync(FilterResponseData filter);
         public Task<Result<SubscriptionPlanInfo>> GetPlanAsync(T data);
         public Task<Result<SubscriptionPlanInfo>> UpdatePlanAsync(T data);
         public Task<Result<SubscriptionPlanInfo>> CreatePlanAsync(T data);
         public Task<Result<DeleteResponse>> DeletePlanAsync(T data);
-
-
     }
 
     public abstract class BuilderPlansApi<T, E> : BuilderApi<T, E>, IBuilderPlansApi<E>
     {
-
         public BuilderPlansApi(IMapper mapper, T service) : base(mapper, service)
         {
-
         }
-
 
         public abstract Task<Result<List<CategoryComponent>>> GetAllCategories();
         public abstract Task<Result<List<SubscriptionPlanInfo>>> GetPlansAsync(FilterResponseData filter);
         public abstract Task<Result<SubscriptionPlanInfo>> GetPlanAsync(E data);
-
         public abstract Task<Result<SubscriptionPlanInfo>> UpdatePlanAsync(E data);
         public abstract Task<Result<SubscriptionPlanInfo>> CreatePlanAsync(E data);
         public abstract Task<Result<DeleteResponse>> DeletePlanAsync(E data);
-
-
     }
+
     public class BuilderPlansComponent<T> : IBuilderPlansComponent<T>
     {
-
         public Func<T, Task<Result<List<SubscriptionPlanInfo>>>> GetPlans { get; set; }
         public Func<T, Task> SubmitContainerPlans { get; set; }
         public Func<T, Task> SubmitSubscriptionPlan { get; set; }
         public Func<T, Task> SubmitCreatePlan { get; set; }
         public Func<T, Task> SubmitUpdatePlan { get; set; }
-
-
     }
-
 
     public class TemplatePlansShare<T, E> : TemplateBase<T, E>
     {
@@ -88,42 +70,23 @@ namespace LAHJA.Data.UI.Templates.Plans
         protected IBuilderPlansApi<E> builderApi;
         private readonly IBuilderPlansComponent<E> builderComponents;
         public IBuilderPlansComponent<E> BuilderComponents { get => builderComponents; }
-        public TemplatePlansShare(
 
-               IMapper mapper,
-               AuthService AuthService,
-                T client,
-                IBuilderPlansComponent<E> builderComponents,
-                NavigationManager navigation,
-                IDialogService dialogService,
-                ISnackbar snackbar,
-                  IClientSafelyHandlerException safelyHandler
-
-
-            ) : base(mapper, AuthService, client, safelyHandler)
+        public TemplatePlansShare(IMapper mapper, AuthService AuthService, T client, IBuilderPlansComponent<E> builderComponents, NavigationManager navigation, IDialogService dialogService, ISnackbar snackbar, ISafeInvoker safelyHandler) : base(mapper, AuthService, client, safelyHandler)
         {
-
-
-
             builderComponents = new BuilderPlansComponent<E>();
             this.navigation = navigation;
             this.dialogService = dialogService;
             this.Snackbar = snackbar;
             //this.builderApi = builderApi;
             this.builderComponents = builderComponents;
-
-
         }
-
     }
-
 
     public class BuilderPlansApiClient : BuilderPlansApi<PlansClientService, DataBuildPlansBase>, IBuilderPlansApi<DataBuildPlansBase>
     {
         public BuilderPlansApiClient(IMapper mapper, PlansClientService service) : base(mapper, service)
         {
         }
-
 
         public override async Task<Result<SubscriptionPlanInfo>> UpdatePlanAsync(DataBuildPlansBase data)
         {
@@ -135,7 +98,6 @@ namespace LAHJA.Data.UI.Templates.Plans
                 {
                     var map = Mapper.Map<SubscriptionPlanInfo>(res.Data);
                     return Result<SubscriptionPlanInfo>.Success(map);
-
                 }
                 catch (Exception e)
                 {
@@ -158,7 +120,6 @@ namespace LAHJA.Data.UI.Templates.Plans
                 {
                     var map = Mapper.Map<SubscriptionPlanInfo>(res.Data);
                     return Result<SubscriptionPlanInfo>.Success(map);
-
                 }
                 catch (Exception e)
                 {
@@ -171,11 +132,8 @@ namespace LAHJA.Data.UI.Templates.Plans
             }
         }
 
-
-
         public override async Task<Result<List<SubscriptionPlanInfo>>> GetPlansAsync(FilterResponseData filter)
         {
-
             var res = await Service.GetPlansAsync(filter);
             if (res.Succeeded)
             {
@@ -188,18 +146,12 @@ namespace LAHJA.Data.UI.Templates.Plans
             }
         }
 
-
-
-
-
         public override async Task<Result<SubscriptionPlanInfo>> GetPlanAsync(DataBuildPlansBase data)
         {
-            
             var res = await Service.GetPlanAsync(data.PlanId, data.Lg);
             if (res.Succeeded)
             {
                 var map = Mapper.Map<SubscriptionPlanInfo>(res.Data);
-
                 return Result<SubscriptionPlanInfo>.Success(map);
             }
             else
@@ -208,20 +160,13 @@ namespace LAHJA.Data.UI.Templates.Plans
             }
         }
 
-
-
-
-
         public override async Task<Result<DeleteResponse>> DeletePlanAsync(DataBuildPlansBase data)
         {
-
             return await Service.DeletePlanAsync(data.PlanId);
-
         }
 
         public override async Task<Result<List<CategoryComponent>>> GetAllCategories()
         {
-
             var res = await Service.GetCategories(new FilterResponseData());
             if (res.Succeeded)
             {
@@ -229,7 +174,6 @@ namespace LAHJA.Data.UI.Templates.Plans
                 {
                     var map = Mapper.Map<List<CategoryComponent>>(res.Data);
                     return Result<List<CategoryComponent>>.Success(map);
-
                 }
                 catch (Exception e)
                 {
@@ -243,83 +187,55 @@ namespace LAHJA.Data.UI.Templates.Plans
         }
     }
 
-
+    [AutoSafeInvoke]
     public class TemplatePlans : TemplatePlansShare<PlansClientService, DataBuildPlansBase>
     {
-
+        private readonly ISafeInvoker safeInvoker;
         private readonly TemplatePlans _self;
+        private List<CategoryComponent> _categories = new List<CategoryComponent>();
+        private List<SubscriptionPlanInfo> _plans = new List<SubscriptionPlanInfo>();
+        private List<SubscriptionPlanInfo> _allPlans = new List<SubscriptionPlanInfo>();
+        private SubscriptionPlanInfo _plan = new SubscriptionPlanInfo();
+        public TemplatePlans(IMapper mapper, AuthService AuthService, PlansClientService client, IBuilderPlansComponent<DataBuildPlansBase> builderComponents, NavigationManager navigation, IDialogService dialogService, ISnackbar snackbar, ISafeInvoker safeInvoker, IServiceProvider provider) : base(mapper, AuthService, client, builderComponents, navigation, dialogService, snackbar, safeInvoker)
+        {
+            this.safeInvoker = safeInvoker;
+            this.BuilderComponents.GetPlans = getPlansAsync;
+            this.BuilderComponents.SubmitSubscriptionPlan = OnSubmitSubscriptionPlan;
+            this.BuilderComponents.SubmitUpdatePlan = OnSubmitUpdatePlans;
+            this.BuilderComponents.SubmitCreatePlan = OnSubmitCreatePlans;
+            this.builderApi = new BuilderPlansApiClient(mapper, client);
+        //_self = provider.GetRequiredService<TemplatePlans>();
+        }
+
         public List<CategoryComponent> Categories { get => _categories; }
         public List<SubscriptionPlanInfo> SubscriptionPlans { get => _plans; }
         public List<SubscriptionPlanInfo> AllSubscriptionPlans { get => _allPlans; }
         public SubscriptionPlanInfo SubscriptionPlan { get => _plan; }
         public List<string> Errors { get => _errors; }
 
-
-        public TemplatePlans(
-            IMapper mapper,
-            AuthService AuthService,
-            PlansClientService client,
-            IBuilderPlansComponent<DataBuildPlansBase> builderComponents,
-            NavigationManager navigation,
-            IDialogService dialogService,
-            ISnackbar snackbar,
-            IClientSafelyHandlerException safelyHandler,
-           IServiceProvider provider)
-            : base(mapper, AuthService, client, builderComponents, navigation, dialogService, snackbar, safelyHandler)
-        {
-            this.BuilderComponents.GetPlans = getPlansAsync;
-            this.BuilderComponents.SubmitSubscriptionPlan = OnSubmitSubscriptionPlan;
-            this.BuilderComponents.SubmitUpdatePlan = OnSubmitUpdatePlans;
-            this.BuilderComponents.SubmitCreatePlan = OnSubmitCreatePlans;
-
-
-            this.builderApi = new BuilderPlansApiClient(mapper, client);
-
-            //_self = provider.GetRequiredService<TemplatePlans>();
-        }
-
-
-
-        private List<CategoryComponent> _categories = new List<CategoryComponent>();
-        private List<SubscriptionPlanInfo> _plans = new List<SubscriptionPlanInfo>();
-        private List<SubscriptionPlanInfo> _allPlans = new List<SubscriptionPlanInfo>();
-        private SubscriptionPlanInfo _plan = new SubscriptionPlanInfo();
-
-        //public  IBuilderPlansComponent<DataBuildPlansBase, DataBuildPlansBase> BuilderPlansComponent { get => builderPlansComponents; }
-
         public async Task<Result<List<CategoryComponent>>> GetAllCategoriesAsync()
         {
-
-            return await builderApi.GetAllCategories();
-           
-
+            return await safeInvoker.InvokeAsync(async () =>
+            {
+                return await builderApi.GetAllCategories();
+            });
         }
+
+        [IgnoreSafeInvoke]
         private async Task<Result<List<SubscriptionPlanInfo>>> getPlansAsync(DataBuildPlansBase buildData)
         {
-
-            //List<SubscriptionPlanInfo> allPlans;
-            //var response =  await safelyHandler.InvokeAsync(async () => await builderApi.GetPlansAsync(new FilterResponseData { lg = buildData.Lg }));
-      
-                return await getSubscriptionsPlansAsync(buildData.Take, buildData.PremiumPlanNumber, buildData.Lg);
-     
-       
+            return await getSubscriptionsPlansAsync(buildData.Take, buildData.PremiumPlanNumber, buildData.Lg);
         }
-        private async Task<Result<List<SubscriptionPlanInfo>>> getSubscriptionsPlansAsync(int take , int premiumPlanNumber = 0,string lg="en")
+
+        private async Task<Result<List<SubscriptionPlanInfo>>> getSubscriptionsPlansAsync(int take, int premiumPlanNumber = 0, string lg = "en")
         {
-
-
-            //throw new Exception("Exception Plans");
-
-            try
+            return await safeInvoker.InvokeAsync(async () =>
             {
-
-
-                //var response = await safelyHandler.InvokeAsync(async () =>
-                //{
+                try
+                {
                     var response = await builderApi.GetPlansAsync(new FilterResponseData { lg = lg });
                     if (response.Succeeded)
                     {
-
                         if (premiumPlanNumber > 0 && take > 0)
                         {
                             var allPlans = response.Data.Take(take).ToList();
@@ -331,128 +247,75 @@ namespace LAHJA.Data.UI.Templates.Plans
                         }
                         else
                         {
-
                             return Result<List<SubscriptionPlanInfo>>.Success(response.Data);
-
-
                         }
 
                         return Result<List<SubscriptionPlanInfo>>.Success(response.Data);
-
-
                     }
                     else
                     {
                         return response;
                     }
-                //});
-
-                //return response;
-            }
-            catch (Exception e)
-            {
-                return Result<List<SubscriptionPlanInfo>>.Fail(e.Message);
-            }
-
+                }
+                catch (Exception e)
+                {
+                    return Result<List<SubscriptionPlanInfo>>.Fail(e.Message);
+                }
+            });
         }
+
+        [IgnoreSafeInvoke]
         public async Task<Result<List<SubscriptionPlanInfo>>> getAllSubscriptionsPlansAsync(FilterResponseData filter, int premiumPlanNumber = 0)
         {
-
-            //var response = await safelyHandler.InvokeAsync(async () => await builderApi.GetPlansAsync(filter));
-            //var response = await builderApi.GetPlansAsync(filter);
-            //if (response.Succeeded)
-            //{
-            //    if (premiumPlanNumber > 0 && filter.Take > 0)
-            //    {
-            //        _allPlans = response.Data.Take(filter.Take).ToList();
-            //        if (_allPlans.Count() > premiumPlanNumber)
-            //        {
-            //            _allPlans[premiumPlanNumber].ClassImport = "plan-import-card";
-            //            _allPlans[premiumPlanNumber].HeaderImport = "textHeader";
-            //        }
-            //    }
-            //    else
-            //    {
-            //        _allPlans = response.Data;
-            //    }
-
-            //    return Result<List<SubscriptionPlanInfo>>.Success(_allPlans);
-            //}
-            //else
-            //{
-            //    _errors = response.Messages;
-            //    return Result<List<SubscriptionPlanInfo>>.Fail(response.Messages);
-            //}
-
             return await getSubscriptionsPlansAsync(filter.Take, premiumPlanNumber, filter.lg);
-
         }
+
         private async Task OnSubmitCreatePlans(DataBuildPlansBase dataBuildPlansBase)
         {
-
             if (dataBuildPlansBase != null)
             {
-                var response = await safelyHandler.InvokeAsync(async () => await builderApi.CreatePlanAsync(dataBuildPlansBase));
-                //var response = await builderApi.CreatePlanAsync(dataBuildPlansBase);
+                var response = await safeInvoker.InvokeAsync(async () => await builderApi.CreatePlanAsync(dataBuildPlansBase));
                 if (response.Succeeded)
                 {
-
                 }
                 else
                 {
                     _errors = response.Messages;
                 }
             }
-
         }
 
         private async Task OnSubmitUpdatePlans(DataBuildPlansBase dataBuildPlansBase)
         {
-
             if (dataBuildPlansBase != null)
             {
                 //var response = await builderApi.UpdatePlanAsync(dataBuildPlansBase);
-                var response = await safelyHandler.InvokeAsync(async () => await builderApi.UpdatePlanAsync(dataBuildPlansBase));
+                var response = await safeInvoker.InvokeAsync(async () => await builderApi.UpdatePlanAsync(dataBuildPlansBase));
                 if (response.Succeeded)
                 {
-
                 }
                 else
                 {
                     _errors = response.Messages;
                 }
             }
-
         }
-
 
         public async Task OnSubmitSubscriptionPlan(DataBuildPlansBase dataBuildPlansBase)
         {
-            //var isAuth = await authService.isAuth();
-            if (dataBuildPlansBase != null)
+            await safeInvoker.InvokeAsync(async () =>
             {
-                navigation.NavigateTo($"{RouterPage.PAYMENT}/{dataBuildPlansBase.PlanId}");
-            }
-            //else
-            //{
-            //    navigation.NavigateTo(RouterPage.LOGIN);
-            //}
-
+                if (dataBuildPlansBase != null)
+                {
+                    navigation.NavigateTo($"{RouterPage.PAYMENT}/{dataBuildPlansBase.PlanId}");
+                }
+            });
         }
+
         public async Task<Result<SubscriptionPlanInfo>> GetSubmitSubscriptionPlan(DataBuildPlansBase dataBuildPlansBase)
         {
-
-
-            var response = await safelyHandler.InvokeAsync(async () => await builderApi.GetPlanAsync(dataBuildPlansBase));
-
+            var response = await safeInvoker.InvokeAsync(async () => await builderApi.GetPlanAsync(dataBuildPlansBase));
             return response;
-
-
-
         }
-
-
     }
-
 }
-

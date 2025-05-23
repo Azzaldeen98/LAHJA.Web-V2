@@ -11,68 +11,69 @@ namespace Application.Services;
 public class AuthorizationSessionService : IAuthorizationSessionService {
 
 
-            
- private readonly AuthorizationSessionUseCase _authorizationSessionUseCase;
- private readonly CreateAuthorizationSessionUseCase _createAuthorizationSessionUseCase;
- private readonly CreateForAllServicesAuthorizationSessionUseCase _createForAllServicesAuthorizationSessionUseCase;
- private readonly CreateForDashboardAuthorizationSessionUseCase _createForDashboardAuthorizationSessionUseCase;
- private readonly CreateForListServicesAuthorizationSessionUseCase _createForListServicesAuthorizationSessionUseCase;
- private readonly DeleteAuthorizationSessionUseCase _deleteAuthorizationSessionUseCase;
- private readonly EncryptFromCore2AuthorizationSessionUseCase _encryptFromCore2AuthorizationSessionUseCase;
- private readonly EncryptFromCoreAuthorizationSessionUseCase _encryptFromCoreAuthorizationSessionUseCase;
- private readonly EncryptFromWebAuthorizationSessionUseCase _encryptFromWebAuthorizationSessionUseCase;
- private readonly GetActiveSessionAuthorizationSessionUseCase _getActiveSessionAuthorizationSessionUseCase;
- private readonly GetSessionAuthorizationSessionUseCase _getSessionAuthorizationSessionUseCase;
- private readonly GetSessionByTokenAuthorizationSessionUseCase _getSessionByTokenAuthorizationSessionUseCase;
- private readonly GetSessionsAuthorizationSessionUseCase _getSessionsAuthorizationSessionUseCase;
- private readonly PauseAuthorizationSessionUseCase _pauseAuthorizationSessionUseCase;
- private readonly ResumeAuthorizationSessionUseCase _resumeAuthorizationSessionUseCase;
- private readonly ValidateCoreTokenAuthorizationSessionUseCase _validateCoreTokenAuthorizationSessionUseCase;
- private readonly ValidateCreateTokenAuthorizationSessionUseCase _validateCreateTokenAuthorizationSessionUseCase;
- private readonly ValidateWebTokenAuthorizationSessionUseCase _validateWebTokenAuthorizationSessionUseCase;
+        
+     private readonly AuthorizationSessionUseCase _authorizationSessionUseCase;
+     private readonly CreateAuthorizationSessionUseCase _createAuthorizationSessionUseCase;
+     private readonly CreateForAllServicesAuthorizationSessionUseCase _createForAllServicesAuthorizationSessionUseCase;
+     private readonly CreateForDashboardAuthorizationSessionUseCase _createForDashboardAuthorizationSessionUseCase;
+     private readonly CreateForListServicesAuthorizationSessionUseCase _createForListServicesAuthorizationSessionUseCase;
+     private readonly DeleteAuthorizationSessionUseCase _deleteAuthorizationSessionUseCase;
+     private readonly EncryptFromCore2AuthorizationSessionUseCase _encryptFromCore2AuthorizationSessionUseCase;
+     private readonly EncryptFromCoreAuthorizationSessionUseCase _encryptFromCoreAuthorizationSessionUseCase;
+     private readonly EncryptFromWebAuthorizationSessionUseCase _encryptFromWebAuthorizationSessionUseCase;
+     private readonly GetActiveSessionAuthorizationSessionUseCase _getActiveSessionAuthorizationSessionUseCase;
+     private readonly GetSessionAuthorizationSessionUseCase _getSessionAuthorizationSessionUseCase;
+     private readonly GetSessionByTokenAuthorizationSessionUseCase _getSessionByTokenAuthorizationSessionUseCase;
+     private readonly GetSessionsAuthorizationSessionUseCase _getSessionsAuthorizationSessionUseCase;
+     private readonly PauseAuthorizationSessionUseCase _pauseAuthorizationSessionUseCase;
+     private readonly ResumeAuthorizationSessionUseCase _resumeAuthorizationSessionUseCase;
+     private readonly ValidateCoreTokenAuthorizationSessionUseCase _validateCoreTokenAuthorizationSessionUseCase;
+     private readonly ValidateCreateTokenAuthorizationSessionUseCase _validateCreateTokenAuthorizationSessionUseCase;
+     private readonly ValidateWebTokenAuthorizationSessionUseCase _validateWebTokenAuthorizationSessionUseCase;
 
 
-            public AuthorizationSessionService(
-AuthorizationSessionUseCase authorizationSessionUseCase,
-CreateAuthorizationSessionUseCase createAuthorizationSessionUseCase,
-CreateForAllServicesAuthorizationSessionUseCase createForAllServicesAuthorizationSessionUseCase,
-CreateForDashboardAuthorizationSessionUseCase createForDashboardAuthorizationSessionUseCase,
-CreateForListServicesAuthorizationSessionUseCase createForListServicesAuthorizationSessionUseCase,
-DeleteAuthorizationSessionUseCase deleteAuthorizationSessionUseCase,
-EncryptFromCore2AuthorizationSessionUseCase encryptFromCore2AuthorizationSessionUseCase,
-EncryptFromCoreAuthorizationSessionUseCase encryptFromCoreAuthorizationSessionUseCase,
-EncryptFromWebAuthorizationSessionUseCase encryptFromWebAuthorizationSessionUseCase,
-GetActiveSessionAuthorizationSessionUseCase getActiveSessionAuthorizationSessionUseCase,
-GetSessionAuthorizationSessionUseCase getSessionAuthorizationSessionUseCase,
-GetSessionByTokenAuthorizationSessionUseCase getSessionByTokenAuthorizationSessionUseCase,
-GetSessionsAuthorizationSessionUseCase getSessionsAuthorizationSessionUseCase,
-PauseAuthorizationSessionUseCase pauseAuthorizationSessionUseCase,
-ResumeAuthorizationSessionUseCase resumeAuthorizationSessionUseCase,
-ValidateCoreTokenAuthorizationSessionUseCase validateCoreTokenAuthorizationSessionUseCase,
-ValidateCreateTokenAuthorizationSessionUseCase validateCreateTokenAuthorizationSessionUseCase,
-ValidateWebTokenAuthorizationSessionUseCase validateWebTokenAuthorizationSessionUseCase){
-                
-      _authorizationSessionUseCase=authorizationSessionUseCase;
-      _createAuthorizationSessionUseCase=createAuthorizationSessionUseCase;
-      _createForAllServicesAuthorizationSessionUseCase=createForAllServicesAuthorizationSessionUseCase;
-      _createForDashboardAuthorizationSessionUseCase=createForDashboardAuthorizationSessionUseCase;
-      _createForListServicesAuthorizationSessionUseCase=createForListServicesAuthorizationSessionUseCase;
-      _deleteAuthorizationSessionUseCase=deleteAuthorizationSessionUseCase;
-      _encryptFromCore2AuthorizationSessionUseCase=encryptFromCore2AuthorizationSessionUseCase;
-      _encryptFromCoreAuthorizationSessionUseCase=encryptFromCoreAuthorizationSessionUseCase;
-      _encryptFromWebAuthorizationSessionUseCase=encryptFromWebAuthorizationSessionUseCase;
-      _getActiveSessionAuthorizationSessionUseCase=getActiveSessionAuthorizationSessionUseCase;
-      _getSessionAuthorizationSessionUseCase=getSessionAuthorizationSessionUseCase;
-      _getSessionByTokenAuthorizationSessionUseCase=getSessionByTokenAuthorizationSessionUseCase;
-      _getSessionsAuthorizationSessionUseCase=getSessionsAuthorizationSessionUseCase;
-      _pauseAuthorizationSessionUseCase=pauseAuthorizationSessionUseCase;
-      _resumeAuthorizationSessionUseCase=resumeAuthorizationSessionUseCase;
-      _validateCoreTokenAuthorizationSessionUseCase=validateCoreTokenAuthorizationSessionUseCase;
-      _validateCreateTokenAuthorizationSessionUseCase=validateCreateTokenAuthorizationSessionUseCase;
-      _validateWebTokenAuthorizationSessionUseCase=validateWebTokenAuthorizationSessionUseCase;
+    public AuthorizationSessionService(   
+            AuthorizationSessionUseCase authorizationSessionUseCase,
+            CreateAuthorizationSessionUseCase createAuthorizationSessionUseCase,
+            CreateForAllServicesAuthorizationSessionUseCase createForAllServicesAuthorizationSessionUseCase,
+            CreateForDashboardAuthorizationSessionUseCase createForDashboardAuthorizationSessionUseCase,
+            CreateForListServicesAuthorizationSessionUseCase createForListServicesAuthorizationSessionUseCase,
+            DeleteAuthorizationSessionUseCase deleteAuthorizationSessionUseCase,
+            EncryptFromCore2AuthorizationSessionUseCase encryptFromCore2AuthorizationSessionUseCase,
+            EncryptFromCoreAuthorizationSessionUseCase encryptFromCoreAuthorizationSessionUseCase,
+            EncryptFromWebAuthorizationSessionUseCase encryptFromWebAuthorizationSessionUseCase,
+            GetActiveSessionAuthorizationSessionUseCase getActiveSessionAuthorizationSessionUseCase,
+            GetSessionAuthorizationSessionUseCase getSessionAuthorizationSessionUseCase,
+            GetSessionByTokenAuthorizationSessionUseCase getSessionByTokenAuthorizationSessionUseCase,
+            GetSessionsAuthorizationSessionUseCase getSessionsAuthorizationSessionUseCase,
+            PauseAuthorizationSessionUseCase pauseAuthorizationSessionUseCase,
+            ResumeAuthorizationSessionUseCase resumeAuthorizationSessionUseCase,
+            ValidateCoreTokenAuthorizationSessionUseCase validateCoreTokenAuthorizationSessionUseCase,
+            ValidateCreateTokenAuthorizationSessionUseCase validateCreateTokenAuthorizationSessionUseCase,
+            ValidateWebTokenAuthorizationSessionUseCase validateWebTokenAuthorizationSessionUseCase)
+    {
+                        
+          _authorizationSessionUseCase=authorizationSessionUseCase;
+          _createAuthorizationSessionUseCase=createAuthorizationSessionUseCase;
+          _createForAllServicesAuthorizationSessionUseCase=createForAllServicesAuthorizationSessionUseCase;
+          _createForDashboardAuthorizationSessionUseCase=createForDashboardAuthorizationSessionUseCase;
+          _createForListServicesAuthorizationSessionUseCase=createForListServicesAuthorizationSessionUseCase;
+          _deleteAuthorizationSessionUseCase=deleteAuthorizationSessionUseCase;
+          _encryptFromCore2AuthorizationSessionUseCase=encryptFromCore2AuthorizationSessionUseCase;
+          _encryptFromCoreAuthorizationSessionUseCase=encryptFromCoreAuthorizationSessionUseCase;
+          _encryptFromWebAuthorizationSessionUseCase=encryptFromWebAuthorizationSessionUseCase;
+          _getActiveSessionAuthorizationSessionUseCase=getActiveSessionAuthorizationSessionUseCase;
+          _getSessionAuthorizationSessionUseCase=getSessionAuthorizationSessionUseCase;
+          _getSessionByTokenAuthorizationSessionUseCase=getSessionByTokenAuthorizationSessionUseCase;
+          _getSessionsAuthorizationSessionUseCase=getSessionsAuthorizationSessionUseCase;
+          _pauseAuthorizationSessionUseCase=pauseAuthorizationSessionUseCase;
+          _resumeAuthorizationSessionUseCase=resumeAuthorizationSessionUseCase;
+          _validateCoreTokenAuthorizationSessionUseCase=validateCoreTokenAuthorizationSessionUseCase;
+          _validateCreateTokenAuthorizationSessionUseCase=validateCreateTokenAuthorizationSessionUseCase;
+          _validateWebTokenAuthorizationSessionUseCase=validateWebTokenAuthorizationSessionUseCase;
 
 
-            }
+    }
 
                 
 
@@ -81,7 +82,7 @@ ValidateWebTokenAuthorizationSessionUseCase validateWebTokenAuthorizationSession
 
     
 
-         return    await _authorizationSessionUseCase.ExecuteAsync(body, cancellationToken);
+         return   await _authorizationSessionUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -93,7 +94,7 @@ ValidateWebTokenAuthorizationSessionUseCase validateWebTokenAuthorizationSession
 
     
 
-         return    await _createAuthorizationSessionUseCase.ExecuteAsync(body, cancellationToken);
+         return   await _createAuthorizationSessionUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -105,7 +106,7 @@ ValidateWebTokenAuthorizationSessionUseCase validateWebTokenAuthorizationSession
 
     
 
-         return    await _createForAllServicesAuthorizationSessionUseCase.ExecuteAsync(body, cancellationToken);
+         return   await _createForAllServicesAuthorizationSessionUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -117,7 +118,7 @@ ValidateWebTokenAuthorizationSessionUseCase validateWebTokenAuthorizationSession
 
     
 
-         return    await _createForDashboardAuthorizationSessionUseCase.ExecuteAsync(body, cancellationToken);
+         return   await _createForDashboardAuthorizationSessionUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -129,7 +130,7 @@ ValidateWebTokenAuthorizationSessionUseCase validateWebTokenAuthorizationSession
 
     
 
-         return    await _createForListServicesAuthorizationSessionUseCase.ExecuteAsync(body, cancellationToken);
+         return   await _createForListServicesAuthorizationSessionUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -141,7 +142,7 @@ ValidateWebTokenAuthorizationSessionUseCase validateWebTokenAuthorizationSession
 
     
 
-         return    await _deleteAuthorizationSessionUseCase.ExecuteAsync(id, cancellationToken);
+         return   await _deleteAuthorizationSessionUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -153,7 +154,7 @@ ValidateWebTokenAuthorizationSessionUseCase validateWebTokenAuthorizationSession
 
     
 
-         return    await _encryptFromCore2AuthorizationSessionUseCase.ExecuteAsync(encrptedToken, coreToken, cancellationToken);
+         return   await _encryptFromCore2AuthorizationSessionUseCase.ExecuteAsync(encrptedToken, coreToken, cancellationToken);
         
 
    }
@@ -165,7 +166,7 @@ ValidateWebTokenAuthorizationSessionUseCase validateWebTokenAuthorizationSession
 
     
 
-         return    await _encryptFromCoreAuthorizationSessionUseCase.ExecuteAsync(sesstionToken, cancellationToken);
+         return   await _encryptFromCoreAuthorizationSessionUseCase.ExecuteAsync(sesstionToken, cancellationToken);
         
 
    }
@@ -177,7 +178,7 @@ ValidateWebTokenAuthorizationSessionUseCase validateWebTokenAuthorizationSession
 
     
 
-         return    await _encryptFromWebAuthorizationSessionUseCase.ExecuteAsync(body, cancellationToken);
+         return   await _encryptFromWebAuthorizationSessionUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -189,7 +190,7 @@ ValidateWebTokenAuthorizationSessionUseCase validateWebTokenAuthorizationSession
 
     
 
-         return    await _getActiveSessionAuthorizationSessionUseCase.ExecuteAsync(userId, type, cancellationToken);
+         return   await _getActiveSessionAuthorizationSessionUseCase.ExecuteAsync(userId, type, cancellationToken);
         
 
    }
@@ -201,7 +202,7 @@ ValidateWebTokenAuthorizationSessionUseCase validateWebTokenAuthorizationSession
 
     
 
-         return    await _getSessionAuthorizationSessionUseCase.ExecuteAsync(id, cancellationToken);
+         return   await _getSessionAuthorizationSessionUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -213,7 +214,7 @@ ValidateWebTokenAuthorizationSessionUseCase validateWebTokenAuthorizationSession
 
     
 
-         return    await _getSessionByTokenAuthorizationSessionUseCase.ExecuteAsync(token, cancellationToken);
+         return   await _getSessionByTokenAuthorizationSessionUseCase.ExecuteAsync(token, cancellationToken);
         
 
    }
@@ -225,7 +226,7 @@ ValidateWebTokenAuthorizationSessionUseCase validateWebTokenAuthorizationSession
 
     
 
-         return    await _getSessionsAuthorizationSessionUseCase.ExecuteAsync(cancellationToken);
+         return   await _getSessionsAuthorizationSessionUseCase.ExecuteAsync(cancellationToken);
         
 
    }
@@ -237,7 +238,7 @@ ValidateWebTokenAuthorizationSessionUseCase validateWebTokenAuthorizationSession
 
     
 
-         return    await _pauseAuthorizationSessionUseCase.ExecuteAsync(id, cancellationToken);
+         return   await _pauseAuthorizationSessionUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -249,7 +250,7 @@ ValidateWebTokenAuthorizationSessionUseCase validateWebTokenAuthorizationSession
 
     
 
-         return    await _resumeAuthorizationSessionUseCase.ExecuteAsync(id, cancellationToken);
+         return   await _resumeAuthorizationSessionUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -261,7 +262,7 @@ ValidateWebTokenAuthorizationSessionUseCase validateWebTokenAuthorizationSession
 
     
 
-          await _validateCoreTokenAuthorizationSessionUseCase.ExecuteAsync(token, coreToken, cancellationToken);
+         await _validateCoreTokenAuthorizationSessionUseCase.ExecuteAsync(token, coreToken, cancellationToken);
         
 
    }
@@ -273,7 +274,7 @@ ValidateWebTokenAuthorizationSessionUseCase validateWebTokenAuthorizationSession
 
     
 
-          await _validateCreateTokenAuthorizationSessionUseCase.ExecuteAsync(token, coreToken, cancellationToken);
+         await _validateCreateTokenAuthorizationSessionUseCase.ExecuteAsync(token, coreToken, cancellationToken);
         
 
    }
@@ -285,7 +286,7 @@ ValidateWebTokenAuthorizationSessionUseCase validateWebTokenAuthorizationSession
 
     
 
-          await _validateWebTokenAuthorizationSessionUseCase.ExecuteAsync(token, cancellationToken);
+         await _validateWebTokenAuthorizationSessionUseCase.ExecuteAsync(token, cancellationToken);
         
 
    }

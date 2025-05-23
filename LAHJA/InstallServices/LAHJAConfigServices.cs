@@ -32,24 +32,36 @@ using LAHJA.ApplicationLayer.ModelAi;
 using LAHJA.Data.UI.Models.ModelAi;
 using LAHJA.Data.UI.Templates.ModelAi;
 using LAHJA.ContextServices;
-using Infrastructure.Middlewares;
-using LAHJA.ErrorHandling;
-using LAHJA.Services.Infrastructure.Extensions;
+
 using LAHJA.Data.UI.Models.Profile;
 using LAHJA.Data.UI.Models.SessionTokenAuth;
+using Application.Config;
+using Client.Shared.UI.ErrorHandling;
 
 namespace LAHJA
 {
+    
+
+    
     public static class LAHJAConfigServices
     {
+
+        
+
+
         public static void InstallLAHJAConfigServices(this IServiceCollection serviceCollection)
         {
+
+
+            serviceCollection.AddTransient<AuthService>();
 
             InstallMapping(serviceCollection);
             InstallServices(serviceCollection);
             InstallHelperServices(serviceCollection);
             InstallTemplates(serviceCollection);
             InstallAppUtilityServices(serviceCollection);
+
+    
 
         }
 
@@ -73,7 +85,7 @@ namespace LAHJA
             serviceCollection.AddScoped<IUserActionService, UserActionService>();
             serviceCollection.AddScoped<IErrorHandlingService, ErrorHandlingService>();
             serviceCollection.AddScoped<IManageLanguageService,ManageLanguageService>();
-            serviceCollection.AddScoped<IClientSafelyHandlerException, ClientSafelyHandlerException>();
+            //serviceCollection.AddScoped<ISafelyHandler, ClientSafelyHandlerException>();
             serviceCollection.AddScoped<SessionUserManager>();
             serviceCollection.AddScoped<LanguageService>();
             serviceCollection.AddScoped<MessageBox>();
@@ -88,7 +100,7 @@ namespace LAHJA
             ////  Auth
             serviceCollection.AddScoped<IBuilderAuthApi<DataBuildAuthBase>, BuilderAuthApiClient>();
             serviceCollection.AddScoped<IBuilderAuthComponent<DataBuildAuthBase>,BuilderAuthComponent<DataBuildAuthBase>>();
-            serviceCollection.AddScoped<TemplateAuthShare<ClientAuthService,DataBuildAuthBase>>();
+            serviceCollection.AddScoped<TemplateAuthShare<Helpers.Services.AuthService, DataBuildAuthBase>>();
             serviceCollection.AddScoped<TemplateAuth>();
 
             //// Plans
@@ -165,7 +177,7 @@ namespace LAHJA
         }
         private static void InstallServices(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddTransient<LAHJA.Helpers.Services.AuthService>();
+      
 
             serviceCollection.AddScoped<ClientAuthService>();
             serviceCollection.AddScoped<PlansClientService>();

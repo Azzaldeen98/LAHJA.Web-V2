@@ -7,7 +7,7 @@ using Domain.Entities.Request.Response;
 using Domain.Entities.Service.Response;
 using Domain.Repository.Request;
 using Domain.ShareData;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using Infrastructure.DataSource.ApiClient.Payment;
 using Infrastructure.DataSource.Seeds;
 using Infrastructure.DataSource.Seeds.Models;

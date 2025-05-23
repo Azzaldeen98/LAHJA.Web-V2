@@ -8,7 +8,7 @@ using Domain.Repository.AuthorizationSession;
 using Domain.Repository.Price;
 using Domain.Repository.Service;
 using Domain.ShareData.Base;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using System.Linq.Expressions;
 
 namespace Application.UseCase.Space

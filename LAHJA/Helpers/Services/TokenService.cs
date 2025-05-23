@@ -2,11 +2,15 @@
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using Microsoft.JSInterop;
 using Shared.Constants;
+using Shared.Enums;
 using Shared.Helpers;
 namespace LAHJA.Helpers.Services
 {
 
     ////TODO: 8-2
+    /// <summary>
+    /// 
+    /// </summary>
     public class TokenService : ITokenService
     {
         private readonly IJSRuntime _jsRuntime;
@@ -70,19 +74,9 @@ namespace LAHJA.Helpers.Services
             }
         }
 
-        public async Task DeleteTokenFromSessionAsync()
-        {
-            try
-            {
-                await PSession.DeleteAsync(ConstantsApp.ACCESS_TOKEN);
+    
 
-            }catch(Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-        }
-
-        public async Task<string> GetTokenFromSessionAsync()
+        public async Task<string?> GetTokenFromSessionAsync()
         {
             return  (await PSession.GetAsync<string>(ConstantsApp.ACCESS_TOKEN)).Value??"";
         }
@@ -159,7 +153,7 @@ namespace LAHJA.Helpers.Services
             }
             //return await _jsRuntime.InvokeAsync<string>("localStorageHelper.getItem", ConstantsApp.LOGIN_TYPE) ?? LoginType.Email.ToString();
         }
-        public async Task<string> GetTokenAsync()
+        public async Task<string?> GetTokenAsync()
         {
             try
             {
@@ -174,7 +168,7 @@ namespace LAHJA.Helpers.Services
         }  
         
 
-        public async Task<string> GetRefreshTokenAsync()
+        public async Task<string?> GetRefreshTokenAsync()
         {
             try
             {
@@ -258,7 +252,18 @@ namespace LAHJA.Helpers.Services
             }
             //await _jsRuntime.InvokeVoidAsync("localStorageHelper.removeItem", ConstantsApp.ACCESS_TOKEN);
         }
+        public async Task DeleteTokenFromSessionAsync()
+        {
+            try
+            {
+                await PSession.DeleteAsync(ConstantsApp.ACCESS_TOKEN);
 
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
         public string? GetToken()
         {
             try 
@@ -377,12 +382,7 @@ namespace LAHJA.Helpers.Services
                 await PLocalStorage.DeleteAsync(ConstantsApp.REFRESH_TOKEN);
                 await PLocalStorage.DeleteAsync(ConstantsApp.EXPIRES_IN_TOKEN);
                 await PLocalStorage.DeleteAsync(ConstantsApp.TOKEN_TYPE);
-                //await _jsRuntime.InvokeVoidAsync("localStorageHelper.removeItem", ConstantsApp.ACCESS_TOKEN);
-                //await _jsRuntime.InvokeVoidAsync("localStorageHelper.removeItem", ConstantsApp.REFRESH_TOKEN);
-                //await _jsRuntime.InvokeVoidAsync("localStorageHelper.removeItem", ConstantsApp.EXPIRES_IN_TOKEN);
-                //await _jsRuntime.InvokeVoidAsync("localStorageHelper.removeItem", ConstantsApp.TOKEN_TYPE);
-
-                //await RemoveTempTokenAsync();
+                
             }
             catch (Exception e)
             {
@@ -390,35 +390,27 @@ namespace LAHJA.Helpers.Services
             }
         }
 
-        /// <summary>
-        /// ///////////////////////////////////////////////////////////////////////////
-        /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
-		public async Task SaveTempTokenAsync(string token)
-		{
-			await _jsRuntime.InvokeVoidAsync("localStorageHelper.setItem", "Temp_Token", token);
-		}
+        public Task DeleteTokenAsync()
+        {
+            throw new NotImplementedException();
+        }
 
-		public async Task<string> GetTempTokenAsync()
-		{
-			return await _jsRuntime.InvokeAsync<string>("localStorageHelper.getItem", "Temp_Token") ?? "";
-		}
-		public async Task RemoveTempTokenAsync()
-		{
-			try
-			{
-				await _jsRuntime.InvokeVoidAsync("localStorageHelper.removeItem", "Temp_Token");
-			}
-			catch (Exception e)
-			{
-                Console.WriteLine(e.Message);
-            }
-		}
+        public Task DeleteRefreshTokenAsync()
+        {
+            throw new NotImplementedException();
+        }
 
+        public Task DeleteTokenTypeAsync()
+        {
+            throw new NotImplementedException();
+        }
 
+        public Task DeleteExpiresInTokenAsync()
+        {
+            throw new NotImplementedException();
+        }
 
+      
 
-
-	}
+    }
 }

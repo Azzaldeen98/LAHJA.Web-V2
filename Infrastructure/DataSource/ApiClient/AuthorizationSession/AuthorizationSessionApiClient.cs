@@ -5,11 +5,11 @@ using Microsoft.Extensions.Configuration;
 using Infrastructure.DataSource.ApiClient.Base;
 using Infrastructure.Models.AuthorizationSession;
 using Domain.ShareData.Base;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using Newtonsoft.Json.Linq;
 using Domain.Exceptions;
 using Infrastructure.Middlewares;
-using Infrastructure.Shared.ApiInvoker;
+using Infrastructure.Share.Invoker;
 
 
 

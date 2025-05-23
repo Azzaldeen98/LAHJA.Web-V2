@@ -1,7 +1,7 @@
 ﻿using Application.UseCase.Plans;
 using Domain.Entities.Plans;
 using Infrastructure.Models.Plans;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,16 +28,17 @@ namespace Application.Services.Auth
         private readonly LogoutUseCase logoutUseCase;
         private readonly ExternalLoginUseCase externalLoginUseCase;
 
-        public WebAuthService(LoginUseCase loginUseCase,
+        public WebAuthService(
 
-            RegisterUseCase registerUseCase,
-            ForgetPasswordUseCase forgetPasswordUseCase,
-            RefreshTokinUseCase refreshTokinUseCase,
-            ResetPasswordUseCase resetPasswordUseCase,
-            ConfirmationEmailUseCase confirmationEmailUseCase,
-            LogoutUseCase logoutUseCase,
-            ReSendConfirmationEmailUseCase reSendConfirmationEmailUseCase,
-            ExternalLoginUseCase externalLoginUseCase)
+                    LoginUseCase loginUseCase,
+                    RegisterUseCase registerUseCase,
+                    ForgetPasswordUseCase forgetPasswordUseCase,
+                    RefreshTokinUseCase refreshTokinUseCase,
+                    ResetPasswordUseCase resetPasswordUseCase,
+                    ConfirmationEmailUseCase confirmationEmailUseCase,
+                    LogoutUseCase logoutUseCase,
+                    ReSendConfirmationEmailUseCase reSendConfirmationEmailUseCase,
+                    ExternalLoginUseCase externalLoginUseCase)
         {
 
 

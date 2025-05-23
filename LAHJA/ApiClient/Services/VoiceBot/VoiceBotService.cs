@@ -1,4 +1,4 @@
-﻿using Domain.Wrapper;
+﻿using Domain.Wrapper; using Shared.Wrapper;
 using LAHJA.ApiClient.Models;
 using LAHJA.ApiClient.Services.Query;
 using LAHJA.Data.UI.Models;

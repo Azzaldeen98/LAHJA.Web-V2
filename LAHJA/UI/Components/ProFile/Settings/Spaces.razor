@@ -8,6 +8,7 @@
 @using LAHJA.UI.Components.ServiceCard
 @using LAHJA.UI.Components.TabelCard
 @using Microsoft.AspNetCore.Authorization
+@using global::Shared.Wrapper
 @attribute [Authorize]
 
 @inject IDialogService DialogService
@@ -142,13 +143,7 @@
                 Name=TranslationsLST[lg]["Create"]
 
             },
-            // new()
-            // {
-            //     Icon=@Icons.Material.Filled.Delete
-            //     ,
-            //     IsMudChip=false,
-            //     Tag="delete"
-            // }
+     
         };
         groupAction.ChipClicked += OnChipClicked;
 

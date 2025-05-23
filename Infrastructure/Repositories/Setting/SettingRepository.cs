@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Infrastructure.Repositories;
 
 
-public class SettingRepository : ISettingRepository {
+ public  class SettingRepository : ISettingRepository {
 
     private readonly ISettingApiClient _apiClient;
     public SettingRepository(ISettingApiClient apiClient){

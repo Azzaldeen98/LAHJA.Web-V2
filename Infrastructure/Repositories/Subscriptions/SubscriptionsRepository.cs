@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Infrastructure.Repositories;
 
 
-public class SubscriptionsRepository : ISubscriptionsRepository {
+ public  class SubscriptionsRepository : ISubscriptionsRepository {
 
     private readonly ISubscriptionsApiClient _apiClient;
     public SubscriptionsRepository(ISubscriptionsApiClient apiClient){

@@ -11,17 +11,18 @@ namespace Application.Services;
 public class PermissionService : IPermissionService {
 
 
-            
- private readonly GetAllPermissionUseCase _getAllPermissionUseCase;
+        
+     private readonly GetAllPermissionUseCase _getAllPermissionUseCase;
 
 
-            public PermissionService(
-GetAllPermissionUseCase getAllPermissionUseCase){
-                
-      _getAllPermissionUseCase=getAllPermissionUseCase;
+    public PermissionService(   
+            GetAllPermissionUseCase getAllPermissionUseCase)
+    {
+                        
+          _getAllPermissionUseCase=getAllPermissionUseCase;
 
 
-            }
+    }
 
                 
 
@@ -30,7 +31,7 @@ GetAllPermissionUseCase getAllPermissionUseCase){
 
     
 
-          await _getAllPermissionUseCase.ExecuteAsync(cancellationToken);
+         await _getAllPermissionUseCase.ExecuteAsync(cancellationToken);
         
 
    }

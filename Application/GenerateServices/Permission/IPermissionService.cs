@@ -8,7 +8,7 @@ using Application.UseCases;
 namespace Application.Services;
 
 
-public interface IPermissionService :  ITBaseService ,  ITScope  
+public interface IPermissionService :  ITBaseShareService  
 {
 
     public Task getAllPermissionAsync(CancellationToken cancellationToken);

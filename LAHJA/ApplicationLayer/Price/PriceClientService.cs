@@ -1,23 +1,24 @@
 ﻿using Application.Services.Plans;
 using AutoMapper;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using LAHJA.Helpers.Services;
 using Domain.Entities.Price.Response;
 using Domain.Entities.Price;
 using Domain.Entities.Price.Request;
 using Domain.ShareData.Base;
+using Shared.Helpers;
 
 namespace LAHJA.ApplicationLayer.Price
 {
     public class PriceClientService
     {
         private readonly PriceService _priceService;
-        private readonly TokenService tokenService;
+        private readonly ITokenService tokenService;
         private readonly IMapper _mapper;
 
 
 
-        public PriceClientService(PriceService PriceService, IMapper mapper, TokenService tokenService)
+        public PriceClientService(PriceService PriceService, IMapper mapper, ITokenService tokenService)
         {
 
             this._priceService = PriceService;

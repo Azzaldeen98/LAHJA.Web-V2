@@ -6,7 +6,7 @@ using Shared.Exceptions.General;
 using Shared.Exceptions.Server;
 using Shared.HandlerException;
 
-namespace Infrastructure.Shared.ApiInvoker
+namespace Infrastructure.Share.Invoker
 {
     /// <summary>
     /// ResilientApiInvoker

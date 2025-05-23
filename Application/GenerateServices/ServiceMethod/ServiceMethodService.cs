@@ -11,29 +11,30 @@ namespace Application.Services;
 public class ServiceMethodService : IServiceMethodService {
 
 
-            
- private readonly CreateServiceMethodsUseCase _createServiceMethodsUseCase;
- private readonly DeleteServiceMethodsUseCase _deleteServiceMethodsUseCase;
- private readonly GetServiceMethodsUseCase _getServiceMethodsUseCase;
- private readonly GetServiceMethodUseCase _getServiceMethodUseCase;
- private readonly UpdateServiceMethodsUseCase _updateServiceMethodsUseCase;
+        
+     private readonly CreateServiceMethodsUseCase _createServiceMethodsUseCase;
+     private readonly DeleteServiceMethodsUseCase _deleteServiceMethodsUseCase;
+     private readonly GetServiceMethodsUseCase _getServiceMethodsUseCase;
+     private readonly GetServiceMethodUseCase _getServiceMethodUseCase;
+     private readonly UpdateServiceMethodsUseCase _updateServiceMethodsUseCase;
 
 
-            public ServiceMethodService(
-CreateServiceMethodsUseCase createServiceMethodsUseCase,
-DeleteServiceMethodsUseCase deleteServiceMethodsUseCase,
-GetServiceMethodsUseCase getServiceMethodsUseCase,
-GetServiceMethodUseCase getServiceMethodUseCase,
-UpdateServiceMethodsUseCase updateServiceMethodsUseCase){
-                
-      _createServiceMethodsUseCase=createServiceMethodsUseCase;
-      _deleteServiceMethodsUseCase=deleteServiceMethodsUseCase;
-      _getServiceMethodsUseCase=getServiceMethodsUseCase;
-      _getServiceMethodUseCase=getServiceMethodUseCase;
-      _updateServiceMethodsUseCase=updateServiceMethodsUseCase;
+    public ServiceMethodService(   
+            CreateServiceMethodsUseCase createServiceMethodsUseCase,
+            DeleteServiceMethodsUseCase deleteServiceMethodsUseCase,
+            GetServiceMethodsUseCase getServiceMethodsUseCase,
+            GetServiceMethodUseCase getServiceMethodUseCase,
+            UpdateServiceMethodsUseCase updateServiceMethodsUseCase)
+    {
+                        
+          _createServiceMethodsUseCase=createServiceMethodsUseCase;
+          _deleteServiceMethodsUseCase=deleteServiceMethodsUseCase;
+          _getServiceMethodsUseCase=getServiceMethodsUseCase;
+          _getServiceMethodUseCase=getServiceMethodUseCase;
+          _updateServiceMethodsUseCase=updateServiceMethodsUseCase;
 
 
-            }
+    }
 
                 
 
@@ -42,7 +43,7 @@ UpdateServiceMethodsUseCase updateServiceMethodsUseCase){
 
     
 
-         return    await _createServiceMethodsUseCase.ExecuteAsync(body, cancellationToken);
+         return   await _createServiceMethodsUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -54,7 +55,7 @@ UpdateServiceMethodsUseCase updateServiceMethodsUseCase){
 
     
 
-         return    await _deleteServiceMethodsUseCase.ExecuteAsync(id, cancellationToken);
+         return   await _deleteServiceMethodsUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -66,7 +67,7 @@ UpdateServiceMethodsUseCase updateServiceMethodsUseCase){
 
     
 
-         return    await _getServiceMethodsUseCase.ExecuteAsync(cancellationToken);
+         return   await _getServiceMethodsUseCase.ExecuteAsync(cancellationToken);
         
 
    }
@@ -78,7 +79,7 @@ UpdateServiceMethodsUseCase updateServiceMethodsUseCase){
 
     
 
-         return    await _getServiceMethodUseCase.ExecuteAsync(id, cancellationToken);
+         return   await _getServiceMethodUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -90,7 +91,7 @@ UpdateServiceMethodsUseCase updateServiceMethodsUseCase){
 
     
 
-         return    await _updateServiceMethodsUseCase.ExecuteAsync(id, body, cancellationToken);
+         return   await _updateServiceMethodsUseCase.ExecuteAsync(id, body, cancellationToken);
         
 
    }

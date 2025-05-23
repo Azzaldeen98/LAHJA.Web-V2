@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Client.Shared.Execution;
 using Infrastructure.Middlewares;
 using LAHJA.Helpers;
 using LAHJA.Helpers.Services;
@@ -71,7 +72,7 @@ public abstract class TemplateBase<T,E> : ITemplateBase<T, E>
 
     protected readonly IMapper mapper;
     protected readonly AuthService authService;
-    protected readonly IClientSafelyHandlerException safelyHandler;
+    protected readonly ISafeInvoker safeInvoker;
     //protected readonly ProtectedSessionStorage PSession;
     protected readonly T client;
     protected List<string> _errors;
@@ -87,10 +88,10 @@ public abstract class TemplateBase<T,E> : ITemplateBase<T, E>
 
     }
 
-    public TemplateBase(IMapper mapper, AuthService authService, T client,IClientSafelyHandlerException safelyHandler): this(mapper, authService, client)
+    public TemplateBase(IMapper mapper, AuthService authService, T client, ISafeInvoker safeInvoker) : this(mapper, authService, client)
     {
 
-        this.safelyHandler = safelyHandler;
+        this.safeInvoker = safeInvoker;
     }
 
 }

@@ -1,7 +1,7 @@
 ﻿
 using AutoMapper;
 using Domain.Entities.Product.Response;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using Infrastructure.DataSource.Seeds;
 using Infrastructure.Models.Product.Request;
 using Infrastructure.Models.Product.Response;

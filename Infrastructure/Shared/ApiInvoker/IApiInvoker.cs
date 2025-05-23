@@ -1,7 +1,7 @@
 ﻿using Shared.Exceptions.Base;
 using Shared.HandlerException;
 
-namespace Infrastructure.Shared.ApiInvoker
+namespace Infrastructure.Share.Invoker
 {
     public interface IApiInvoker: IExceptionHandler
     {

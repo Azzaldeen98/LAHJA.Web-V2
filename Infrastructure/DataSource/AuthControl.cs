@@ -2,6 +2,7 @@
 using Domain.Entities;
 using Domain.ShareData.Base.Auth;
 using Domain.Wrapper;
+using Shared.Wrapper;
 using Infrastructure.DataSource.ApiClient.Auth;
 using Infrastructure.DataSource.Seeds;
 using Infrastructure.DataSource.Seeds.Models;

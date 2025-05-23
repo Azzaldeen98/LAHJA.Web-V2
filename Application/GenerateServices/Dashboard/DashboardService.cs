@@ -11,38 +11,39 @@ namespace Application.Services;
 public class DashboardService : IDashboardService {
 
 
-            
- private readonly GetRequestsByDatetimeDashboardUseCase _getRequestsByDatetimeDashboardUseCase;
- private readonly GetRequestsByStatusDashboardUseCase _getRequestsByStatusDashboardUseCase;
- private readonly GetRequestsDashboardUseCase _getRequestsDashboardUseCase;
- private readonly ModelAiServiceRequestsDashboardUseCase _modelAiServiceRequestsDashboardUseCase;
- private readonly ServiceUsageAndRemainingDashboardUseCase _serviceUsageAndRemainingDashboardUseCase;
- private readonly ServiceUsageDataDashboardUseCase _serviceUsageDataDashboardUseCase;
- private readonly ServiceUsersCountDashboardUseCase _serviceUsersCountDashboardUseCase;
- private readonly UsageAndRemainingRequestsDashboardUseCase _usageAndRemainingRequestsDashboardUseCase;
+        
+     private readonly GetRequestsByDatetimeDashboardUseCase _getRequestsByDatetimeDashboardUseCase;
+     private readonly GetRequestsByStatusDashboardUseCase _getRequestsByStatusDashboardUseCase;
+     private readonly GetRequestsDashboardUseCase _getRequestsDashboardUseCase;
+     private readonly ModelAiServiceRequestsDashboardUseCase _modelAiServiceRequestsDashboardUseCase;
+     private readonly ServiceUsageAndRemainingDashboardUseCase _serviceUsageAndRemainingDashboardUseCase;
+     private readonly ServiceUsageDataDashboardUseCase _serviceUsageDataDashboardUseCase;
+     private readonly ServiceUsersCountDashboardUseCase _serviceUsersCountDashboardUseCase;
+     private readonly UsageAndRemainingRequestsDashboardUseCase _usageAndRemainingRequestsDashboardUseCase;
 
 
-            public DashboardService(
-GetRequestsByDatetimeDashboardUseCase getRequestsByDatetimeDashboardUseCase,
-GetRequestsByStatusDashboardUseCase getRequestsByStatusDashboardUseCase,
-GetRequestsDashboardUseCase getRequestsDashboardUseCase,
-ModelAiServiceRequestsDashboardUseCase modelAiServiceRequestsDashboardUseCase,
-ServiceUsageAndRemainingDashboardUseCase serviceUsageAndRemainingDashboardUseCase,
-ServiceUsageDataDashboardUseCase serviceUsageDataDashboardUseCase,
-ServiceUsersCountDashboardUseCase serviceUsersCountDashboardUseCase,
-UsageAndRemainingRequestsDashboardUseCase usageAndRemainingRequestsDashboardUseCase){
-                
-      _getRequestsByDatetimeDashboardUseCase=getRequestsByDatetimeDashboardUseCase;
-      _getRequestsByStatusDashboardUseCase=getRequestsByStatusDashboardUseCase;
-      _getRequestsDashboardUseCase=getRequestsDashboardUseCase;
-      _modelAiServiceRequestsDashboardUseCase=modelAiServiceRequestsDashboardUseCase;
-      _serviceUsageAndRemainingDashboardUseCase=serviceUsageAndRemainingDashboardUseCase;
-      _serviceUsageDataDashboardUseCase=serviceUsageDataDashboardUseCase;
-      _serviceUsersCountDashboardUseCase=serviceUsersCountDashboardUseCase;
-      _usageAndRemainingRequestsDashboardUseCase=usageAndRemainingRequestsDashboardUseCase;
+    public DashboardService(   
+            GetRequestsByDatetimeDashboardUseCase getRequestsByDatetimeDashboardUseCase,
+            GetRequestsByStatusDashboardUseCase getRequestsByStatusDashboardUseCase,
+            GetRequestsDashboardUseCase getRequestsDashboardUseCase,
+            ModelAiServiceRequestsDashboardUseCase modelAiServiceRequestsDashboardUseCase,
+            ServiceUsageAndRemainingDashboardUseCase serviceUsageAndRemainingDashboardUseCase,
+            ServiceUsageDataDashboardUseCase serviceUsageDataDashboardUseCase,
+            ServiceUsersCountDashboardUseCase serviceUsersCountDashboardUseCase,
+            UsageAndRemainingRequestsDashboardUseCase usageAndRemainingRequestsDashboardUseCase)
+    {
+                        
+          _getRequestsByDatetimeDashboardUseCase=getRequestsByDatetimeDashboardUseCase;
+          _getRequestsByStatusDashboardUseCase=getRequestsByStatusDashboardUseCase;
+          _getRequestsDashboardUseCase=getRequestsDashboardUseCase;
+          _modelAiServiceRequestsDashboardUseCase=modelAiServiceRequestsDashboardUseCase;
+          _serviceUsageAndRemainingDashboardUseCase=serviceUsageAndRemainingDashboardUseCase;
+          _serviceUsageDataDashboardUseCase=serviceUsageDataDashboardUseCase;
+          _serviceUsersCountDashboardUseCase=serviceUsersCountDashboardUseCase;
+          _usageAndRemainingRequestsDashboardUseCase=usageAndRemainingRequestsDashboardUseCase;
 
 
-            }
+    }
 
                 
 
@@ -51,7 +52,7 @@ UsageAndRemainingRequestsDashboardUseCase usageAndRemainingRequestsDashboardUseC
 
     
 
-         return    await _getRequestsByDatetimeDashboardUseCase.ExecuteAsync(filterBy, startDate, endDate, requestType, groupBy, cancellationToken);
+         return   await _getRequestsByDatetimeDashboardUseCase.ExecuteAsync(filterBy, startDate, endDate, requestType, groupBy, cancellationToken);
         
 
    }
@@ -63,7 +64,7 @@ UsageAndRemainingRequestsDashboardUseCase usageAndRemainingRequestsDashboardUseC
 
     
 
-         return    await _getRequestsByStatusDashboardUseCase.ExecuteAsync(filterBy, startDate, endDate, requestType, cancellationToken);
+         return   await _getRequestsByStatusDashboardUseCase.ExecuteAsync(filterBy, startDate, endDate, requestType, cancellationToken);
         
 
    }
@@ -75,7 +76,7 @@ UsageAndRemainingRequestsDashboardUseCase usageAndRemainingRequestsDashboardUseC
 
     
 
-         return    await _getRequestsDashboardUseCase.ExecuteAsync(filterBy, startDate, endDate, requestType, groupBy, cancellationToken);
+         return   await _getRequestsDashboardUseCase.ExecuteAsync(filterBy, startDate, endDate, requestType, groupBy, cancellationToken);
         
 
    }
@@ -87,7 +88,7 @@ UsageAndRemainingRequestsDashboardUseCase usageAndRemainingRequestsDashboardUseC
 
     
 
-         return    await _modelAiServiceRequestsDashboardUseCase.ExecuteAsync(cancellationToken);
+         return   await _modelAiServiceRequestsDashboardUseCase.ExecuteAsync(cancellationToken);
         
 
    }
@@ -99,7 +100,7 @@ UsageAndRemainingRequestsDashboardUseCase usageAndRemainingRequestsDashboardUseC
 
     
 
-         return    await _serviceUsageAndRemainingDashboardUseCase.ExecuteAsync(cancellationToken);
+         return   await _serviceUsageAndRemainingDashboardUseCase.ExecuteAsync(cancellationToken);
         
 
    }
@@ -111,7 +112,7 @@ UsageAndRemainingRequestsDashboardUseCase usageAndRemainingRequestsDashboardUseC
 
     
 
-         return    await _serviceUsageDataDashboardUseCase.ExecuteAsync(cancellationToken);
+         return   await _serviceUsageDataDashboardUseCase.ExecuteAsync(cancellationToken);
         
 
    }
@@ -123,7 +124,7 @@ UsageAndRemainingRequestsDashboardUseCase usageAndRemainingRequestsDashboardUseC
 
     
 
-         return    await _serviceUsersCountDashboardUseCase.ExecuteAsync(cancellationToken);
+         return   await _serviceUsersCountDashboardUseCase.ExecuteAsync(cancellationToken);
         
 
    }
@@ -135,7 +136,7 @@ UsageAndRemainingRequestsDashboardUseCase usageAndRemainingRequestsDashboardUseC
 
     
 
-         return    await _usageAndRemainingRequestsDashboardUseCase.ExecuteAsync(cancellationToken);
+         return   await _usageAndRemainingRequestsDashboardUseCase.ExecuteAsync(cancellationToken);
         
 
    }

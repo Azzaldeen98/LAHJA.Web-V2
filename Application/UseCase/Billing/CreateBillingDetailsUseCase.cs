@@ -1,7 +1,7 @@
 ﻿using Domain.Entities.Billing.Request;
 using Domain.Entities.Billing.Response;
 using Domain.Repository.Billing;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 
 namespace Application.Services.Plans
 {

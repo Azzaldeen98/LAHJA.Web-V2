@@ -8,7 +8,7 @@ using Application.UseCases;
 namespace Application.Services;
 
 
-public interface IServiceService :  ITBaseService ,  ITScope  
+public interface IServiceService :  ITBaseShareService  
 {
 
     public Task<ServiceResponse> createServiceAsync(ServiceCreate body, CancellationToken cancellationToken);

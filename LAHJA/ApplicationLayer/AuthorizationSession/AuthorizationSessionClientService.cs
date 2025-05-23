@@ -3,7 +3,7 @@ using Application.UseCase.AuthorizationSession;
 using Domain.Entities.AuthorizationSession;
 using Domain.Repository.AuthorizationSession;
 using Domain.ShareData.Base;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 
 namespace LAHJA.ApplicationLayer.AuthorizationSession
 {

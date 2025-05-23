@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Infrastructure.DataSource.ApiClientFactory;
-using Infrastructure.Shared.ApiInvoker;
+using Infrastructure.Share.Invoker;
 using Microsoft.Extensions.Configuration;
 using Shared.Interfaces;
 

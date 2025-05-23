@@ -60,4 +60,35 @@ public class GenerationOptions
             {AdditionalCode}
         }
     ";
+
+
+    public GenerationOptions Clone()
+    {
+        return new GenerationOptions
+        {
+            ClassName = this.ClassName,
+            InterfaceName = this.InterfaceName,
+            SourceBaseInterface = this.SourceBaseInterface,
+            BaseInterface = this.BaseInterface,
+            UnifiedNameForFunctions = this.UnifiedNameForFunctions,
+            ImplementGenerateInterface = this.ImplementGenerateInterface,
+            ImplementOtherInterfacesInClass = this.ImplementOtherInterfacesInClass,
+            SourceTemplateFilePath = this.SourceTemplateFilePath,
+            SourceCategoryName = this.SourceCategoryName,
+            DestinationRoot = this.DestinationRoot,
+            DestinationDirectory = this.DestinationDirectory,
+            SourceDirectory = this.SourceDirectory,
+            DestinationCategoryName = this.DestinationCategoryName,
+            NamespaceName = this.NamespaceName,
+            AdditionalCode = this.AdditionalCode,
+            MethodContentCode = this.MethodContentCode,
+            Usings = new List<string>(this.Usings),
+            Interfaces = new List<Type>(this.Interfaces),
+            BaseClass = this.BaseClass,
+            Template = this.Template,
+            Properties = this.Properties?.ToArray(),  // Clone array
+                                                      // ملاحظة: SourceType من نوع Type وهو immutable، لا داعي لاستنساخه
+        };
+    }
+
 }

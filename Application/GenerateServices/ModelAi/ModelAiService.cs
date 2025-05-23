@@ -11,86 +11,87 @@ namespace Application.Services;
 public class ModelAiService : IModelAiService {
 
 
-            
- private readonly CreateModelAiUseCase _createModelAiUseCase;
- private readonly DeleteModelAiUseCase _deleteModelAiUseCase;
- private readonly FilterMaodelAi2ModelAiUseCase _filterMaodelAi2ModelAiUseCase;
- private readonly FilterMaodelAiModelAiUseCase _filterMaodelAiModelAiUseCase;
- private readonly GetCategoriesByTypeModelAiUseCase _getCategoriesByTypeModelAiUseCase;
- private readonly GetLanguagesByModelAiUseCase _getLanguagesByModelAiUseCase;
- private readonly GetModelAiUseCase _getModelAiUseCase;
- private readonly GetModelChatStudioModelAiUseCase _getModelChatStudioModelAiUseCase;
- private readonly GetModelsAiModelAiUseCase _getModelsAiModelAiUseCase;
- private readonly GetModelsByCategoryModelAiUseCase _getModelsByCategoryModelAiUseCase;
- private readonly GetModelsByDialectModelAiUseCase _getModelsByDialectModelAiUseCase;
- private readonly GetModelsByGenderModelAiUseCase _getModelsByGenderModelAiUseCase;
- private readonly GetModelsByIsStandardModelAiUseCase _getModelsByIsStandardModelAiUseCase;
- private readonly GetModelsByLanguageAndDialectModelAiUseCase _getModelsByLanguageAndDialectModelAiUseCase;
- private readonly GetModelsByLanguageDialectTypeModelAiUseCase _getModelsByLanguageDialectTypeModelAiUseCase;
- private readonly GetModelsByLanguageModelAiUseCase _getModelsByLanguageModelAiUseCase;
- private readonly GetModelsByTypeAndGenderModelAiUseCase _getModelsByTypeAndGenderModelAiUseCase;
- private readonly GetModelsByTypeModelAiUseCase _getModelsByTypeModelAiUseCase;
- private readonly GetModelSpechStudioModelAiUseCase _getModelSpechStudioModelAiUseCase;
- private readonly GetModelTextStudioModelAiUseCase _getModelTextStudioModelAiUseCase;
- private readonly GetSettingModelAiUseCase _getSettingModelAiUseCase;
- private readonly GetStartStudioModelAiUseCase _getStartStudioModelAiUseCase;
- private readonly GetValueFilterServiceModelAiUseCase _getValueFilterServiceModelAiUseCase;
- private readonly UpdateModelAiUseCase _updateModelAiUseCase;
+        
+     private readonly CreateModelAiUseCase _createModelAiUseCase;
+     private readonly DeleteModelAiUseCase _deleteModelAiUseCase;
+     private readonly FilterMaodelAi2ModelAiUseCase _filterMaodelAi2ModelAiUseCase;
+     private readonly FilterMaodelAiModelAiUseCase _filterMaodelAiModelAiUseCase;
+     private readonly GetCategoriesByTypeModelAiUseCase _getCategoriesByTypeModelAiUseCase;
+     private readonly GetLanguagesByModelAiUseCase _getLanguagesByModelAiUseCase;
+     private readonly GetModelAiUseCase _getModelAiUseCase;
+     private readonly GetModelChatStudioModelAiUseCase _getModelChatStudioModelAiUseCase;
+     private readonly GetModelsAiModelAiUseCase _getModelsAiModelAiUseCase;
+     private readonly GetModelsByCategoryModelAiUseCase _getModelsByCategoryModelAiUseCase;
+     private readonly GetModelsByDialectModelAiUseCase _getModelsByDialectModelAiUseCase;
+     private readonly GetModelsByGenderModelAiUseCase _getModelsByGenderModelAiUseCase;
+     private readonly GetModelsByIsStandardModelAiUseCase _getModelsByIsStandardModelAiUseCase;
+     private readonly GetModelsByLanguageAndDialectModelAiUseCase _getModelsByLanguageAndDialectModelAiUseCase;
+     private readonly GetModelsByLanguageDialectTypeModelAiUseCase _getModelsByLanguageDialectTypeModelAiUseCase;
+     private readonly GetModelsByLanguageModelAiUseCase _getModelsByLanguageModelAiUseCase;
+     private readonly GetModelsByTypeAndGenderModelAiUseCase _getModelsByTypeAndGenderModelAiUseCase;
+     private readonly GetModelsByTypeModelAiUseCase _getModelsByTypeModelAiUseCase;
+     private readonly GetModelSpechStudioModelAiUseCase _getModelSpechStudioModelAiUseCase;
+     private readonly GetModelTextStudioModelAiUseCase _getModelTextStudioModelAiUseCase;
+     private readonly GetSettingModelAiUseCase _getSettingModelAiUseCase;
+     private readonly GetStartStudioModelAiUseCase _getStartStudioModelAiUseCase;
+     private readonly GetValueFilterServiceModelAiUseCase _getValueFilterServiceModelAiUseCase;
+     private readonly UpdateModelAiUseCase _updateModelAiUseCase;
 
 
-            public ModelAiService(
-CreateModelAiUseCase createModelAiUseCase,
-DeleteModelAiUseCase deleteModelAiUseCase,
-FilterMaodelAi2ModelAiUseCase filterMaodelAi2ModelAiUseCase,
-FilterMaodelAiModelAiUseCase filterMaodelAiModelAiUseCase,
-GetCategoriesByTypeModelAiUseCase getCategoriesByTypeModelAiUseCase,
-GetLanguagesByModelAiUseCase getLanguagesByModelAiUseCase,
-GetModelAiUseCase getModelAiUseCase,
-GetModelChatStudioModelAiUseCase getModelChatStudioModelAiUseCase,
-GetModelsAiModelAiUseCase getModelsAiModelAiUseCase,
-GetModelsByCategoryModelAiUseCase getModelsByCategoryModelAiUseCase,
-GetModelsByDialectModelAiUseCase getModelsByDialectModelAiUseCase,
-GetModelsByGenderModelAiUseCase getModelsByGenderModelAiUseCase,
-GetModelsByIsStandardModelAiUseCase getModelsByIsStandardModelAiUseCase,
-GetModelsByLanguageAndDialectModelAiUseCase getModelsByLanguageAndDialectModelAiUseCase,
-GetModelsByLanguageDialectTypeModelAiUseCase getModelsByLanguageDialectTypeModelAiUseCase,
-GetModelsByLanguageModelAiUseCase getModelsByLanguageModelAiUseCase,
-GetModelsByTypeAndGenderModelAiUseCase getModelsByTypeAndGenderModelAiUseCase,
-GetModelsByTypeModelAiUseCase getModelsByTypeModelAiUseCase,
-GetModelSpechStudioModelAiUseCase getModelSpechStudioModelAiUseCase,
-GetModelTextStudioModelAiUseCase getModelTextStudioModelAiUseCase,
-GetSettingModelAiUseCase getSettingModelAiUseCase,
-GetStartStudioModelAiUseCase getStartStudioModelAiUseCase,
-GetValueFilterServiceModelAiUseCase getValueFilterServiceModelAiUseCase,
-UpdateModelAiUseCase updateModelAiUseCase){
-                
-      _createModelAiUseCase=createModelAiUseCase;
-      _deleteModelAiUseCase=deleteModelAiUseCase;
-      _filterMaodelAi2ModelAiUseCase=filterMaodelAi2ModelAiUseCase;
-      _filterMaodelAiModelAiUseCase=filterMaodelAiModelAiUseCase;
-      _getCategoriesByTypeModelAiUseCase=getCategoriesByTypeModelAiUseCase;
-      _getLanguagesByModelAiUseCase=getLanguagesByModelAiUseCase;
-      _getModelAiUseCase=getModelAiUseCase;
-      _getModelChatStudioModelAiUseCase=getModelChatStudioModelAiUseCase;
-      _getModelsAiModelAiUseCase=getModelsAiModelAiUseCase;
-      _getModelsByCategoryModelAiUseCase=getModelsByCategoryModelAiUseCase;
-      _getModelsByDialectModelAiUseCase=getModelsByDialectModelAiUseCase;
-      _getModelsByGenderModelAiUseCase=getModelsByGenderModelAiUseCase;
-      _getModelsByIsStandardModelAiUseCase=getModelsByIsStandardModelAiUseCase;
-      _getModelsByLanguageAndDialectModelAiUseCase=getModelsByLanguageAndDialectModelAiUseCase;
-      _getModelsByLanguageDialectTypeModelAiUseCase=getModelsByLanguageDialectTypeModelAiUseCase;
-      _getModelsByLanguageModelAiUseCase=getModelsByLanguageModelAiUseCase;
-      _getModelsByTypeAndGenderModelAiUseCase=getModelsByTypeAndGenderModelAiUseCase;
-      _getModelsByTypeModelAiUseCase=getModelsByTypeModelAiUseCase;
-      _getModelSpechStudioModelAiUseCase=getModelSpechStudioModelAiUseCase;
-      _getModelTextStudioModelAiUseCase=getModelTextStudioModelAiUseCase;
-      _getSettingModelAiUseCase=getSettingModelAiUseCase;
-      _getStartStudioModelAiUseCase=getStartStudioModelAiUseCase;
-      _getValueFilterServiceModelAiUseCase=getValueFilterServiceModelAiUseCase;
-      _updateModelAiUseCase=updateModelAiUseCase;
+    public ModelAiService(   
+            CreateModelAiUseCase createModelAiUseCase,
+            DeleteModelAiUseCase deleteModelAiUseCase,
+            FilterMaodelAi2ModelAiUseCase filterMaodelAi2ModelAiUseCase,
+            FilterMaodelAiModelAiUseCase filterMaodelAiModelAiUseCase,
+            GetCategoriesByTypeModelAiUseCase getCategoriesByTypeModelAiUseCase,
+            GetLanguagesByModelAiUseCase getLanguagesByModelAiUseCase,
+            GetModelAiUseCase getModelAiUseCase,
+            GetModelChatStudioModelAiUseCase getModelChatStudioModelAiUseCase,
+            GetModelsAiModelAiUseCase getModelsAiModelAiUseCase,
+            GetModelsByCategoryModelAiUseCase getModelsByCategoryModelAiUseCase,
+            GetModelsByDialectModelAiUseCase getModelsByDialectModelAiUseCase,
+            GetModelsByGenderModelAiUseCase getModelsByGenderModelAiUseCase,
+            GetModelsByIsStandardModelAiUseCase getModelsByIsStandardModelAiUseCase,
+            GetModelsByLanguageAndDialectModelAiUseCase getModelsByLanguageAndDialectModelAiUseCase,
+            GetModelsByLanguageDialectTypeModelAiUseCase getModelsByLanguageDialectTypeModelAiUseCase,
+            GetModelsByLanguageModelAiUseCase getModelsByLanguageModelAiUseCase,
+            GetModelsByTypeAndGenderModelAiUseCase getModelsByTypeAndGenderModelAiUseCase,
+            GetModelsByTypeModelAiUseCase getModelsByTypeModelAiUseCase,
+            GetModelSpechStudioModelAiUseCase getModelSpechStudioModelAiUseCase,
+            GetModelTextStudioModelAiUseCase getModelTextStudioModelAiUseCase,
+            GetSettingModelAiUseCase getSettingModelAiUseCase,
+            GetStartStudioModelAiUseCase getStartStudioModelAiUseCase,
+            GetValueFilterServiceModelAiUseCase getValueFilterServiceModelAiUseCase,
+            UpdateModelAiUseCase updateModelAiUseCase)
+    {
+                        
+          _createModelAiUseCase=createModelAiUseCase;
+          _deleteModelAiUseCase=deleteModelAiUseCase;
+          _filterMaodelAi2ModelAiUseCase=filterMaodelAi2ModelAiUseCase;
+          _filterMaodelAiModelAiUseCase=filterMaodelAiModelAiUseCase;
+          _getCategoriesByTypeModelAiUseCase=getCategoriesByTypeModelAiUseCase;
+          _getLanguagesByModelAiUseCase=getLanguagesByModelAiUseCase;
+          _getModelAiUseCase=getModelAiUseCase;
+          _getModelChatStudioModelAiUseCase=getModelChatStudioModelAiUseCase;
+          _getModelsAiModelAiUseCase=getModelsAiModelAiUseCase;
+          _getModelsByCategoryModelAiUseCase=getModelsByCategoryModelAiUseCase;
+          _getModelsByDialectModelAiUseCase=getModelsByDialectModelAiUseCase;
+          _getModelsByGenderModelAiUseCase=getModelsByGenderModelAiUseCase;
+          _getModelsByIsStandardModelAiUseCase=getModelsByIsStandardModelAiUseCase;
+          _getModelsByLanguageAndDialectModelAiUseCase=getModelsByLanguageAndDialectModelAiUseCase;
+          _getModelsByLanguageDialectTypeModelAiUseCase=getModelsByLanguageDialectTypeModelAiUseCase;
+          _getModelsByLanguageModelAiUseCase=getModelsByLanguageModelAiUseCase;
+          _getModelsByTypeAndGenderModelAiUseCase=getModelsByTypeAndGenderModelAiUseCase;
+          _getModelsByTypeModelAiUseCase=getModelsByTypeModelAiUseCase;
+          _getModelSpechStudioModelAiUseCase=getModelSpechStudioModelAiUseCase;
+          _getModelTextStudioModelAiUseCase=getModelTextStudioModelAiUseCase;
+          _getSettingModelAiUseCase=getSettingModelAiUseCase;
+          _getStartStudioModelAiUseCase=getStartStudioModelAiUseCase;
+          _getValueFilterServiceModelAiUseCase=getValueFilterServiceModelAiUseCase;
+          _updateModelAiUseCase=updateModelAiUseCase;
 
 
-            }
+    }
 
                 
 
@@ -99,7 +100,7 @@ UpdateModelAiUseCase updateModelAiUseCase){
 
     
 
-         return    await _createModelAiUseCase.ExecuteAsync(body, cancellationToken);
+         return   await _createModelAiUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -111,7 +112,7 @@ UpdateModelAiUseCase updateModelAiUseCase){
 
     
 
-         return    await _deleteModelAiUseCase.ExecuteAsync(id, cancellationToken);
+         return   await _deleteModelAiUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -123,7 +124,7 @@ UpdateModelAiUseCase updateModelAiUseCase){
 
     
 
-         return    await _filterMaodelAi2ModelAiUseCase.ExecuteAsync(body, cancellationToken);
+         return   await _filterMaodelAi2ModelAiUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -135,7 +136,7 @@ UpdateModelAiUseCase updateModelAiUseCase){
 
     
 
-         return    await _filterMaodelAiModelAiUseCase.ExecuteAsync(body, cancellationToken);
+         return   await _filterMaodelAiModelAiUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -147,7 +148,7 @@ UpdateModelAiUseCase updateModelAiUseCase){
 
     
 
-         return    await _getCategoriesByTypeModelAiUseCase.ExecuteAsync(type, cancellationToken);
+         return   await _getCategoriesByTypeModelAiUseCase.ExecuteAsync(type, cancellationToken);
         
 
    }
@@ -159,7 +160,7 @@ UpdateModelAiUseCase updateModelAiUseCase){
 
     
 
-         return    await _getLanguagesByModelAiUseCase.ExecuteAsync(type, category, cancellationToken);
+         return   await _getLanguagesByModelAiUseCase.ExecuteAsync(type, category, cancellationToken);
         
 
    }
@@ -171,7 +172,7 @@ UpdateModelAiUseCase updateModelAiUseCase){
 
     
 
-         return    await _getModelAiUseCase.ExecuteAsync(id, cancellationToken);
+         return   await _getModelAiUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -183,7 +184,7 @@ UpdateModelAiUseCase updateModelAiUseCase){
 
     
 
-         return    await _getModelChatStudioModelAiUseCase.ExecuteAsync(lg, cancellationToken);
+         return   await _getModelChatStudioModelAiUseCase.ExecuteAsync(lg, cancellationToken);
         
 
    }
@@ -195,7 +196,7 @@ UpdateModelAiUseCase updateModelAiUseCase){
 
     
 
-         return    await _getModelsAiModelAiUseCase.ExecuteAsync(cancellationToken);
+         return   await _getModelsAiModelAiUseCase.ExecuteAsync(cancellationToken);
         
 
    }
@@ -207,7 +208,7 @@ UpdateModelAiUseCase updateModelAiUseCase){
 
     
 
-         return    await _getModelsByCategoryModelAiUseCase.ExecuteAsync(category, cancellationToken);
+         return   await _getModelsByCategoryModelAiUseCase.ExecuteAsync(category, cancellationToken);
         
 
    }
@@ -219,7 +220,7 @@ UpdateModelAiUseCase updateModelAiUseCase){
 
     
 
-         return    await _getModelsByDialectModelAiUseCase.ExecuteAsync(dialect, cancellationToken);
+         return   await _getModelsByDialectModelAiUseCase.ExecuteAsync(dialect, cancellationToken);
         
 
    }
@@ -231,7 +232,7 @@ UpdateModelAiUseCase updateModelAiUseCase){
 
     
 
-         return    await _getModelsByGenderModelAiUseCase.ExecuteAsync(gender, cancellationToken);
+         return   await _getModelsByGenderModelAiUseCase.ExecuteAsync(gender, cancellationToken);
         
 
    }
@@ -243,7 +244,7 @@ UpdateModelAiUseCase updateModelAiUseCase){
 
     
 
-         return    await _getModelsByIsStandardModelAiUseCase.ExecuteAsync(isStandard, cancellationToken);
+         return   await _getModelsByIsStandardModelAiUseCase.ExecuteAsync(isStandard, cancellationToken);
         
 
    }
@@ -255,7 +256,7 @@ UpdateModelAiUseCase updateModelAiUseCase){
 
     
 
-         return    await _getModelsByLanguageAndDialectModelAiUseCase.ExecuteAsync(language, dialect, cancellationToken);
+         return   await _getModelsByLanguageAndDialectModelAiUseCase.ExecuteAsync(language, dialect, cancellationToken);
         
 
    }
@@ -267,7 +268,7 @@ UpdateModelAiUseCase updateModelAiUseCase){
 
     
 
-         return    await _getModelsByLanguageDialectTypeModelAiUseCase.ExecuteAsync(language, dialect, type, cancellationToken);
+         return   await _getModelsByLanguageDialectTypeModelAiUseCase.ExecuteAsync(language, dialect, type, cancellationToken);
         
 
    }
@@ -279,7 +280,7 @@ UpdateModelAiUseCase updateModelAiUseCase){
 
     
 
-         return    await _getModelsByLanguageModelAiUseCase.ExecuteAsync(language, cancellationToken);
+         return   await _getModelsByLanguageModelAiUseCase.ExecuteAsync(language, cancellationToken);
         
 
    }
@@ -291,7 +292,7 @@ UpdateModelAiUseCase updateModelAiUseCase){
 
     
 
-         return    await _getModelsByTypeAndGenderModelAiUseCase.ExecuteAsync(type, gender, cancellationToken);
+         return   await _getModelsByTypeAndGenderModelAiUseCase.ExecuteAsync(type, gender, cancellationToken);
         
 
    }
@@ -303,7 +304,7 @@ UpdateModelAiUseCase updateModelAiUseCase){
 
     
 
-         return    await _getModelsByTypeModelAiUseCase.ExecuteAsync(type, cancellationToken);
+         return   await _getModelsByTypeModelAiUseCase.ExecuteAsync(type, cancellationToken);
         
 
    }
@@ -315,7 +316,7 @@ UpdateModelAiUseCase updateModelAiUseCase){
 
     
 
-         return    await _getModelSpechStudioModelAiUseCase.ExecuteAsync(lg, cancellationToken);
+         return   await _getModelSpechStudioModelAiUseCase.ExecuteAsync(lg, cancellationToken);
         
 
    }
@@ -327,7 +328,7 @@ UpdateModelAiUseCase updateModelAiUseCase){
 
     
 
-         return    await _getModelTextStudioModelAiUseCase.ExecuteAsync(lg, cancellationToken);
+         return   await _getModelTextStudioModelAiUseCase.ExecuteAsync(lg, cancellationToken);
         
 
    }
@@ -339,7 +340,7 @@ UpdateModelAiUseCase updateModelAiUseCase){
 
     
 
-         return    await _getSettingModelAiUseCase.ExecuteAsync(langage, cancellationToken);
+         return   await _getSettingModelAiUseCase.ExecuteAsync(langage, cancellationToken);
         
 
    }
@@ -351,7 +352,7 @@ UpdateModelAiUseCase updateModelAiUseCase){
 
     
 
-         return    await _getStartStudioModelAiUseCase.ExecuteAsync(lg, cancellationToken);
+         return   await _getStartStudioModelAiUseCase.ExecuteAsync(lg, cancellationToken);
         
 
    }
@@ -363,7 +364,7 @@ UpdateModelAiUseCase updateModelAiUseCase){
 
     
 
-         return    await _getValueFilterServiceModelAiUseCase.ExecuteAsync(lg, cancellationToken);
+         return   await _getValueFilterServiceModelAiUseCase.ExecuteAsync(lg, cancellationToken);
         
 
    }
@@ -375,7 +376,7 @@ UpdateModelAiUseCase updateModelAiUseCase){
 
     
 
-         return    await _updateModelAiUseCase.ExecuteAsync(id, body, cancellationToken);
+         return   await _updateModelAiUseCase.ExecuteAsync(id, body, cancellationToken);
         
 
    }

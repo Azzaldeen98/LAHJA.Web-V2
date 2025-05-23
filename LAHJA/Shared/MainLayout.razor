@@ -19,11 +19,13 @@
 @using System.Globalization
 @using global::Shared.Constants
 @using global::Shared.Constants.Router
+@using global::Shared.Enums
+@using global::Shared.Helpers
 
 @inject NavigationManager nm
 @inject ProtectedSessionStorage pass
 @inject NavigationManager NavigationManager
-@inject TokenService _tokenService
+@inject ITokenService _tokenService
 @inject AuthService _authService
 @inject SessionUserManager sessionUserManager
 @inject CustomAuthenticationStateProvider AuthStateProvider
@@ -354,7 +356,7 @@
 
                         var refreshToken = _tokenService.GetRefreshToken();
 
-                        var resp = await templateAuth.RefreshToken(new RefreshRequest { RefreshToken = refreshToken });
+                        var resp = await templateAuth.RefreshToken(new DataBuildAuthBase { RefreshToken = refreshToken });
 
                         // if (resp!=null && resp.Succeeded)
                         // {

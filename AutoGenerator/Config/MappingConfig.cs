@@ -116,7 +116,7 @@ namespace AutoGenerator.Config
             var dtos = assembly.GetTypes().Where(t => typeof(ITBuildDto).IsAssignableFrom(t) && t.IsClass).ToList();
             var dtosShare = assembly.GetTypes().Where(t => typeof(ITShareDto).IsAssignableFrom(t) && t.IsClass).ToList();
             var vms = assembly.GetTypes().Where(t => typeof(ITVM).IsAssignableFrom(t) && t.IsClass).ToList();
-            var dsos = assembly.GetTypes().Where(t => typeof(ITDso).IsAssignableFrom(t) && t.IsClass).ToList();
+            var dsos = assembly.GetTypes().Where(t => typeof(ITDto).IsAssignableFrom(t) && t.IsClass).ToList();
 
             // 1. Map Models <-> DTOs
             foreach (var model in models.Where(m => !CheckIgnoreAutomateMapper(m)))

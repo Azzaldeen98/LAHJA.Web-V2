@@ -2,7 +2,7 @@
 using Domain.Entities.Profile.Request;
 using Domain.Entities.Profile.Response;
 using Domain.Entities.Request.Response;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 
 namespace Domain.Repository.Profile;
 

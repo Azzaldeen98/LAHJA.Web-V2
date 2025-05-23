@@ -1,6 +1,6 @@
 ﻿//using AutoMapper;
 //using Domain.ShareData.Base;
-//using Domain.Wrapper;
+//using Domain.Wrapper; using Shared.Wrapper;
 //using LAHJA.Data.UI.Templates.Base;
 //using LAHJA.Helpers.Services;
 //using Microsoft.AspNetCore.Components;

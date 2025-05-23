@@ -2,7 +2,7 @@
 using Domain.Entities.Checkout;
 using Domain.Entities.Checkout.Request;
 using Domain.Entities.Checkout.Response;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 
 namespace Application.Services.Checkout
 {

@@ -1,6 +1,6 @@
 ﻿
 using AutoMapper;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using Infrastructure.DataSource.Seeds;
 using Shared.Settings;
 using Infrastructure.Models.BaseFolder.Response;

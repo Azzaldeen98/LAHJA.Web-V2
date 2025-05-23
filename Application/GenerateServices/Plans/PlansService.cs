@@ -11,32 +11,33 @@ namespace Application.Services;
 public class PlansService : IPlansService {
 
 
-            
- private readonly AsGroupPlansUseCase _asGroupPlansUseCase;
- private readonly CreatePlanUseCase _createPlanUseCase;
- private readonly DeletePlanUseCase _deletePlanUseCase;
- private readonly GetPlansUseCase _getPlansUseCase;
- private readonly GetPlanUseCase _getPlanUseCase;
- private readonly UpdatePlanUseCase _updatePlanUseCase;
+        
+     private readonly AsGroupPlansUseCase _asGroupPlansUseCase;
+     private readonly CreatePlanUseCase _createPlanUseCase;
+     private readonly DeletePlanUseCase _deletePlanUseCase;
+     private readonly GetPlansUseCase _getPlansUseCase;
+     private readonly GetPlanUseCase _getPlanUseCase;
+     private readonly UpdatePlanUseCase _updatePlanUseCase;
 
 
-            public PlansService(
-AsGroupPlansUseCase asGroupPlansUseCase,
-CreatePlanUseCase createPlanUseCase,
-DeletePlanUseCase deletePlanUseCase,
-GetPlansUseCase getPlansUseCase,
-GetPlanUseCase getPlanUseCase,
-UpdatePlanUseCase updatePlanUseCase){
-                
-      _asGroupPlansUseCase=asGroupPlansUseCase;
-      _createPlanUseCase=createPlanUseCase;
-      _deletePlanUseCase=deletePlanUseCase;
-      _getPlansUseCase=getPlansUseCase;
-      _getPlanUseCase=getPlanUseCase;
-      _updatePlanUseCase=updatePlanUseCase;
+    public PlansService(   
+            AsGroupPlansUseCase asGroupPlansUseCase,
+            CreatePlanUseCase createPlanUseCase,
+            DeletePlanUseCase deletePlanUseCase,
+            GetPlansUseCase getPlansUseCase,
+            GetPlanUseCase getPlanUseCase,
+            UpdatePlanUseCase updatePlanUseCase)
+    {
+                        
+          _asGroupPlansUseCase=asGroupPlansUseCase;
+          _createPlanUseCase=createPlanUseCase;
+          _deletePlanUseCase=deletePlanUseCase;
+          _getPlansUseCase=getPlansUseCase;
+          _getPlanUseCase=getPlanUseCase;
+          _updatePlanUseCase=updatePlanUseCase;
 
 
-      }
+    }
 
                 
 
@@ -45,7 +46,7 @@ UpdatePlanUseCase updatePlanUseCase){
 
     
 
-         return    await _asGroupPlansUseCase.ExecuteAsync(langauge, cancellationToken);
+         return   await _asGroupPlansUseCase.ExecuteAsync(langauge, cancellationToken);
         
 
    }
@@ -57,7 +58,7 @@ UpdatePlanUseCase updatePlanUseCase){
 
     
 
-         return    await _createPlanUseCase.ExecuteAsync(lg, body, cancellationToken);
+         return   await _createPlanUseCase.ExecuteAsync(lg, body, cancellationToken);
         
 
    }
@@ -69,7 +70,7 @@ UpdatePlanUseCase updatePlanUseCase){
 
     
 
-         return    await _deletePlanUseCase.ExecuteAsync(id, cancellationToken);
+         return   await _deletePlanUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -81,7 +82,7 @@ UpdatePlanUseCase updatePlanUseCase){
 
     
 
-         return    await _getPlansUseCase.ExecuteAsync(lg, cancellationToken);
+         return   await _getPlansUseCase.ExecuteAsync(lg, cancellationToken);
         
 
    }
@@ -93,7 +94,7 @@ UpdatePlanUseCase updatePlanUseCase){
 
     
 
-         return    await _getPlanUseCase.ExecuteAsync(id, lg, cancellationToken);
+         return   await _getPlanUseCase.ExecuteAsync(id, lg, cancellationToken);
         
 
    }
@@ -105,7 +106,7 @@ UpdatePlanUseCase updatePlanUseCase){
 
     
 
-         return    await _updatePlanUseCase.ExecuteAsync(id, body, cancellationToken);
+         return   await _updatePlanUseCase.ExecuteAsync(id, body, cancellationToken);
         
 
    }

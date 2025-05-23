@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Infrastructure.Repositories;
 
 
-public class MasterRepository : IMasterRepository {
+ public  class MasterRepository : IMasterRepository {
 
     private readonly IMasterApiClient _apiClient;
     public MasterRepository(IMasterApiClient apiClient){

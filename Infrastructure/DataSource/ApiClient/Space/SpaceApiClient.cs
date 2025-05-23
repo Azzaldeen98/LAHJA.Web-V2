@@ -3,11 +3,11 @@ using Infrastructure.DataSource.ApiClientFactory;
 using Infrastructure.Nswag;
 using Microsoft.Extensions.Configuration;
 using Infrastructure.DataSource.ApiClient.Base;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using Domain.Entities.Profile;
 using Domain.ShareData.Base;
 using Infrastructure.Middlewares;
-using Infrastructure.Shared.ApiInvoker;
+using Infrastructure.Share.Invoker;
 
 
 

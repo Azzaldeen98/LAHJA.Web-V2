@@ -11,41 +11,42 @@ namespace Application.Services;
 public class PaymentService : IPaymentService {
 
 
-            
- private readonly CancelPaymentUseCase _cancelPaymentUseCase;
- private readonly ConfirmPaymentUseCase _confirmPaymentUseCase;
- private readonly CreateCustomerSessionPaymentUseCase _createCustomerSessionPaymentUseCase;
- private readonly CreatePaymentMethodUseCase _createPaymentMethodUseCase;
- private readonly DeleteMethodPaymentUseCase _deleteMethodPaymentUseCase;
- private readonly GetMethodsPaymentUseCase _getMethodsPaymentUseCase;
- private readonly GetSetupIntentsPaymentUseCase _getSetupIntentsPaymentUseCase;
- private readonly MakePaymentMethodDefaultUseCase _makePaymentMethodDefaultUseCase;
- private readonly UpdateBillingInformationPaymentUseCase _updateBillingInformationPaymentUseCase;
+        
+     private readonly CancelPaymentUseCase _cancelPaymentUseCase;
+     private readonly ConfirmPaymentUseCase _confirmPaymentUseCase;
+     private readonly CreateCustomerSessionPaymentUseCase _createCustomerSessionPaymentUseCase;
+     private readonly CreatePaymentMethodUseCase _createPaymentMethodUseCase;
+     private readonly DeleteMethodPaymentUseCase _deleteMethodPaymentUseCase;
+     private readonly GetMethodsPaymentUseCase _getMethodsPaymentUseCase;
+     private readonly GetSetupIntentsPaymentUseCase _getSetupIntentsPaymentUseCase;
+     private readonly MakePaymentMethodDefaultUseCase _makePaymentMethodDefaultUseCase;
+     private readonly UpdateBillingInformationPaymentUseCase _updateBillingInformationPaymentUseCase;
 
 
-            public PaymentService(
-CancelPaymentUseCase cancelPaymentUseCase,
-ConfirmPaymentUseCase confirmPaymentUseCase,
-CreateCustomerSessionPaymentUseCase createCustomerSessionPaymentUseCase,
-CreatePaymentMethodUseCase createPaymentMethodUseCase,
-DeleteMethodPaymentUseCase deleteMethodPaymentUseCase,
-GetMethodsPaymentUseCase getMethodsPaymentUseCase,
-GetSetupIntentsPaymentUseCase getSetupIntentsPaymentUseCase,
-MakePaymentMethodDefaultUseCase makePaymentMethodDefaultUseCase,
-UpdateBillingInformationPaymentUseCase updateBillingInformationPaymentUseCase){
-                
-      _cancelPaymentUseCase=cancelPaymentUseCase;
-      _confirmPaymentUseCase=confirmPaymentUseCase;
-      _createCustomerSessionPaymentUseCase=createCustomerSessionPaymentUseCase;
-      _createPaymentMethodUseCase=createPaymentMethodUseCase;
-      _deleteMethodPaymentUseCase=deleteMethodPaymentUseCase;
-      _getMethodsPaymentUseCase=getMethodsPaymentUseCase;
-      _getSetupIntentsPaymentUseCase=getSetupIntentsPaymentUseCase;
-      _makePaymentMethodDefaultUseCase=makePaymentMethodDefaultUseCase;
-      _updateBillingInformationPaymentUseCase=updateBillingInformationPaymentUseCase;
+    public PaymentService(   
+            CancelPaymentUseCase cancelPaymentUseCase,
+            ConfirmPaymentUseCase confirmPaymentUseCase,
+            CreateCustomerSessionPaymentUseCase createCustomerSessionPaymentUseCase,
+            CreatePaymentMethodUseCase createPaymentMethodUseCase,
+            DeleteMethodPaymentUseCase deleteMethodPaymentUseCase,
+            GetMethodsPaymentUseCase getMethodsPaymentUseCase,
+            GetSetupIntentsPaymentUseCase getSetupIntentsPaymentUseCase,
+            MakePaymentMethodDefaultUseCase makePaymentMethodDefaultUseCase,
+            UpdateBillingInformationPaymentUseCase updateBillingInformationPaymentUseCase)
+    {
+                        
+          _cancelPaymentUseCase=cancelPaymentUseCase;
+          _confirmPaymentUseCase=confirmPaymentUseCase;
+          _createCustomerSessionPaymentUseCase=createCustomerSessionPaymentUseCase;
+          _createPaymentMethodUseCase=createPaymentMethodUseCase;
+          _deleteMethodPaymentUseCase=deleteMethodPaymentUseCase;
+          _getMethodsPaymentUseCase=getMethodsPaymentUseCase;
+          _getSetupIntentsPaymentUseCase=getSetupIntentsPaymentUseCase;
+          _makePaymentMethodDefaultUseCase=makePaymentMethodDefaultUseCase;
+          _updateBillingInformationPaymentUseCase=updateBillingInformationPaymentUseCase;
 
 
-            }
+    }
 
                 
 
@@ -54,7 +55,7 @@ UpdateBillingInformationPaymentUseCase updateBillingInformationPaymentUseCase){
 
     
 
-          await _cancelPaymentUseCase.ExecuteAsync(id, cancellationToken);
+         await _cancelPaymentUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -66,7 +67,7 @@ UpdateBillingInformationPaymentUseCase updateBillingInformationPaymentUseCase){
 
     
 
-          await _confirmPaymentUseCase.ExecuteAsync(id, cancellationToken);
+         await _confirmPaymentUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -78,7 +79,7 @@ UpdateBillingInformationPaymentUseCase updateBillingInformationPaymentUseCase){
 
     
 
-         return    await _createCustomerSessionPaymentUseCase.ExecuteAsync(body, cancellationToken);
+         return   await _createCustomerSessionPaymentUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -90,7 +91,7 @@ UpdateBillingInformationPaymentUseCase updateBillingInformationPaymentUseCase){
 
     
 
-         return    await _createPaymentMethodUseCase.ExecuteAsync(body, cancellationToken);
+         return   await _createPaymentMethodUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -102,7 +103,7 @@ UpdateBillingInformationPaymentUseCase updateBillingInformationPaymentUseCase){
 
     
 
-          await _deleteMethodPaymentUseCase.ExecuteAsync(id, cancellationToken);
+         await _deleteMethodPaymentUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -114,7 +115,7 @@ UpdateBillingInformationPaymentUseCase updateBillingInformationPaymentUseCase){
 
     
 
-         return    await _getMethodsPaymentUseCase.ExecuteAsync(cancellationToken);
+         return   await _getMethodsPaymentUseCase.ExecuteAsync(cancellationToken);
         
 
    }
@@ -126,7 +127,7 @@ UpdateBillingInformationPaymentUseCase updateBillingInformationPaymentUseCase){
 
     
 
-          await _getSetupIntentsPaymentUseCase.ExecuteAsync(cancellationToken);
+         await _getSetupIntentsPaymentUseCase.ExecuteAsync(cancellationToken);
         
 
    }
@@ -138,7 +139,7 @@ UpdateBillingInformationPaymentUseCase updateBillingInformationPaymentUseCase){
 
     
 
-          await _makePaymentMethodDefaultUseCase.ExecuteAsync(paymentMethodId, cancellationToken);
+         await _makePaymentMethodDefaultUseCase.ExecuteAsync(paymentMethodId, cancellationToken);
         
 
    }
@@ -150,7 +151,7 @@ UpdateBillingInformationPaymentUseCase updateBillingInformationPaymentUseCase){
 
     
 
-         return    await _updateBillingInformationPaymentUseCase.ExecuteAsync(body, cancellationToken);
+         return   await _updateBillingInformationPaymentUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }

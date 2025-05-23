@@ -5,6 +5,8 @@ using Domain.Entities.Auth.Response;
 using LAHJA.Helpers.Enum;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using Microsoft.JSInterop;
+using Shared.Enums;
+using Shared.Helpers;
 
 namespace LAHJA.Helpers.Services
 {
@@ -16,9 +18,9 @@ namespace LAHJA.Helpers.Services
     ////TODO: 8-2
     public class AuthService
     {
-        private readonly TokenService tokenService;
+        private readonly ITokenService tokenService;
 
-        public AuthService(TokenService tokenService)
+        public AuthService(ITokenService tokenService)
         {
 
             this.tokenService = tokenService;

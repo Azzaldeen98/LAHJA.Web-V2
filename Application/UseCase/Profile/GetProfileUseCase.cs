@@ -2,7 +2,7 @@
 using Domain.Entities.Profile;
 using Domain.Repository.Plans;
 using Domain.Repository.Profile;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 
 namespace Application.UseCase.Plans
 {

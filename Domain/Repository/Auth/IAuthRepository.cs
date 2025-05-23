@@ -2,7 +2,7 @@
 using Domain.Entities.Auth.Request;
 using Domain.Entities.Auth.Response;
 using Domain.ShareData.Base;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 
 namespace Domain.Repository.Auth
 {

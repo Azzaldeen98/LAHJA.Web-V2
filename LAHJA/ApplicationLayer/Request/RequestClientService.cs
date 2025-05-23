@@ -5,8 +5,9 @@ using Domain.Entities.Event.Response;
 using Domain.Entities.Request.Request;
 using Domain.Entities.Request.Response;
 using Domain.Entities.Service.Response;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using LAHJA.Helpers.Services;
+using Shared.Helpers;
 
 namespace LAHJA.ApplicationLayer.Request
 {
@@ -14,11 +15,11 @@ namespace LAHJA.ApplicationLayer.Request
     {
         private readonly RequestService requestService;
         private readonly IMapper _mapper;
-        private readonly TokenService _tokenService;
+        private readonly ITokenService _tokenService;
 
 
         public RequestClientService(RequestService requestService, IMapper mapper,
-            TokenService tokenService)
+            ITokenService tokenService)
         {
             this.requestService = requestService;
             _mapper = mapper;

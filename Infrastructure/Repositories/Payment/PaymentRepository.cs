@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Infrastructure.Repositories;
 
 
-public class PaymentRepository : IPaymentRepository {
+ public  class PaymentRepository : IPaymentRepository {
 
     private readonly IPaymentApiClient _apiClient;
     public PaymentRepository(IPaymentApiClient apiClient){

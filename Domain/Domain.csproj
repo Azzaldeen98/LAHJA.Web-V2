@@ -21,5 +21,9 @@
     <Folder Include="ShareData\Base\Payment\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Shared\Shared.csproj" />
+  </ItemGroup>
+
 
 </Project>

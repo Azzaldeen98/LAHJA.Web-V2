@@ -3,17 +3,17 @@ using  System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Infrastructure.Nswag;
-using Infrastructure.Shared.ApiInvoker;
+using Infrastructure.Share.Invoker;
 using AutoMapper;
 using Shared.Interfaces;
 using Infrastructure.DataSource.ApiClientBase;
 using Infrastructure.DataSource.ApiClientFactory;
-using Infrastructure.Shared.ApiInvoker;
+using Infrastructure.Share.Invoker;
 using Microsoft.Extensions.Configuration;
 namespace Infrastructure.DataSource.ApiClient2;
 
 
-public class ModelAiApiClient : BuildApiClient<ModelAiClient>  , IModelAiApiClient {
+ public  class ModelAiApiClient : BuildApiClient<ModelAiClient>  , IModelAiApiClient {
 
   
     public ModelAiApiClient(ClientFactory clientFactory, IMapper mapper, IConfiguration config, 

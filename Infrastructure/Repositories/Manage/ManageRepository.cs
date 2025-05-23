@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Infrastructure.Repositories;
 
 
-public class ManageRepository : IManageRepository {
+ public  class ManageRepository : IManageRepository {
 
     private readonly IManageApiClient _apiClient;
     public ManageRepository(IManageApiClient apiClient){

@@ -3,7 +3,7 @@ using Domain.Entities.Event.Response;
 using Domain.Entities.Request.Request;
 using Domain.Entities.Request.Response;
 using Domain.Entities.Service.Response;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 
 namespace Domain.Repository.Request
 {

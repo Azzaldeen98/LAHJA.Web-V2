@@ -8,7 +8,7 @@ using Application.UseCases;
 namespace Application.Services;
 
 
-public interface IInvoicesService :  ITBaseService ,  ITScope  
+public interface IInvoicesService :  ITBaseShareService  
 {
 
     public Task<ICollection<Invoice>> getInvoicesAsync(string customerId, CancellationToken cancellationToken);

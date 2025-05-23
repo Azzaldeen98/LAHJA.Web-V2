@@ -1,7 +1,7 @@
 ﻿using Domain.Entities.Auth.Request;
 using Domain.Repository.Auth;
 using Domain.ShareData.Base;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 
 namespace Application.UseCase;
 

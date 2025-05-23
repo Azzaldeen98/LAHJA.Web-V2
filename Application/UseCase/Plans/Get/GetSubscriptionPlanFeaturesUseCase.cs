@@ -1,6 +1,6 @@
 ﻿using Domain.Entities.Plans.Response;
 using Domain.Repository.Plans;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 
 namespace Application.UseCase.Plans.Get
 {

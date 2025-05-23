@@ -1,18 +1,11 @@
 ﻿
-using Blazorise;
-using Blazorise.Captcha.ReCaptcha;
-using Domain.Entities;
+using AutoGenerator.Attributes;
 using FluentValidation;
-using IdentityModel.Client;
+using Infrastructure.Nswag;
 using LAHJA.UI.Components.Auth;
 using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Options;
-using Microsoft.JSInterop;
 using MudBlazor;
 using Shared.Constants.Router;
-using Shared.Enums;
-using Shared.Models;
-using Shared.Wrapper;
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 
@@ -45,7 +38,7 @@ namespace LAHJA.Data.UI.Components.Base
     }
 
 
-
+    [HasMapped(typeof(RefreshRequest), typeof(RegisterRequest))]
     public class DataBuildAuthBase
     {
 
@@ -63,6 +56,11 @@ namespace LAHJA.Data.UI.Components.Base
         public string? Code { get; set; }
         public bool IsLogin { get; set; } = true;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public string Provider { get; set; }
+        public string ReturnUrl { get; set; }
+        public string RefreshToken { get; set; }
+        public bool UseCookies { get; set; } = false;
+        public bool UseSessionCookies { get; set; }= false;
     }
 
 
@@ -97,7 +95,7 @@ namespace LAHJA.Data.UI.Components.Base
         }
         [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
-        [Parameter] public EventCallback<ExternalLoginRequest> OnSubmitExternalLogin { get; set; }
+        [Parameter] public EventCallback<DataBuildAuthBase> OnSubmitExternalLogin { get; set; }
         [Parameter] public EventCallback<T> OnSubmit { get; set; }
         [Parameter] public EventCallback<T> OnSubmitConfirmEmail { get; set; }
         [Parameter] public EventCallback<T> OnSubmitReSendConfirmEmail { get; set; }

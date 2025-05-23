@@ -8,7 +8,7 @@ using Application.UseCases;
 namespace Application.Services;
 
 
-public interface ISettingService :  ITBaseService ,  ITScope  
+public interface ISettingService :  ITBaseShareService  
 {
 
     public Task<ICollection<object>> settingAllAsync(CancellationToken cancellationToken);

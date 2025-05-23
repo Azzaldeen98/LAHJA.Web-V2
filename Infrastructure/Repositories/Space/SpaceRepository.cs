@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Infrastructure.Repositories;
 
 
-public class SpaceRepository : ISpaceRepository {
+ public  class SpaceRepository : ISpaceRepository {
 
     private readonly ISpaceApiClient _apiClient;
     public SpaceRepository(ISpaceApiClient apiClient){

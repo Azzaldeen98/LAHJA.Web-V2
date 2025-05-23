@@ -1,6 +1,6 @@
 ﻿using Application.UseCase.ModelAi;
 using Domain.Entities.ModelAi;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 
 namespace Application.Services.ModelAi
 {

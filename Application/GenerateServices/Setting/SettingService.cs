@@ -11,29 +11,30 @@ namespace Application.Services;
 public class SettingService : ISettingService {
 
 
-            
- private readonly SettingAllUseCase _settingAllUseCase;
- private readonly SettingDELETEUseCase _settingDELETEUseCase;
- private readonly SettingGETUseCase _settingGETUseCase;
- private readonly SettingPOSTUseCase _settingPOSTUseCase;
- private readonly SettingPUTUseCase _settingPUTUseCase;
+        
+     private readonly SettingAllUseCase _settingAllUseCase;
+     private readonly SettingDELETEUseCase _settingDELETEUseCase;
+     private readonly SettingGETUseCase _settingGETUseCase;
+     private readonly SettingPOSTUseCase _settingPOSTUseCase;
+     private readonly SettingPUTUseCase _settingPUTUseCase;
 
 
-            public SettingService(
-SettingAllUseCase settingAllUseCase,
-SettingDELETEUseCase settingDELETEUseCase,
-SettingGETUseCase settingGETUseCase,
-SettingPOSTUseCase settingPOSTUseCase,
-SettingPUTUseCase settingPUTUseCase){
-                
-      _settingAllUseCase=settingAllUseCase;
-      _settingDELETEUseCase=settingDELETEUseCase;
-      _settingGETUseCase=settingGETUseCase;
-      _settingPOSTUseCase=settingPOSTUseCase;
-      _settingPUTUseCase=settingPUTUseCase;
+    public SettingService(   
+            SettingAllUseCase settingAllUseCase,
+            SettingDELETEUseCase settingDELETEUseCase,
+            SettingGETUseCase settingGETUseCase,
+            SettingPOSTUseCase settingPOSTUseCase,
+            SettingPUTUseCase settingPUTUseCase)
+    {
+                        
+          _settingAllUseCase=settingAllUseCase;
+          _settingDELETEUseCase=settingDELETEUseCase;
+          _settingGETUseCase=settingGETUseCase;
+          _settingPOSTUseCase=settingPOSTUseCase;
+          _settingPUTUseCase=settingPUTUseCase;
 
 
-            }
+    }
 
                 
 
@@ -42,7 +43,7 @@ SettingPUTUseCase settingPUTUseCase){
 
     
 
-         return    await _settingAllUseCase.ExecuteAsync(cancellationToken);
+         return   await _settingAllUseCase.ExecuteAsync(cancellationToken);
         
 
    }
@@ -54,7 +55,7 @@ SettingPUTUseCase settingPUTUseCase){
 
     
 
-          await _settingDELETEUseCase.ExecuteAsync(name, cancellationToken);
+         await _settingDELETEUseCase.ExecuteAsync(name, cancellationToken);
         
 
    }
@@ -66,7 +67,7 @@ SettingPUTUseCase settingPUTUseCase){
 
     
 
-         return    await _settingGETUseCase.ExecuteAsync(name, cancellationToken);
+         return   await _settingGETUseCase.ExecuteAsync(name, cancellationToken);
         
 
    }
@@ -78,7 +79,7 @@ SettingPUTUseCase settingPUTUseCase){
 
     
 
-         return    await _settingPOSTUseCase.ExecuteAsync(body, cancellationToken);
+         return   await _settingPOSTUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -90,7 +91,7 @@ SettingPUTUseCase settingPUTUseCase){
 
     
 
-          await _settingPUTUseCase.ExecuteAsync(name, body, cancellationToken);
+         await _settingPUTUseCase.ExecuteAsync(name, body, cancellationToken);
         
 
    }

@@ -2,14 +2,14 @@
 using Infrastructure.DataSource.ApiClientFactory;
 using Microsoft.Extensions.Configuration;
 using Infrastructure.DataSource.ApiClient.Base;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using Domain.Entities.ModelGateway;
 using Infrastructure.Models.BaseFolder.Response;
 using Domain.ShareData.Base;
 using Infrastructure.Models.ModelGateway;
 using Infrastructure.Nswag;
 using Infrastructure.Middlewares;
-using Infrastructure.Shared.ApiInvoker;
+using Infrastructure.Share.Invoker;
 
 
 namespace Infrastructure.DataSource.ApiClient.ModelGateway

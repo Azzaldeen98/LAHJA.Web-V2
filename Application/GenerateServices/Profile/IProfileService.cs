@@ -8,7 +8,7 @@ using Application.UseCases;
 namespace Application.Services;
 
 
-public interface IProfileService :  ITBaseService ,  ITScope  
+public interface IProfileService :  ITBaseShareService  
 {
 
     public Task<CustomerResponse> getCustomerProfileAsync(CancellationToken cancellationToken);

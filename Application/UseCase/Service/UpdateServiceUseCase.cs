@@ -1,7 +1,7 @@
 ﻿using Domain.Entities.Service.Request;
 using Domain.Entities.Service.Response;
 using Domain.Repository.Service;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 
 namespace Application.UseCase.Service
 {

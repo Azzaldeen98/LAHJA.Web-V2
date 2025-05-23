@@ -3,7 +3,7 @@ using Domain.Entities.AuthorizationSession;
 using Domain.Entities.AuthorizationSession;
 using Domain.Repository.AuthorizationSession;
 using Domain.ShareData.Base;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using Infrastructure.Core.Repositories.Base;
 using Infrastructure.DataSource.ApiClient.AuthorizationSession;
 using Infrastructure.DataSource.ApiClient.Payment;

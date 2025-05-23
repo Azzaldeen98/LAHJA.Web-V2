@@ -2,7 +2,7 @@
 using AutoMapper;
 using Domain.Entities.Billing.Request;
 using Domain.Entities.Billing.Response;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using IdentityModel.Client;
 using Infrastructure.Nswag;
 using LAHJA.Data.UI.Components.Payment.DataBuildBillingBase;

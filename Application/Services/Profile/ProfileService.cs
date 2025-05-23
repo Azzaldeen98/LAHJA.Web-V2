@@ -8,7 +8,7 @@ using Domain.Entities.Profile.Response;
 using Domain.Entities.Space.Request;
 using Domain.Repository.Profile;
 using Domain.ShareData.Base;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 
 namespace Application.Services.Profile
 {

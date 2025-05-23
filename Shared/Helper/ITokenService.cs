@@ -1,10 +1,20 @@
-﻿namespace Shared.Helpers
+﻿using Microsoft.AspNetCore.Http;
+using Shared.Constants;
+using Shared.Enums;
+using Shared.Interfaces;
+
+namespace Shared.Helpers
 {
 
-    public interface ITokenService
+    public interface ITokenService : ITScope
     {
+
+        Task<bool> IsWebHasStartUpAsync();
+        Task<bool> StartUpWebSessionAsync();
+        
         Task<string?> GetTokenAsync();
         string? GetToken();
+        string? GetLoginType();
         string? GetRefreshToken();
         Task<string?> GetTokenFromSessionAsync();
         Task<string?> GetRefreshTokenAsync();
@@ -17,17 +27,28 @@
         Task SaveTokenTypeAsync(string tokenType);
         Task SaveExpiresInTokenAsync(string expiresIn);
         Task SaveRefreshTokenAsync(string token);
+        Task SaveLoginTypeAsync(LoginType type);
+        void SetToken(string token);
+        void SetRefreshToken(string token);
+        Task SaveTokenInSessionAsync(string tokenIn);
 
         ///////////////////////////////////////
         Task RemoveTokenAsync();
+        Task RemoveCookiesAsync();
         Task RemoveAllTokensAsync();
+        Task DeleteTokenAsync();
+        void DeleteToken();
+        void DeleteRefreshToken();
+        Task DeleteTokenFromSessionAsync();
+        Task DeleteLoginTypeAsync();
+        Task DeleteRefreshTokenAsync();
+        Task DeleteTokenTypeAsync();
+        Task DeleteExpiresInTokenAsync();
 
 
-        //////////////////////////////////////////
-      
-        Task SaveTempTokenAsync(string token);
-        Task<string> GetTempTokenAsync();
-        Task RemoveTempTokenAsync();
-	}
+    }
+
+
+
 
 }

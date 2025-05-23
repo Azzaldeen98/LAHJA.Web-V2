@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Infrastructure.Repositories;
 
 
-public class CheckoutRepository : ICheckoutRepository {
+ public  class CheckoutRepository : ICheckoutRepository {
 
     private readonly ICheckoutApiClient _apiClient;
     public CheckoutRepository(ICheckoutApiClient apiClient){

@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Infrastructure.Repositories;
 
 
-public class DashboardRepository : IDashboardRepository {
+ public  class DashboardRepository : IDashboardRepository {
 
     private readonly IDashboardApiClient _apiClient;
     public DashboardRepository(IDashboardApiClient apiClient){

@@ -1,4 +1,4 @@
-﻿using Domain.Wrapper;
+﻿using Domain.Wrapper; using Shared.Wrapper;
 using Infrastructure.Nswag;
 using Microsoft.AspNetCore.Http;
 using System.Text.Json;

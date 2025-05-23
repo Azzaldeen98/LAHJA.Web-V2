@@ -1,7 +1,7 @@
 ﻿using ApexCharts;
 using Blazorise;
 using Blazorise.Extensions;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using LAHJA.ApiClient.Models;
 using LAHJA.Data.UI.Models;
 using Microsoft.AspNetCore.Components.Forms;

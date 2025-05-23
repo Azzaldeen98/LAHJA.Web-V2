@@ -1,6 +1,6 @@
 ﻿using Domain.Repository.Profile;
 using Domain.Repository.Subscriptions;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 
 namespace Application.UseCase.Plans.Get
 {

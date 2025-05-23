@@ -8,7 +8,7 @@ using Application.UseCases;
 namespace Application.Services;
 
 
-public interface ISpaceService :  ITBaseService ,  ITScope  
+public interface ISpaceService :  ITBaseShareService  
 {
 
     public Task<SpaceResponse> createSpaceAsync(CreateSpaceRequest body, CancellationToken cancellationToken);

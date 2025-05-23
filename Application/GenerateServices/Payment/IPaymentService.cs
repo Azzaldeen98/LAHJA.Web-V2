@@ -8,7 +8,7 @@ using Application.UseCases;
 namespace Application.Services;
 
 
-public interface IPaymentService :  ITBaseService ,  ITScope  
+public interface IPaymentService :  ITBaseShareService  
 {
 
     public Task cancelPaymentAsync(string id, CancellationToken cancellationToken);

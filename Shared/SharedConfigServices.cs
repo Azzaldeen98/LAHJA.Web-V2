@@ -4,6 +4,8 @@ using Shared.Settings;
 
 namespace Shared
 {
+
+    public interface ISharedLayerMarker { }
     public static class SharedConfigServices
     {
         public static void InstallSharedConfigServices(this IServiceCollection serviceCollection)

@@ -8,7 +8,7 @@ using Application.UseCases;
 namespace Application.Services;
 
 
-public interface IRequestService :  ITBaseService ,  ITScope  
+public interface IRequestService :  ITBaseShareService  
 {
 
     public Task<RequestAllowed> allowedRequestAsync(string serviceId, CancellationToken cancellationToken);

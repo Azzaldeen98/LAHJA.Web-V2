@@ -11,29 +11,30 @@ namespace Application.Services;
 public class ServiceService : IServiceService {
 
 
-            
- private readonly CreateServiceUseCase _createServiceUseCase;
- private readonly DeleteServiceUseCase _deleteServiceUseCase;
- private readonly GetServicesUseCase _getServicesUseCase;
- private readonly GetServiceUseCase _getServiceUseCase;
- private readonly UpdateServiceUseCase _updateServiceUseCase;
+        
+     private readonly CreateServiceUseCase _createServiceUseCase;
+     private readonly DeleteServiceUseCase _deleteServiceUseCase;
+     private readonly GetServicesUseCase _getServicesUseCase;
+     private readonly GetServiceUseCase _getServiceUseCase;
+     private readonly UpdateServiceUseCase _updateServiceUseCase;
 
 
-            public ServiceService(
-CreateServiceUseCase createServiceUseCase,
-DeleteServiceUseCase deleteServiceUseCase,
-GetServicesUseCase getServicesUseCase,
-GetServiceUseCase getServiceUseCase,
-UpdateServiceUseCase updateServiceUseCase){
-                
-      _createServiceUseCase=createServiceUseCase;
-      _deleteServiceUseCase=deleteServiceUseCase;
-      _getServicesUseCase=getServicesUseCase;
-      _getServiceUseCase=getServiceUseCase;
-      _updateServiceUseCase=updateServiceUseCase;
+    public ServiceService(   
+            CreateServiceUseCase createServiceUseCase,
+            DeleteServiceUseCase deleteServiceUseCase,
+            GetServicesUseCase getServicesUseCase,
+            GetServiceUseCase getServiceUseCase,
+            UpdateServiceUseCase updateServiceUseCase)
+    {
+                        
+          _createServiceUseCase=createServiceUseCase;
+          _deleteServiceUseCase=deleteServiceUseCase;
+          _getServicesUseCase=getServicesUseCase;
+          _getServiceUseCase=getServiceUseCase;
+          _updateServiceUseCase=updateServiceUseCase;
 
 
-            }
+    }
 
                 
 
@@ -42,7 +43,7 @@ UpdateServiceUseCase updateServiceUseCase){
 
     
 
-         return    await _createServiceUseCase.ExecuteAsync(body, cancellationToken);
+         return   await _createServiceUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -54,7 +55,7 @@ UpdateServiceUseCase updateServiceUseCase){
 
     
 
-         return    await _deleteServiceUseCase.ExecuteAsync(id, cancellationToken);
+         return   await _deleteServiceUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -66,7 +67,7 @@ UpdateServiceUseCase updateServiceUseCase){
 
     
 
-         return    await _getServicesUseCase.ExecuteAsync(cancellationToken);
+         return   await _getServicesUseCase.ExecuteAsync(cancellationToken);
         
 
    }
@@ -78,7 +79,7 @@ UpdateServiceUseCase updateServiceUseCase){
 
     
 
-         return    await _getServiceUseCase.ExecuteAsync(id, cancellationToken);
+         return   await _getServiceUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -90,7 +91,7 @@ UpdateServiceUseCase updateServiceUseCase){
 
     
 
-          await _updateServiceUseCase.ExecuteAsync(id, body, cancellationToken);
+         await _updateServiceUseCase.ExecuteAsync(id, body, cancellationToken);
         
 
    }

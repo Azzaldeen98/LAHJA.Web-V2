@@ -5,13 +5,14 @@ using Domain.Entities.Event.Response;
 using Domain.Entities.Service.Request;
 using Domain.Entities.Service.Response;
 using Domain.ShareData.Base;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using LAHJA.ApiClient.Models;
 using LAHJA.ApiClient.Services;
 using LAHJA.ApiClient.Services.Query;
 using LAHJA.ApiClient.Services.VoiceBot;
 using LAHJA.Data.UI.Models;
 using LAHJA.Helpers.Services;
+using Shared.Helpers;
 
 namespace LAHJA.ApplicationLayer.Service
 {
@@ -19,12 +20,12 @@ namespace LAHJA.ApplicationLayer.Service
     {
         private readonly LAHJAService _lahjaService;
         private readonly IMapper _mapper;
-        private readonly TokenService _tokenService;
+        private readonly ITokenService _tokenService;
         private readonly IVoiceBotService voiceBotService;
         private readonly IT2TService t2TService;
         private readonly IQueryTextToSpeechService queryTextToSpeechService;
 
-        public LAHJAClientService(LAHJAService lahjaService, IMapper mapper, TokenService tokenService, IVoiceBotService voiceBotService, IT2TService t2TService, IQueryTextToSpeechService queryTextToSpeechService)
+        public LAHJAClientService(LAHJAService lahjaService, IMapper mapper, ITokenService tokenService, IVoiceBotService voiceBotService, IT2TService t2TService, IQueryTextToSpeechService queryTextToSpeechService)
         {
             _lahjaService = lahjaService;
             _mapper = mapper;

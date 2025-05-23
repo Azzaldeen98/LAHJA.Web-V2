@@ -11,29 +11,30 @@ namespace Application.Services;
 public class PriceService : IPriceService {
 
 
-            
- private readonly CreatePriceUseCase _createPriceUseCase;
- private readonly GetPricesUseCase _getPricesUseCase;
- private readonly GetPriceUseCase _getPriceUseCase;
- private readonly SearchPriceUseCase _searchPriceUseCase;
- private readonly UpdatePriceUseCase _updatePriceUseCase;
+        
+     private readonly CreatePriceUseCase _createPriceUseCase;
+     private readonly GetPricesUseCase _getPricesUseCase;
+     private readonly GetPriceUseCase _getPriceUseCase;
+     private readonly SearchPriceUseCase _searchPriceUseCase;
+     private readonly UpdatePriceUseCase _updatePriceUseCase;
 
 
-            public PriceService(
-CreatePriceUseCase createPriceUseCase,
-GetPricesUseCase getPricesUseCase,
-GetPriceUseCase getPriceUseCase,
-SearchPriceUseCase searchPriceUseCase,
-UpdatePriceUseCase updatePriceUseCase){
-                
-      _createPriceUseCase=createPriceUseCase;
-      _getPricesUseCase=getPricesUseCase;
-      _getPriceUseCase=getPriceUseCase;
-      _searchPriceUseCase=searchPriceUseCase;
-      _updatePriceUseCase=updatePriceUseCase;
+    public PriceService(   
+            CreatePriceUseCase createPriceUseCase,
+            GetPricesUseCase getPricesUseCase,
+            GetPriceUseCase getPriceUseCase,
+            SearchPriceUseCase searchPriceUseCase,
+            UpdatePriceUseCase updatePriceUseCase)
+    {
+                        
+          _createPriceUseCase=createPriceUseCase;
+          _getPricesUseCase=getPricesUseCase;
+          _getPriceUseCase=getPriceUseCase;
+          _searchPriceUseCase=searchPriceUseCase;
+          _updatePriceUseCase=updatePriceUseCase;
 
 
-            }
+    }
 
                 
 
@@ -42,7 +43,7 @@ UpdatePriceUseCase updatePriceUseCase){
 
     
 
-         return    await _createPriceUseCase.ExecuteAsync(body, cancellationToken);
+         return   await _createPriceUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -54,7 +55,7 @@ UpdatePriceUseCase updatePriceUseCase){
 
     
 
-         return    await _getPricesUseCase.ExecuteAsync(productId, active, cancellationToken);
+         return   await _getPricesUseCase.ExecuteAsync(productId, active, cancellationToken);
         
 
    }
@@ -66,7 +67,7 @@ UpdatePriceUseCase updatePriceUseCase){
 
     
 
-         return    await _getPriceUseCase.ExecuteAsync(id, cancellationToken);
+         return   await _getPriceUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -78,7 +79,7 @@ UpdatePriceUseCase updatePriceUseCase){
 
     
 
-          await _searchPriceUseCase.ExecuteAsync(body, cancellationToken);
+         await _searchPriceUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -90,7 +91,7 @@ UpdatePriceUseCase updatePriceUseCase){
 
     
 
-         return    await _updatePriceUseCase.ExecuteAsync(id, body, cancellationToken);
+         return   await _updatePriceUseCase.ExecuteAsync(id, body, cancellationToken);
         
 
    }

@@ -1,6 +1,7 @@
 
 using Castle.DynamicProxy;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Shared.Interfaces;
 using System.Reflection;
 
@@ -11,6 +12,126 @@ namespace Shared.Services.Infrastructure.Extensions
 
     public static class RegistrarServiceCollectionExtensions
     {
+        //public static IServiceCollection AddServiceLifetime<TBase>(
+        //    this IServiceCollection services, 
+        //    ServiceLifetime lifetime,
+        //    params Assembly[] assemblies)
+        //{
+        //    if(assemblies == null || assemblies.Length == 0)
+        //    {
+        //        assemblies = new[] { Assembly.GetExecutingAssembly() };
+        //    }
+
+        //    //services.Scan(scan => scan
+        //    //  .FromAssemblies(assemblies)
+        //    //  // «Œ — ﬂ· «·ﬂ·«”«  «·ﬁ«»·… ·· ⁄ÌÌ‰ ≈·Ï TBase
+        //    //  .AddClasses(classes => classes.AssignableTo<TBase>())
+        //    //    // ”Ã¯·Â« „ﬁ«»· Ã„Ì⁄ «·Ê«ÃÂ«  «· Ì  ÿ»ﬁÂ«
+        //    //    .AsImplementedInterfaces()
+        //    //    // »‰„ÿ Scoped
+        //    //    .WithLifetime(lifetime));
+
+        //    services.Scan(scan => scan
+        //      .FromAssemblies(assemblies)
+        //      .AddClasses(c => c.AssignableTo<TBase>())
+        //        .AsImplementedInterfaces(iface => typeof(TBase).IsAssignableFrom(iface)) // ”Ã¯·Â« „ﬁ«»· Ã„Ì⁄ «·Ê«ÃÂ«  «· Ì  ÿ»ﬁÂ«
+        //        .AsSelf()                   // ≈÷«›… «· ”ÃÌ· «·–« Ì
+        //        .WithLifetime(lifetime));
+
+
+        //    return services;
+        //}
+        public static IServiceCollection AddServiceByLifetime<TMarker>(
+         this IServiceCollection services,
+         Func<IServiceCollection, Type, Type, IServiceCollection> addService,
+         Assembly[] assemblies,
+         ILogger? logger = null)  //  „—Ì— logger «Œ Ì«—Ì
+        {
+
+
+            if (services == null) throw new ArgumentNullException(nameof(services));
+            if (addService == null) throw new ArgumentNullException(nameof(addService));
+            if (assemblies == null || assemblies.Length == 0)
+            {
+                assemblies = new[] { Assembly.GetExecutingAssembly() };
+            }
+
+            foreach (var assembly in assemblies)
+            {
+                Type[] types;
+                try
+                {
+                    types = assembly.GetTypes();
+                }
+                catch (ReflectionTypeLoadException ex)
+                {
+                    types = ex.Types.Where(t => t != null).ToArray();
+                    logger?.LogWarning(ex, $"Load warning in assembly {assembly.FullName}. Some types could not be loaded.");
+                }
+                catch (Exception ex)
+                {
+                    logger?.LogError(ex, $"Failed to load types from assembly {assembly.FullName}");
+                    continue;  //  ŒÿÏ Â–« «·√”„»·Ì Ê«” „— ›Ì «·»«ﬁÌ
+                }
+
+                if(types == null || types.Length == 0)
+                {
+                    logger?.LogWarning($"No types found in assembly {assembly.FullName}");
+                    continue;  //  ŒÿÏ Â–« «·√”„»·Ì Ê«” „— ›Ì «·»«ﬁÌ
+                }
+                var implTypes = types.Where(t =>
+                        !t.IsAbstract &&
+                        !t.IsInterface &&
+                        typeof(TMarker).IsAssignableFrom(t));
+
+                foreach (var implType in implTypes)
+                {
+                    var allIfaces = implType.GetInterfaces();
+                    var inheritedIfaces = allIfaces.SelectMany(i => i.GetInterfaces()).ToHashSet();
+
+                    var directIfaces = allIfaces
+                        .Except(inheritedIfaces)
+                        .Where(i => typeof(TMarker).IsAssignableFrom(i))
+                        .ToList();
+
+                    if (directIfaces.Any())
+                    {
+                        foreach (var iface in directIfaces)
+                        {
+                            if (!services.Any(s => s.ServiceType == iface && s.ImplementationType == implType))
+                            {
+                                try
+                                {
+                                    addService(services, iface, implType);
+                                    logger?.LogInformation($"Registered By Interface: {implType.Name} as {iface.Name}");
+                                }
+                                catch (Exception ex)
+                                {
+                                    logger?.LogError(ex, $"Error registering {implType.Name} as {iface.Name}");
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (!services.Any(s => s.ServiceType == implType))
+                        {
+                            try
+                            {
+                                addService(services, implType, implType);
+                                logger?.LogInformation($"Registered Self: {implType.Name} as self");
+                            }
+                            catch (Exception ex)
+                            {
+                                logger?.LogError(ex, $"Error registering {implType.Name} as self");
+                            }
+                        }
+                    }
+                }
+            }
+
+            return services;
+        }
 
         public static void RegisterServices<TInterface>(this IServiceCollection services,
             Func<IServiceCollection, Type, Type, IServiceCollection> registrationMethod)
@@ -48,23 +169,10 @@ namespace Shared.Services.Infrastructure.Extensions
                 if (!hasMatchedInterface)
                 {
                     System.Diagnostics.Debug.WriteLine($"ServiceRegistrar : {type.Name} \n");
-                    //MethodInfo methodInfo = registrationMethod.Method;
-
-                    //if (methodInfo.IsGenericMethodDefinition)
-                    //{
-                    //    MethodInfo constructedMethod = methodInfo.MakeGenericMethod(type);
-
-
-                    //    constructedMethod.Invoke(registrationMethod.Target, new object[] { services, type });
-                    //    Console.WriteLine("?? «·œ«·… ÂÌ Ã‰—Ìﬂ ( ” Œœ„ ﬁÊ«·» T).");
-                    //}
-                    //else
-                    //{
-
+   
 
                     registrationMethod(services, type, type);
-                    //Console.WriteLine("? «·œ«·… ·Ì”  Ã‰—Ìﬂ.");
-                    //}
+              
 
                 }
             }
@@ -173,48 +281,55 @@ namespace Shared.Services.Infrastructure.Extensions
         }
 
 
-        public static void RegisterServicesByLifetime(this IServiceCollection services)
+        public static void RegisterServicesByLifetimes(this IServiceCollection services,  Assembly[] assemblies, ILogger? logger = null)
         {
-
-            services.RegisterServices<ITSingleton>(ServiceCollectionServiceExtensions.AddSingleton);
-            services.RegisterServices<ITScope>(ServiceCollectionServiceExtensions.AddScoped);
-            services.RegisterServices<ITTransient>(ServiceCollectionServiceExtensions.AddTransient);
-
-
+            services.AddServiceByLifetime<ITTransient>(ServiceCollectionServiceExtensions.AddTransient, assemblies, logger);
+            services.AddServiceByLifetime<ITScope>(ServiceCollectionServiceExtensions.AddScoped, assemblies, logger);
+            services.AddServiceByLifetime<ITSingleton>(ServiceCollectionServiceExtensions.AddSingleton, assemblies, logger);
 
         }
+        //public static void RegisterServicesByLifetime(this IServiceCollection services)
+        //{
 
-        public static void RegisterInterceptorServices<ITServices,TInterceptorService>(this IServiceCollection services)
-                where ITServices : class
-                where TInterceptorService : class, IInterceptor
-        {
-
-            RegisterServicesCallBack<ITService>(services,callback:(s, interfaceType, implementationType) => {
-                
-                if (interfaceType == implementationType)
-                {
-
-                      var method = typeof(ServiceCollectionExtensions)
-                     .GetMethod("AddScopedWithInterceptor", BindingFlags.Public | BindingFlags.Static)
-                     .MakeGenericMethod(interfaceType, typeof(TInterceptorService));
-                      method.Invoke(null, new object[] { s });
-                }
-                else
-                {
-
-                    var method = typeof(ServiceCollectionExtensions)
-                    .GetMethod("AddScopedWithInterceptor", BindingFlags.Public | BindingFlags.Static)
-                    .MakeGenericMethod(interfaceType, implementationType, typeof(TInterceptorService));
-                        method.Invoke(null, new object[] { s });
-                }
-
-
-            });
- 
+        //    services.RegisterServices<ITSingleton>(ServiceCollectionServiceExtensions.AddSingleton);
+        //    services.RegisterServices<ITScope>(ServiceCollectionServiceExtensions.AddScoped);
+        //    services.RegisterServices<ITTransient>(ServiceCollectionServiceExtensions.AddTransient);
 
 
 
-        }
+        //}
+
+        //public static void RegisterInterceptorServices<ITServices,TInterceptorService>(this IServiceCollection services)
+        //        where ITServices : class
+        //        where TInterceptorService : class, IInterceptor
+        //{
+
+        //    RegisterServicesCallBack<ITService>(services,callback:(s, interfaceType, implementationType) => {
+
+        //        if (interfaceType == implementationType)
+        //        {
+
+        //              var method = typeof(ServiceCollectionExtensions)
+        //             .GetMethod("AddScopedWithInterceptor", BindingFlags.Public | BindingFlags.Static)
+        //             .MakeGenericMethod(interfaceType, typeof(TInterceptorService));
+        //              method.Invoke(null, new object[] { s });
+        //        }
+        //        else
+        //        {
+
+        //            var method = typeof(ServiceCollectionExtensions)
+        //            .GetMethod("AddScopedWithInterceptor", BindingFlags.Public | BindingFlags.Static)
+        //            .MakeGenericMethod(interfaceType, implementationType, typeof(TInterceptorService));
+        //                method.Invoke(null, new object[] { s });
+        //        }
+
+
+        //    });
+
+
+
+
+        //}
 
 
         public static IServiceCollection AddScopedWithInterceptor<TInterface, TImplementation, TInterceptor>(

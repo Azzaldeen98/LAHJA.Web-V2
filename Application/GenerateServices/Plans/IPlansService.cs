@@ -8,7 +8,7 @@ using Application.UseCases;
 namespace Application.Services;
 
 
-public interface IPlansService :  ITBaseService ,  ITScope  
+public interface IPlansService :  ITBaseShareService  
 {
 
     public Task<ICollection<PlanView>> asGroupPlansAsync(string langauge, CancellationToken cancellationToken);

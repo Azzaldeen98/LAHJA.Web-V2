@@ -11,32 +11,33 @@ namespace Application.Services;
 public class ProductService : IProductService {
 
 
-            
- private readonly CreateProductUseCase _createProductUseCase;
- private readonly DeleteProductUseCase _deleteProductUseCase;
- private readonly GetProductsUseCase _getProductsUseCase;
- private readonly GetProductUseCase _getProductUseCase;
- private readonly SearchAllProductUseCase _searchAllProductUseCase;
- private readonly UpdateProductUseCase _updateProductUseCase;
+        
+     private readonly CreateProductUseCase _createProductUseCase;
+     private readonly DeleteProductUseCase _deleteProductUseCase;
+     private readonly GetProductsUseCase _getProductsUseCase;
+     private readonly GetProductUseCase _getProductUseCase;
+     private readonly SearchAllProductUseCase _searchAllProductUseCase;
+     private readonly UpdateProductUseCase _updateProductUseCase;
 
 
-            public ProductService(
-CreateProductUseCase createProductUseCase,
-DeleteProductUseCase deleteProductUseCase,
-GetProductsUseCase getProductsUseCase,
-GetProductUseCase getProductUseCase,
-SearchAllProductUseCase searchAllProductUseCase,
-UpdateProductUseCase updateProductUseCase){
-                
-      _createProductUseCase=createProductUseCase;
-      _deleteProductUseCase=deleteProductUseCase;
-      _getProductsUseCase=getProductsUseCase;
-      _getProductUseCase=getProductUseCase;
-      _searchAllProductUseCase=searchAllProductUseCase;
-      _updateProductUseCase=updateProductUseCase;
+    public ProductService(   
+            CreateProductUseCase createProductUseCase,
+            DeleteProductUseCase deleteProductUseCase,
+            GetProductsUseCase getProductsUseCase,
+            GetProductUseCase getProductUseCase,
+            SearchAllProductUseCase searchAllProductUseCase,
+            UpdateProductUseCase updateProductUseCase)
+    {
+                        
+          _createProductUseCase=createProductUseCase;
+          _deleteProductUseCase=deleteProductUseCase;
+          _getProductsUseCase=getProductsUseCase;
+          _getProductUseCase=getProductUseCase;
+          _searchAllProductUseCase=searchAllProductUseCase;
+          _updateProductUseCase=updateProductUseCase;
 
 
-            }
+    }
 
                 
 
@@ -45,7 +46,7 @@ UpdateProductUseCase updateProductUseCase){
 
     
 
-         return    await _createProductUseCase.ExecuteAsync(body, cancellationToken);
+         return   await _createProductUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -57,7 +58,7 @@ UpdateProductUseCase updateProductUseCase){
 
     
 
-         return    await _deleteProductUseCase.ExecuteAsync(id, cancellationToken);
+         return   await _deleteProductUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -69,7 +70,7 @@ UpdateProductUseCase updateProductUseCase){
 
     
 
-         return    await _getProductsUseCase.ExecuteAsync(startingAfter, endingBefore, limit, cancellationToken);
+         return   await _getProductsUseCase.ExecuteAsync(startingAfter, endingBefore, limit, cancellationToken);
         
 
    }
@@ -81,7 +82,7 @@ UpdateProductUseCase updateProductUseCase){
 
     
 
-         return    await _getProductUseCase.ExecuteAsync(id, cancellationToken);
+         return   await _getProductUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -93,7 +94,7 @@ UpdateProductUseCase updateProductUseCase){
 
     
 
-         return    await _searchAllProductUseCase.ExecuteAsync(query, limit, page, cancellationToken);
+         return   await _searchAllProductUseCase.ExecuteAsync(query, limit, page, cancellationToken);
         
 
    }
@@ -105,7 +106,7 @@ UpdateProductUseCase updateProductUseCase){
 
     
 
-         return    await _updateProductUseCase.ExecuteAsync(id, body, cancellationToken);
+         return   await _updateProductUseCase.ExecuteAsync(id, body, cancellationToken);
         
 
    }

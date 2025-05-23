@@ -11,20 +11,21 @@ namespace Application.Services;
 public class CheckoutService : ICheckoutService {
 
 
-            
- private readonly CreateCheckoutUseCase _createCheckoutUseCase;
- private readonly ManageCheckoutUseCase _manageCheckoutUseCase;
+        
+     private readonly CreateCheckoutUseCase _createCheckoutUseCase;
+     private readonly ManageCheckoutUseCase _manageCheckoutUseCase;
 
 
-            public CheckoutService(
-CreateCheckoutUseCase createCheckoutUseCase,
-ManageCheckoutUseCase manageCheckoutUseCase){
-                
-      _createCheckoutUseCase=createCheckoutUseCase;
-      _manageCheckoutUseCase=manageCheckoutUseCase;
+    public CheckoutService(   
+            CreateCheckoutUseCase createCheckoutUseCase,
+            ManageCheckoutUseCase manageCheckoutUseCase)
+    {
+                        
+          _createCheckoutUseCase=createCheckoutUseCase;
+          _manageCheckoutUseCase=manageCheckoutUseCase;
 
 
-            }
+    }
 
                 
 
@@ -33,7 +34,7 @@ ManageCheckoutUseCase manageCheckoutUseCase){
 
     
 
-         return    await _createCheckoutUseCase.ExecuteAsync(body, cancellationToken);
+         return   await _createCheckoutUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -45,7 +46,7 @@ ManageCheckoutUseCase manageCheckoutUseCase){
 
     
 
-         return    await _manageCheckoutUseCase.ExecuteAsync(body, cancellationToken);
+         return   await _manageCheckoutUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }

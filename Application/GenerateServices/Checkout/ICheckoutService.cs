@@ -8,7 +8,7 @@ using Application.UseCases;
 namespace Application.Services;
 
 
-public interface ICheckoutService :  ITBaseService ,  ITScope  
+public interface ICheckoutService :  ITBaseShareService  
 {
 
     public Task<CheckoutResponse> createCheckoutAsync(CheckoutOptions body, CancellationToken cancellationToken);

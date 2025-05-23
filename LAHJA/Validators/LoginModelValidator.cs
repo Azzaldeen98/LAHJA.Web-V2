@@ -2,6 +2,7 @@
 using LAHJA.Data.UI.Components.Base;
 using LAHJA.Helpers;
 using Microsoft.Extensions.Localization;
+using System.ComponentModel.DataAnnotations;
 
 namespace LAHJA.Validators
 {

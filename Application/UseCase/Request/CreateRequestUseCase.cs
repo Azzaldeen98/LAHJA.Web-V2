@@ -1,7 +1,7 @@
 ﻿using Domain.Entities.Request.Request;
 using Domain.Entities.Request.Response;
 using Domain.Repository.Request;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 
 namespace Application.UseCase.Request
 {

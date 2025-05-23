@@ -1,7 +1,7 @@
 ﻿using Domain.Entities.Checkout.Request;
 using Domain.Entities.Checkout.Response;
 using Domain.Repository.Checkout;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 
 namespace Application.UseCase.Plans.Get
 {

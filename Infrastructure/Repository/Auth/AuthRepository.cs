@@ -6,7 +6,7 @@ using Domain.Entities.Auth.Response;
 using Domain.Repository.Auth;
 using Domain.ShareData.Base;
 using Domain.ShareData.Base.Auth;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using Infrastructure.DataSource;
 using Infrastructure.DataSource.ApiClient.Auth;
 using Infrastructure.DataSource.Seeds;

@@ -2,7 +2,7 @@
 using Domain.Entities.Product.Response;
 using Domain.Repository.Product;
 using Domain.ShareData.Base;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 
 namespace Application.UseCase.Plans.Get
 {

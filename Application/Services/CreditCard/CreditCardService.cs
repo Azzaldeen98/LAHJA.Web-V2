@@ -7,7 +7,7 @@ using Domain.Entities.Checkout.Request;
 using Domain.Entities.Checkout.Response;
 using Domain.Entities.Plans.Response;
 using Domain.ShareData.Base;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using Infrastructure.Models.Profile.Response;
 
 namespace Application.Services.Plans

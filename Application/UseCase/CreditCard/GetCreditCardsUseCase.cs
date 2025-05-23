@@ -10,7 +10,7 @@ using Domain.Repository.Billing;
 using Domain.Repository.CreditCard;
 using Domain.Repository.Checkout;
 using Domain.ShareData.Base;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using Infrastructure.Models.Profile.Response;
 
 namespace Application.Services.Plans

@@ -11,20 +11,21 @@ namespace Application.Services;
 public class InvoicesService : IInvoicesService {
 
 
-            
- private readonly GetInvoicesUseCase _getInvoicesUseCase;
- private readonly GetInvoiceUseCase _getInvoiceUseCase;
+        
+     private readonly GetInvoicesUseCase _getInvoicesUseCase;
+     private readonly GetInvoiceUseCase _getInvoiceUseCase;
 
 
-            public InvoicesService(
-GetInvoicesUseCase getInvoicesUseCase,
-GetInvoiceUseCase getInvoiceUseCase){
-                
-      _getInvoicesUseCase=getInvoicesUseCase;
-      _getInvoiceUseCase=getInvoiceUseCase;
+    public InvoicesService(   
+            GetInvoicesUseCase getInvoicesUseCase,
+            GetInvoiceUseCase getInvoiceUseCase)
+    {
+                        
+          _getInvoicesUseCase=getInvoicesUseCase;
+          _getInvoiceUseCase=getInvoiceUseCase;
 
 
-            }
+    }
 
                 
 
@@ -33,7 +34,7 @@ GetInvoiceUseCase getInvoiceUseCase){
 
     
 
-         return    await _getInvoicesUseCase.ExecuteAsync(customerId, cancellationToken);
+         return   await _getInvoicesUseCase.ExecuteAsync(customerId, cancellationToken);
         
 
    }
@@ -45,7 +46,7 @@ GetInvoiceUseCase getInvoiceUseCase){
 
     
 
-         return    await _getInvoiceUseCase.ExecuteAsync(id, cancellationToken);
+         return   await _getInvoiceUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }

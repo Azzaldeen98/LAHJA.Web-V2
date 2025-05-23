@@ -2,7 +2,7 @@
 using Domain.Entities.Setting.Response;
 using Domain.Entities.Subscriptions.Response;
 using Domain.ShareData.Base;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 
 
 namespace Domain.Repository.Setting

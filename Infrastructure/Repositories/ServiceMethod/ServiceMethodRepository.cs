@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Infrastructure.Repositories;
 
 
-public class ServiceMethodRepository : IServiceMethodRepository {
+ public  class ServiceMethodRepository : IServiceMethodRepository {
 
     private readonly IServiceMethodApiClient _apiClient;
     public ServiceMethodRepository(IServiceMethodApiClient apiClient){

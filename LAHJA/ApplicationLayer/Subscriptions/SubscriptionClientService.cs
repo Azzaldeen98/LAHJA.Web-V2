@@ -4,18 +4,19 @@ using Domain.Entities.Subscriptions;
 using Domain.Entities.Subscriptions.Request;
 using Domain.Entities.Subscriptions.Response;
 using Domain.ShareData.Base;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using LAHJA.Helpers.Services;
+using Shared.Helpers;
 
 namespace LAHJA.ApplicationLayer.Subscription
 {
     public class SubscriptionClientService
     {
         private readonly Application.Services.Subscriptions.SubscriptionService _subscriptionService;
-        private readonly TokenService _tokenService;
+        private readonly ITokenService _tokenService;
         private readonly IMapper _mapper;
 
-        public SubscriptionClientService(Application.Services.Subscriptions.SubscriptionService subscriptionService, IMapper mapper, TokenService tokenService)
+        public SubscriptionClientService(Application.Services.Subscriptions.SubscriptionService subscriptionService, IMapper mapper, ITokenService tokenService)
         {
             this._subscriptionService = subscriptionService;
             this._mapper = mapper;

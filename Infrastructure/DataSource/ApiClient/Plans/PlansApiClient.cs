@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using Infrastructure.DataSource.ApiClientFactory;
 using Infrastructure.Models.BaseFolder.Response;
 using Infrastructure.Models.Plans;
@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Domain.ShareData.Base;
 using Infrastructure.DataSource.ApiClient.Base;
 using Infrastructure.Middlewares;
-using Infrastructure.Shared.ApiInvoker;
+using Infrastructure.Share.Invoker;
 
 namespace Infrastructure.DataSource.ApiClient.Plans
 {

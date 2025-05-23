@@ -1,7 +1,7 @@
 ﻿using Domain.Entities.Subscriptions.Request;
 using Domain.Entities.Subscriptions.Response;
 using Domain.Repository.Subscriptions;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 
 namespace Application.UseCase.Plans.Get
 {

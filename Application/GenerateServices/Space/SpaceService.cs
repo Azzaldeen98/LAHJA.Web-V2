@@ -11,38 +11,39 @@ namespace Application.Services;
 public class SpaceService : ISpaceService {
 
 
-            
- private readonly CreateSpaceUseCase _createSpaceUseCase;
- private readonly DeleteSpaceUseCase _deleteSpaceUseCase;
- private readonly GetBySubscriptionIdSpaceUseCase _getBySubscriptionIdSpaceUseCase;
- private readonly GetByTokenSpaceUseCase _getByTokenSpaceUseCase;
- private readonly GetSpacesByRamUseCase _getSpacesByRamUseCase;
- private readonly GetSpacesUseCase _getSpacesUseCase;
- private readonly GetSpaceUseCase _getSpaceUseCase;
- private readonly UpdateSpaceUseCase _updateSpaceUseCase;
+        
+     private readonly CreateSpaceUseCase _createSpaceUseCase;
+     private readonly DeleteSpaceUseCase _deleteSpaceUseCase;
+     private readonly GetBySubscriptionIdSpaceUseCase _getBySubscriptionIdSpaceUseCase;
+     private readonly GetByTokenSpaceUseCase _getByTokenSpaceUseCase;
+     private readonly GetSpacesByRamUseCase _getSpacesByRamUseCase;
+     private readonly GetSpacesUseCase _getSpacesUseCase;
+     private readonly GetSpaceUseCase _getSpaceUseCase;
+     private readonly UpdateSpaceUseCase _updateSpaceUseCase;
 
 
-            public SpaceService(
-CreateSpaceUseCase createSpaceUseCase,
-DeleteSpaceUseCase deleteSpaceUseCase,
-GetBySubscriptionIdSpaceUseCase getBySubscriptionIdSpaceUseCase,
-GetByTokenSpaceUseCase getByTokenSpaceUseCase,
-GetSpacesByRamUseCase getSpacesByRamUseCase,
-GetSpacesUseCase getSpacesUseCase,
-GetSpaceUseCase getSpaceUseCase,
-UpdateSpaceUseCase updateSpaceUseCase){
-                
-      _createSpaceUseCase=createSpaceUseCase;
-      _deleteSpaceUseCase=deleteSpaceUseCase;
-      _getBySubscriptionIdSpaceUseCase=getBySubscriptionIdSpaceUseCase;
-      _getByTokenSpaceUseCase=getByTokenSpaceUseCase;
-      _getSpacesByRamUseCase=getSpacesByRamUseCase;
-      _getSpacesUseCase=getSpacesUseCase;
-      _getSpaceUseCase=getSpaceUseCase;
-      _updateSpaceUseCase=updateSpaceUseCase;
+    public SpaceService(   
+            CreateSpaceUseCase createSpaceUseCase,
+            DeleteSpaceUseCase deleteSpaceUseCase,
+            GetBySubscriptionIdSpaceUseCase getBySubscriptionIdSpaceUseCase,
+            GetByTokenSpaceUseCase getByTokenSpaceUseCase,
+            GetSpacesByRamUseCase getSpacesByRamUseCase,
+            GetSpacesUseCase getSpacesUseCase,
+            GetSpaceUseCase getSpaceUseCase,
+            UpdateSpaceUseCase updateSpaceUseCase)
+    {
+                        
+          _createSpaceUseCase=createSpaceUseCase;
+          _deleteSpaceUseCase=deleteSpaceUseCase;
+          _getBySubscriptionIdSpaceUseCase=getBySubscriptionIdSpaceUseCase;
+          _getByTokenSpaceUseCase=getByTokenSpaceUseCase;
+          _getSpacesByRamUseCase=getSpacesByRamUseCase;
+          _getSpacesUseCase=getSpacesUseCase;
+          _getSpaceUseCase=getSpaceUseCase;
+          _updateSpaceUseCase=updateSpaceUseCase;
 
 
-            }
+    }
 
                 
 
@@ -51,7 +52,7 @@ UpdateSpaceUseCase updateSpaceUseCase){
 
     
 
-         return    await _createSpaceUseCase.ExecuteAsync(body, cancellationToken);
+         return   await _createSpaceUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -63,7 +64,7 @@ UpdateSpaceUseCase updateSpaceUseCase){
 
     
 
-         return    await _deleteSpaceUseCase.ExecuteAsync(id, cancellationToken);
+         return   await _deleteSpaceUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -75,7 +76,7 @@ UpdateSpaceUseCase updateSpaceUseCase){
 
     
 
-         return    await _getBySubscriptionIdSpaceUseCase.ExecuteAsync(subscriptionId, cancellationToken);
+         return   await _getBySubscriptionIdSpaceUseCase.ExecuteAsync(subscriptionId, cancellationToken);
         
 
    }
@@ -87,7 +88,7 @@ UpdateSpaceUseCase updateSpaceUseCase){
 
     
 
-         return    await _getByTokenSpaceUseCase.ExecuteAsync(token, cancellationToken);
+         return   await _getByTokenSpaceUseCase.ExecuteAsync(token, cancellationToken);
         
 
    }
@@ -99,7 +100,7 @@ UpdateSpaceUseCase updateSpaceUseCase){
 
     
 
-         return    await _getSpacesByRamUseCase.ExecuteAsync(ram, cancellationToken);
+         return   await _getSpacesByRamUseCase.ExecuteAsync(ram, cancellationToken);
         
 
    }
@@ -111,7 +112,7 @@ UpdateSpaceUseCase updateSpaceUseCase){
 
     
 
-         return    await _getSpacesUseCase.ExecuteAsync(cancellationToken);
+         return   await _getSpacesUseCase.ExecuteAsync(cancellationToken);
         
 
    }
@@ -123,7 +124,7 @@ UpdateSpaceUseCase updateSpaceUseCase){
 
     
 
-         return    await _getSpaceUseCase.ExecuteAsync(id, cancellationToken);
+         return   await _getSpaceUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -135,7 +136,7 @@ UpdateSpaceUseCase updateSpaceUseCase){
 
     
 
-         return    await _updateSpaceUseCase.ExecuteAsync(id, body, cancellationToken);
+         return   await _updateSpaceUseCase.ExecuteAsync(id, body, cancellationToken);
         
 
    }

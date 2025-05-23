@@ -11,47 +11,48 @@ namespace Application.Services;
 public class SubscriptionsService : ISubscriptionsService {
 
 
-            
- private readonly CancelAtEndSubscriptionsUseCase _cancelAtEndSubscriptionsUseCase;
- private readonly CancelSubscriptionUseCase _cancelSubscriptionUseCase;
- private readonly CreateSubscriptionUseCase _createSubscriptionUseCase;
- private readonly GetSubscriptionsUseCase _getSubscriptionsUseCase;
- private readonly GetSubscriptionUseCase _getSubscriptionUseCase;
- private readonly PauseCollectionSubscriptionsUseCase _pauseCollectionSubscriptionsUseCase;
- private readonly RenewSubscriptionsUseCase _renewSubscriptionsUseCase;
- private readonly ResetRequestsSubscriptionsUseCase _resetRequestsSubscriptionsUseCase;
- private readonly ResetSpacesSubscriptionsUseCase _resetSpacesSubscriptionsUseCase;
- private readonly ResumeCollectionSubscriptionsUseCase _resumeCollectionSubscriptionsUseCase;
- private readonly ResumeSubscriptionsUseCase _resumeSubscriptionsUseCase;
+        
+     private readonly CancelAtEndSubscriptionsUseCase _cancelAtEndSubscriptionsUseCase;
+     private readonly CancelSubscriptionUseCase _cancelSubscriptionUseCase;
+     private readonly CreateSubscriptionUseCase _createSubscriptionUseCase;
+     private readonly GetSubscriptionsUseCase _getSubscriptionsUseCase;
+     private readonly GetSubscriptionUseCase _getSubscriptionUseCase;
+     private readonly PauseCollectionSubscriptionsUseCase _pauseCollectionSubscriptionsUseCase;
+     private readonly RenewSubscriptionsUseCase _renewSubscriptionsUseCase;
+     private readonly ResetRequestsSubscriptionsUseCase _resetRequestsSubscriptionsUseCase;
+     private readonly ResetSpacesSubscriptionsUseCase _resetSpacesSubscriptionsUseCase;
+     private readonly ResumeCollectionSubscriptionsUseCase _resumeCollectionSubscriptionsUseCase;
+     private readonly ResumeSubscriptionsUseCase _resumeSubscriptionsUseCase;
 
 
-            public SubscriptionsService(
-CancelAtEndSubscriptionsUseCase cancelAtEndSubscriptionsUseCase,
-CancelSubscriptionUseCase cancelSubscriptionUseCase,
-CreateSubscriptionUseCase createSubscriptionUseCase,
-GetSubscriptionsUseCase getSubscriptionsUseCase,
-GetSubscriptionUseCase getSubscriptionUseCase,
-PauseCollectionSubscriptionsUseCase pauseCollectionSubscriptionsUseCase,
-RenewSubscriptionsUseCase renewSubscriptionsUseCase,
-ResetRequestsSubscriptionsUseCase resetRequestsSubscriptionsUseCase,
-ResetSpacesSubscriptionsUseCase resetSpacesSubscriptionsUseCase,
-ResumeCollectionSubscriptionsUseCase resumeCollectionSubscriptionsUseCase,
-ResumeSubscriptionsUseCase resumeSubscriptionsUseCase){
-                
-      _cancelAtEndSubscriptionsUseCase=cancelAtEndSubscriptionsUseCase;
-      _cancelSubscriptionUseCase=cancelSubscriptionUseCase;
-      _createSubscriptionUseCase=createSubscriptionUseCase;
-      _getSubscriptionsUseCase=getSubscriptionsUseCase;
-      _getSubscriptionUseCase=getSubscriptionUseCase;
-      _pauseCollectionSubscriptionsUseCase=pauseCollectionSubscriptionsUseCase;
-      _renewSubscriptionsUseCase=renewSubscriptionsUseCase;
-      _resetRequestsSubscriptionsUseCase=resetRequestsSubscriptionsUseCase;
-      _resetSpacesSubscriptionsUseCase=resetSpacesSubscriptionsUseCase;
-      _resumeCollectionSubscriptionsUseCase=resumeCollectionSubscriptionsUseCase;
-      _resumeSubscriptionsUseCase=resumeSubscriptionsUseCase;
+    public SubscriptionsService(   
+            CancelAtEndSubscriptionsUseCase cancelAtEndSubscriptionsUseCase,
+            CancelSubscriptionUseCase cancelSubscriptionUseCase,
+            CreateSubscriptionUseCase createSubscriptionUseCase,
+            GetSubscriptionsUseCase getSubscriptionsUseCase,
+            GetSubscriptionUseCase getSubscriptionUseCase,
+            PauseCollectionSubscriptionsUseCase pauseCollectionSubscriptionsUseCase,
+            RenewSubscriptionsUseCase renewSubscriptionsUseCase,
+            ResetRequestsSubscriptionsUseCase resetRequestsSubscriptionsUseCase,
+            ResetSpacesSubscriptionsUseCase resetSpacesSubscriptionsUseCase,
+            ResumeCollectionSubscriptionsUseCase resumeCollectionSubscriptionsUseCase,
+            ResumeSubscriptionsUseCase resumeSubscriptionsUseCase)
+    {
+                        
+          _cancelAtEndSubscriptionsUseCase=cancelAtEndSubscriptionsUseCase;
+          _cancelSubscriptionUseCase=cancelSubscriptionUseCase;
+          _createSubscriptionUseCase=createSubscriptionUseCase;
+          _getSubscriptionsUseCase=getSubscriptionsUseCase;
+          _getSubscriptionUseCase=getSubscriptionUseCase;
+          _pauseCollectionSubscriptionsUseCase=pauseCollectionSubscriptionsUseCase;
+          _renewSubscriptionsUseCase=renewSubscriptionsUseCase;
+          _resetRequestsSubscriptionsUseCase=resetRequestsSubscriptionsUseCase;
+          _resetSpacesSubscriptionsUseCase=resetSpacesSubscriptionsUseCase;
+          _resumeCollectionSubscriptionsUseCase=resumeCollectionSubscriptionsUseCase;
+          _resumeSubscriptionsUseCase=resumeSubscriptionsUseCase;
 
 
-            }
+    }
 
                 
 
@@ -60,7 +61,7 @@ ResumeSubscriptionsUseCase resumeSubscriptionsUseCase){
 
     
 
-          await _cancelAtEndSubscriptionsUseCase.ExecuteAsync(id, cancellationToken);
+         await _cancelAtEndSubscriptionsUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -72,7 +73,7 @@ ResumeSubscriptionsUseCase resumeSubscriptionsUseCase){
 
     
 
-          await _cancelSubscriptionUseCase.ExecuteAsync(id, cancellationToken);
+         await _cancelSubscriptionUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -84,7 +85,7 @@ ResumeSubscriptionsUseCase resumeSubscriptionsUseCase){
 
     
 
-         return    await _createSubscriptionUseCase.ExecuteAsync(body, cancellationToken);
+         return   await _createSubscriptionUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -96,7 +97,7 @@ ResumeSubscriptionsUseCase resumeSubscriptionsUseCase){
 
     
 
-         return    await _getSubscriptionsUseCase.ExecuteAsync(cancellationToken);
+         return   await _getSubscriptionsUseCase.ExecuteAsync(cancellationToken);
         
 
    }
@@ -108,7 +109,7 @@ ResumeSubscriptionsUseCase resumeSubscriptionsUseCase){
 
     
 
-         return    await _getSubscriptionUseCase.ExecuteAsync(id, cancellationToken);
+         return   await _getSubscriptionUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -120,7 +121,7 @@ ResumeSubscriptionsUseCase resumeSubscriptionsUseCase){
 
     
 
-          await _pauseCollectionSubscriptionsUseCase.ExecuteAsync(id, body, cancellationToken);
+         await _pauseCollectionSubscriptionsUseCase.ExecuteAsync(id, body, cancellationToken);
         
 
    }
@@ -132,7 +133,7 @@ ResumeSubscriptionsUseCase resumeSubscriptionsUseCase){
 
     
 
-          await _renewSubscriptionsUseCase.ExecuteAsync(id, cancellationToken);
+         await _renewSubscriptionsUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -144,7 +145,7 @@ ResumeSubscriptionsUseCase resumeSubscriptionsUseCase){
 
     
 
-          await _resetRequestsSubscriptionsUseCase.ExecuteAsync(id, cancellationToken);
+         await _resetRequestsSubscriptionsUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -156,7 +157,7 @@ ResumeSubscriptionsUseCase resumeSubscriptionsUseCase){
 
     
 
-          await _resetSpacesSubscriptionsUseCase.ExecuteAsync(id, cancellationToken);
+         await _resetSpacesSubscriptionsUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -168,7 +169,7 @@ ResumeSubscriptionsUseCase resumeSubscriptionsUseCase){
 
     
 
-          await _resumeCollectionSubscriptionsUseCase.ExecuteAsync(id, cancellationToken);
+         await _resumeCollectionSubscriptionsUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -180,7 +181,7 @@ ResumeSubscriptionsUseCase resumeSubscriptionsUseCase){
 
     
 
-          await _resumeSubscriptionsUseCase.ExecuteAsync(id, body, cancellationToken);
+         await _resumeSubscriptionsUseCase.ExecuteAsync(id, body, cancellationToken);
         
 
    }

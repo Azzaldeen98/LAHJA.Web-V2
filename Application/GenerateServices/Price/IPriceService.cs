@@ -8,7 +8,7 @@ using Application.UseCases;
 namespace Application.Services;
 
 
-public interface IPriceService :  ITBaseService ,  ITScope  
+public interface IPriceService :  ITBaseShareService  
 {
 
     public Task<PriceResponse> createPriceAsync(PriceCreate body, CancellationToken cancellationToken);

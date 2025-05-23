@@ -1,7 +1,7 @@
 ﻿using Domain.Entities.Service.Request;
 using Domain.Entities.Service.Response;
 using Domain.ShareData.Base;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 
 namespace Domain.Repository.Service
 {

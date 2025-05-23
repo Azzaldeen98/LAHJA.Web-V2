@@ -11,65 +11,66 @@ namespace Application.Services;
 public class MasterService : IMasterService {
 
 
-            
- private readonly Active2MasterUseCase _active2MasterUseCase;
- private readonly ActiveMasterUseCase _activeMasterUseCase;
- private readonly AdvertisementsGETMasterUseCase _advertisementsGETMasterUseCase;
- private readonly AdvertisementsPOSTMasterUseCase _advertisementsPOSTMasterUseCase;
- private readonly AdvertisementtabMasterUseCase _advertisementtabMasterUseCase;
- private readonly AdvertisementtabsAllMasterUseCase _advertisementtabsAllMasterUseCase;
- private readonly AdvertisementtabsMasterUseCase _advertisementtabsMasterUseCase;
- private readonly CategoriesGETMasterUseCase _categoriesGETMasterUseCase;
- private readonly CategoriesPOSTMasterUseCase _categoriesPOSTMasterUseCase;
- private readonly DialectMasterUseCase _dialectMasterUseCase;
- private readonly DialectsAllMasterUseCase _dialectsAllMasterUseCase;
- private readonly DialectsMasterUseCase _dialectsMasterUseCase;
- private readonly LanguagesAllMasterUseCase _languagesAllMasterUseCase;
- private readonly LanguagesGETMasterUseCase _languagesGETMasterUseCase;
- private readonly LanguagesPOSTMasterUseCase _languagesPOSTMasterUseCase;
- private readonly TypesGETMasterUseCase _typesGETMasterUseCase;
- private readonly TypesPOSTMasterUseCase _typesPOSTMasterUseCase;
+        
+     private readonly Active2MasterUseCase _active2MasterUseCase;
+     private readonly ActiveMasterUseCase _activeMasterUseCase;
+     private readonly AdvertisementsGETMasterUseCase _advertisementsGETMasterUseCase;
+     private readonly AdvertisementsPOSTMasterUseCase _advertisementsPOSTMasterUseCase;
+     private readonly AdvertisementtabMasterUseCase _advertisementtabMasterUseCase;
+     private readonly AdvertisementtabsAllMasterUseCase _advertisementtabsAllMasterUseCase;
+     private readonly AdvertisementtabsMasterUseCase _advertisementtabsMasterUseCase;
+     private readonly CategoriesGETMasterUseCase _categoriesGETMasterUseCase;
+     private readonly CategoriesPOSTMasterUseCase _categoriesPOSTMasterUseCase;
+     private readonly DialectMasterUseCase _dialectMasterUseCase;
+     private readonly DialectsAllMasterUseCase _dialectsAllMasterUseCase;
+     private readonly DialectsMasterUseCase _dialectsMasterUseCase;
+     private readonly LanguagesAllMasterUseCase _languagesAllMasterUseCase;
+     private readonly LanguagesGETMasterUseCase _languagesGETMasterUseCase;
+     private readonly LanguagesPOSTMasterUseCase _languagesPOSTMasterUseCase;
+     private readonly TypesGETMasterUseCase _typesGETMasterUseCase;
+     private readonly TypesPOSTMasterUseCase _typesPOSTMasterUseCase;
 
 
-            public MasterService(
-Active2MasterUseCase active2MasterUseCase,
-ActiveMasterUseCase activeMasterUseCase,
-AdvertisementsGETMasterUseCase advertisementsGETMasterUseCase,
-AdvertisementsPOSTMasterUseCase advertisementsPOSTMasterUseCase,
-AdvertisementtabMasterUseCase advertisementtabMasterUseCase,
-AdvertisementtabsAllMasterUseCase advertisementtabsAllMasterUseCase,
-AdvertisementtabsMasterUseCase advertisementtabsMasterUseCase,
-CategoriesGETMasterUseCase categoriesGETMasterUseCase,
-CategoriesPOSTMasterUseCase categoriesPOSTMasterUseCase,
-DialectMasterUseCase dialectMasterUseCase,
-DialectsAllMasterUseCase dialectsAllMasterUseCase,
-DialectsMasterUseCase dialectsMasterUseCase,
-LanguagesAllMasterUseCase languagesAllMasterUseCase,
-LanguagesGETMasterUseCase languagesGETMasterUseCase,
-LanguagesPOSTMasterUseCase languagesPOSTMasterUseCase,
-TypesGETMasterUseCase typesGETMasterUseCase,
-TypesPOSTMasterUseCase typesPOSTMasterUseCase){
-                
-      _active2MasterUseCase=active2MasterUseCase;
-      _activeMasterUseCase=activeMasterUseCase;
-      _advertisementsGETMasterUseCase=advertisementsGETMasterUseCase;
-      _advertisementsPOSTMasterUseCase=advertisementsPOSTMasterUseCase;
-      _advertisementtabMasterUseCase=advertisementtabMasterUseCase;
-      _advertisementtabsAllMasterUseCase=advertisementtabsAllMasterUseCase;
-      _advertisementtabsMasterUseCase=advertisementtabsMasterUseCase;
-      _categoriesGETMasterUseCase=categoriesGETMasterUseCase;
-      _categoriesPOSTMasterUseCase=categoriesPOSTMasterUseCase;
-      _dialectMasterUseCase=dialectMasterUseCase;
-      _dialectsAllMasterUseCase=dialectsAllMasterUseCase;
-      _dialectsMasterUseCase=dialectsMasterUseCase;
-      _languagesAllMasterUseCase=languagesAllMasterUseCase;
-      _languagesGETMasterUseCase=languagesGETMasterUseCase;
-      _languagesPOSTMasterUseCase=languagesPOSTMasterUseCase;
-      _typesGETMasterUseCase=typesGETMasterUseCase;
-      _typesPOSTMasterUseCase=typesPOSTMasterUseCase;
+    public MasterService(   
+            Active2MasterUseCase active2MasterUseCase,
+            ActiveMasterUseCase activeMasterUseCase,
+            AdvertisementsGETMasterUseCase advertisementsGETMasterUseCase,
+            AdvertisementsPOSTMasterUseCase advertisementsPOSTMasterUseCase,
+            AdvertisementtabMasterUseCase advertisementtabMasterUseCase,
+            AdvertisementtabsAllMasterUseCase advertisementtabsAllMasterUseCase,
+            AdvertisementtabsMasterUseCase advertisementtabsMasterUseCase,
+            CategoriesGETMasterUseCase categoriesGETMasterUseCase,
+            CategoriesPOSTMasterUseCase categoriesPOSTMasterUseCase,
+            DialectMasterUseCase dialectMasterUseCase,
+            DialectsAllMasterUseCase dialectsAllMasterUseCase,
+            DialectsMasterUseCase dialectsMasterUseCase,
+            LanguagesAllMasterUseCase languagesAllMasterUseCase,
+            LanguagesGETMasterUseCase languagesGETMasterUseCase,
+            LanguagesPOSTMasterUseCase languagesPOSTMasterUseCase,
+            TypesGETMasterUseCase typesGETMasterUseCase,
+            TypesPOSTMasterUseCase typesPOSTMasterUseCase)
+    {
+                        
+          _active2MasterUseCase=active2MasterUseCase;
+          _activeMasterUseCase=activeMasterUseCase;
+          _advertisementsGETMasterUseCase=advertisementsGETMasterUseCase;
+          _advertisementsPOSTMasterUseCase=advertisementsPOSTMasterUseCase;
+          _advertisementtabMasterUseCase=advertisementtabMasterUseCase;
+          _advertisementtabsAllMasterUseCase=advertisementtabsAllMasterUseCase;
+          _advertisementtabsMasterUseCase=advertisementtabsMasterUseCase;
+          _categoriesGETMasterUseCase=categoriesGETMasterUseCase;
+          _categoriesPOSTMasterUseCase=categoriesPOSTMasterUseCase;
+          _dialectMasterUseCase=dialectMasterUseCase;
+          _dialectsAllMasterUseCase=dialectsAllMasterUseCase;
+          _dialectsMasterUseCase=dialectsMasterUseCase;
+          _languagesAllMasterUseCase=languagesAllMasterUseCase;
+          _languagesGETMasterUseCase=languagesGETMasterUseCase;
+          _languagesPOSTMasterUseCase=languagesPOSTMasterUseCase;
+          _typesGETMasterUseCase=typesGETMasterUseCase;
+          _typesPOSTMasterUseCase=typesPOSTMasterUseCase;
 
 
-            }
+    }
 
                 
 
@@ -78,7 +79,7 @@ TypesPOSTMasterUseCase typesPOSTMasterUseCase){
 
     
 
-         return    await _active2MasterUseCase.ExecuteAsync(lg, cancellationToken);
+         return   await _active2MasterUseCase.ExecuteAsync(lg, cancellationToken);
         
 
    }
@@ -90,7 +91,7 @@ TypesPOSTMasterUseCase typesPOSTMasterUseCase){
 
     
 
-         return    await _activeMasterUseCase.ExecuteAsync(lg, cancellationToken);
+         return   await _activeMasterUseCase.ExecuteAsync(lg, cancellationToken);
         
 
    }
@@ -102,7 +103,7 @@ TypesPOSTMasterUseCase typesPOSTMasterUseCase){
 
     
 
-         return    await _advertisementsGETMasterUseCase.ExecuteAsync(id, lg, cancellationToken);
+         return   await _advertisementsGETMasterUseCase.ExecuteAsync(id, lg, cancellationToken);
         
 
    }
@@ -114,7 +115,7 @@ TypesPOSTMasterUseCase typesPOSTMasterUseCase){
 
     
 
-          await _advertisementsPOSTMasterUseCase.ExecuteAsync(lg, body, cancellationToken);
+         await _advertisementsPOSTMasterUseCase.ExecuteAsync(lg, body, cancellationToken);
         
 
    }
@@ -126,7 +127,7 @@ TypesPOSTMasterUseCase typesPOSTMasterUseCase){
 
     
 
-         return    await _advertisementtabMasterUseCase.ExecuteAsync(id, lg, cancellationToken);
+         return   await _advertisementtabMasterUseCase.ExecuteAsync(id, lg, cancellationToken);
         
 
    }
@@ -138,7 +139,7 @@ TypesPOSTMasterUseCase typesPOSTMasterUseCase){
 
     
 
-         return    await _advertisementtabsAllMasterUseCase.ExecuteAsync(advertisementId, lg, cancellationToken);
+         return   await _advertisementtabsAllMasterUseCase.ExecuteAsync(advertisementId, lg, cancellationToken);
         
 
    }
@@ -150,7 +151,7 @@ TypesPOSTMasterUseCase typesPOSTMasterUseCase){
 
     
 
-         return    await _advertisementtabsMasterUseCase.ExecuteAsync(lg, body, cancellationToken);
+         return   await _advertisementtabsMasterUseCase.ExecuteAsync(lg, body, cancellationToken);
         
 
    }
@@ -162,7 +163,7 @@ TypesPOSTMasterUseCase typesPOSTMasterUseCase){
 
     
 
-          await _categoriesGETMasterUseCase.ExecuteAsync(name, lg, cancellationToken);
+         await _categoriesGETMasterUseCase.ExecuteAsync(name, lg, cancellationToken);
         
 
    }
@@ -174,7 +175,7 @@ TypesPOSTMasterUseCase typesPOSTMasterUseCase){
 
     
 
-          await _categoriesPOSTMasterUseCase.ExecuteAsync(lg, body, cancellationToken);
+         await _categoriesPOSTMasterUseCase.ExecuteAsync(lg, body, cancellationToken);
         
 
    }
@@ -186,7 +187,7 @@ TypesPOSTMasterUseCase typesPOSTMasterUseCase){
 
     
 
-         return    await _dialectMasterUseCase.ExecuteAsync(languageId, lg, cancellationToken);
+         return   await _dialectMasterUseCase.ExecuteAsync(languageId, lg, cancellationToken);
         
 
    }
@@ -198,7 +199,7 @@ TypesPOSTMasterUseCase typesPOSTMasterUseCase){
 
     
 
-         return    await _dialectsAllMasterUseCase.ExecuteAsync(languageId, lg, cancellationToken);
+         return   await _dialectsAllMasterUseCase.ExecuteAsync(languageId, lg, cancellationToken);
         
 
    }
@@ -210,7 +211,7 @@ TypesPOSTMasterUseCase typesPOSTMasterUseCase){
 
     
 
-         return    await _dialectsMasterUseCase.ExecuteAsync(lg, body, cancellationToken);
+         return   await _dialectsMasterUseCase.ExecuteAsync(lg, body, cancellationToken);
         
 
    }
@@ -222,7 +223,7 @@ TypesPOSTMasterUseCase typesPOSTMasterUseCase){
 
     
 
-         return    await _languagesAllMasterUseCase.ExecuteAsync(lg, cancellationToken);
+         return   await _languagesAllMasterUseCase.ExecuteAsync(lg, cancellationToken);
         
 
    }
@@ -234,7 +235,7 @@ TypesPOSTMasterUseCase typesPOSTMasterUseCase){
 
     
 
-          await _languagesGETMasterUseCase.ExecuteAsync(code, lg, cancellationToken);
+         await _languagesGETMasterUseCase.ExecuteAsync(code, lg, cancellationToken);
         
 
    }
@@ -246,7 +247,7 @@ TypesPOSTMasterUseCase typesPOSTMasterUseCase){
 
     
 
-          await _languagesPOSTMasterUseCase.ExecuteAsync(lg, body, cancellationToken);
+         await _languagesPOSTMasterUseCase.ExecuteAsync(lg, body, cancellationToken);
         
 
    }
@@ -258,7 +259,7 @@ TypesPOSTMasterUseCase typesPOSTMasterUseCase){
 
     
 
-         return    await _typesGETMasterUseCase.ExecuteAsync(name, lg, cancellationToken);
+         return   await _typesGETMasterUseCase.ExecuteAsync(name, lg, cancellationToken);
         
 
    }
@@ -270,7 +271,7 @@ TypesPOSTMasterUseCase typesPOSTMasterUseCase){
 
     
 
-         return    await _typesPOSTMasterUseCase.ExecuteAsync(lg, body, cancellationToken);
+         return   await _typesPOSTMasterUseCase.ExecuteAsync(lg, body, cancellationToken);
         
 
    }

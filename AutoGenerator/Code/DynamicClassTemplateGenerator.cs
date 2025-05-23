@@ -1,14 +1,382 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using AutoGenerator.Attributes;
+using AutoMapper;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AutoGenerator.Code
 {
+    public class AutoGenerateUITemplateGenerator
+    {
+
+        public static string GenerateTemplateBuilder(
+            GenerationOptions generationOptions, 
+            ClassDeclarationSyntax classDecl, 
+            string service_name,
+            string builderType)
+        {
+            var sb = new StringBuilder();
+            var generateCode = "";
+            if (generationOptions.ImplementGenerateInterface)
+            {
+
+                generationOptions.InterfaceName = $"IBuilder{service_name}{builderType}<T>";
+                generationOptions.BaseInterface = $"IBuilder{builderType}<T>";
+
+                generateCode = DynamicClassTemplateGenerator.GenerateInterface(classDecl, generationOptions, null, false);
+                sb.AppendLine(generateCode);
+                sb.AppendLine();
+                //SaveToFile($"{output_directory}\\{generationOptions.InterfaceName}.cs", generateCode);
+     
+                generationOptions.BaseInterface = $"IBuilder{service_name}{builderType}<E>";
+            }
+
+
+            //newGenerationOptions.AdditionalCode = @"";
+            //newGenerationOptions.MethodContentCode = "";
+            generationOptions.ClassName = $"Builder{service_name}{builderType}<T,E>";
+            generateCode = DynamicClassTemplateGenerator.GenerateClass(classDecl, generationOptions, sourceClassName: "", false, "abstract", "abstract");
+            sb.AppendLine(generateCode);
+            sb.AppendLine();
+
+            return sb.ToString();
+        }
+        public static string GenerateTemplateBuilderComponents(
+            GenerationOptions generationOptions,
+            ClassDeclarationSyntax classDecl,
+            string service_name,
+            string nameStartWith= "Builder",
+            string typeClass= "interface",
+            string baseClass= "IBuilderComponents<T>",
+            string genericType= "<T>")
+        {
+            var sb = new StringBuilder();
+      
+
+            var methods = classDecl.Members
+                           .OfType<MethodDeclarationSyntax>()
+                           .Where(m => m.Modifiers.Any(SyntaxKind.PublicKeyword));
+
+
+            
+            sb.AppendLine();
+            sb.Append($"public {typeClass} {nameStartWith}{service_name}Components{genericType} : {baseClass}");
+            sb.AppendLine("{");
+
+         
+          
+   
+            foreach (var method in methods)
+            {
+                var generateCode = GenerateDeclarationDelegate(method.Identifier.Text, "public", "Func<T, Task>", "Submit");
+                sb.AppendLine(generateCode);
+            }
+
+            sb.AppendLine("}");
+ 
+            sb.AppendLine();
+
+
+               
+         
+
+            return sb.ToString();
+        }
+
+        public static string GenerateDeclarationDelegate(
+            string methodName,
+              string typeModifier = "public",
+            string returnType = "Func<T, Task>", 
+            string nameStartWith = "")
+        {
+
+            methodName =  methodName.Replace("Async","");
+            methodName= methodName.First().ToString().ToUpper() + methodName.Substring(1);
+
+
+            return $"  {typeModifier} {returnType} {nameStartWith}{methodName}{{get;set;}}";
+
+   
+        }
+
+
+
+      
+        public static string TemplateShareClassCode(string service_name, string baseClass = "TemplateBase<T,E>")
+        {
+
+
+          return @$"public class Template{service_name}Share<T,E> : {baseClass}
+            {{
+                public IBuilder{service_name}Components<E> BuilderComponents {{ get => builderComponents; }}
+                protected IBuilder{service_name}Api<E> builderApi;
+
+                protected readonly IShareTemplateProvider shareProvider;
+                protected readonly CustomAuthenticationStateProvider AuthStateProvider;
+
+                private readonly IBuilder{service_name}Components<E> builderComponents;
+
+                public Template{service_name}Share(
+                        CustomAuthenticationStateProvider authStateProvider,
+                        LAHJA.Helpers.Services.AuthService authService,
+                        T client,
+                        IBuilder{service_name}Components<E> builderComponents,
+                        IShareTemplateProvider shareProvider) : base(shareProvider.Mapper, authService, client)
+                {{
+
+
+
+                    builderComponents = new Builder{service_name}Components<E>();
+                    this.builderComponents = builderComponents;
+                    AuthStateProvider = authStateProvider;
+                    this.shareProvider = shareProvider;
+                }}
+
+        }}";
+
+
+   
+        }
+
+        public static string GenerateBuilderApiClientClass(
+       GenerationOptions generationOptions,
+       ClassDeclarationSyntax classDecl,
+       string serviceName,
+         SemanticModel semanticModel)
+        {
+            var sb = new StringBuilder();
+
+            // Header and constructor
+            sb.AppendLine($@"
+public class Builder{serviceName}ApiClient : Builder{serviceName}Api<Application.Services.{serviceName}Service, DataBuild{serviceName}Base>, 
+      IBuilder{serviceName}Api<DataBuild{serviceName}Base>
+{{
+    public Builder{serviceName}ApiClient(IMapper mapper, Application.Services.{serviceName}Service service) 
+        : base(mapper, service)
+    {{
+    }}
+");
+
+            var methods = classDecl.Members
+                .OfType<MethodDeclarationSyntax>()
+                .Where(m => m.Modifiers.Any(SyntaxKind.PublicKeyword));
+
+            foreach (var method in methods)
+            {
+                var methodName = method.Identifier.Text;
+                var returnType = method.ReturnType.ToString();
+                var parameters = method.ParameterList.Parameters;
+
+                var parameters_text = string.Join(", ", method.ParameterList.Parameters.Select(p => $"{p.Type} {p.Identifier.Text}"));
+                var variables = string.Join(", ", method.ParameterList.Parameters.Select(p => p.Identifier.Text));
+
+                var mappedTypeName = methodName;// GetMappedTypeName(methodName); // <-- تحتاج لتحديد قاعدة التسمية
+               
+
+
+                sb.AppendLine($@"
+    public override  async {returnType} {methodName}(DataBuild{serviceName}Base data,CancellationToken cancellationToken)
+    {{ ");
+
+
+                var simpleTypes = new[] { "string", "bool", "int", "float", "string?", "bool?", "int?", "float?" };
+
+                if (parameters != null && parameters.Any())
+                {
+                    var parametersExcludingLast = parameters.Take(parameters.Count - 1);
+                    foreach (var param in parametersExcludingLast) 
+                    {
+                        var methodBody = "";
+
+
+                        //var typeInfo = semanticModel.GetTypeInfo(param.Type);
+                        //var typeSymbol = typeInfo.Type;
+
+                        if (!simpleTypes.Contains(param.Type.ToString()))
+                        {
+
+                            methodBody = @$"        var {param.Identifier.Text}= Mapper.Map<{param.Type}>(data);";
+
+                        }
+                        else
+                        {
+                            var name = param.Identifier.Text;
+                            if (!string.IsNullOrEmpty(name))
+                            {
+                                var capitalized = char.ToUpper(name[0]) + name.Substring(1);
+                                methodBody = $"         var {param.Identifier.Text} = data.{capitalized};";
+                            }
+                           
+                        }
+                        sb.AppendLine(methodBody);
+                    }
+                    
+        
+                }
+     
+                var call = returnType.Contains("Task<") ? " return  " : "";
+    
+                sb.AppendLine($"        {call} await Service.{methodName}({variables}); ");
+                sb.AppendLine();
+                sb.AppendLine("    }");
+            }
+
+            sb.AppendLine("}"); // close class
+
+            return sb.ToString();
+        }
+
+        public static void GenerateAllUITemplatesClass(GenerationOptions generationOptions)
+        {
+
+
+            if (!DynamicClassTemplateGenerator.CheckImportantInfo(generationOptions))
+                return;
+
+            var sb = new StringBuilder();
+
+
+            var code = File.ReadAllText(generationOptions.SourceTemplateFilePath);
+            var tree = CSharpSyntaxTree.ParseText(code);
+            var root = tree.GetCompilationUnitRoot();
+            var classDeclarations = root.DescendantNodes().OfType<ClassDeclarationSyntax>();
+
+            // توليد compilation يدويًا
+            var compilation = CSharpCompilation.Create(
+                "GeneratedCode",
+                new[] { tree },
+                new[] {
+                        MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+                        MetadataReference.CreateFromFile(typeof(Console).Assembly.Location),
+                        MetadataReference.CreateFromFile(typeof(Enumerable).Assembly.Location),
+                        MetadataReference.CreateFromFile(typeof(IMapper).Assembly.Location), // لو كنت تستخدم AutoMapper
+                        MetadataReference.CreateFromFile(typeof(Task).Assembly.Location)
+                },
+                new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
+            );
+
+            // استخدم semanticModel
+            var semanticModel = compilation.GetSemanticModel(tree);
+
+            List<Type> interfaces = new List<Type>();
+            if (generationOptions.Interfaces.Any())
+                interfaces.AddRange(generationOptions.Interfaces);
+
+            foreach (var classDecl in classDeclarations)
+            {
+                bool isImplementsInterface = DynamicClassTemplateGenerator.IsImplementsOrInheritsBase(classDecl,
+                                            RoslynUtils.CreateSemanticModel(tree),
+                                            generationOptions.SourceBaseInterface);
+
+
+                if (isImplementsInterface)
+                {
+                    var sourceClassName = classDecl.Identifier.Text;
+                    if (!string.IsNullOrWhiteSpace(sourceClassName))
+                    {
+                        var service_name = sourceClassName.Replace(generationOptions.SourceCategoryName, "");
+
+                        //generationOptions.BaseIClassName = baseClassName;
+                        //var output_directory = "";
+
+                        if (!string.IsNullOrWhiteSpace(service_name))
+                        {
+
+                            generationOptions.NamespaceName = generationOptions.NamespaceName.Replace("{ServiceName}", service_name);
+                            sb.Append(DynamicClassTemplateGenerator.GenerateUsingsNamespaces(generationOptions));
+                            sb.AppendLine();
+
+
+                            generationOptions.ClassName = $"{generationOptions.DestinationCategoryName}{service_name}";
+                            var output_file = $"{generationOptions.DestinationRoot}\\{generationOptions.DestinationDirectory}\\{service_name}\\{generationOptions.ClassName}.cs";
+
+                  
+                            var newGenerationOptions = generationOptions.Clone();
+                            generationOptions.BaseClass = "BuilderApi<T,E>";
+                            var generateCode = GenerateTemplateBuilder(generationOptions, classDecl, service_name,"Api");
+                            sb.AppendLine(generateCode);
+                            sb.AppendLine();
+                         
+
+                            generateCode=GenerateTemplateBuilderComponents(generationOptions,
+                                classDecl,
+                                service_name,
+                                "IBuilder",
+                                "interface", 
+                                "IBuilderComponents<T>", 
+                                "<T>");
+
+                            sb.AppendLine(generateCode);
+                            sb.AppendLine();
+
+                            generateCode = GenerateTemplateBuilderComponents(generationOptions, 
+                                classDecl, 
+                                service_name,
+                                "Builder",
+                                "class", 
+                                $"IBuilder{service_name}Components<T>", 
+                                "<T>");
+
+                            sb.AppendLine(generateCode);
+                            sb.AppendLine();           
+                            
+                            generateCode = TemplateShareClassCode(service_name);
+
+                            sb.AppendLine(generateCode);
+                            sb.AppendLine();             
+                            
+                            generateCode = GenerateBuilderApiClientClass(generationOptions, classDecl, service_name, semanticModel);
+
+                            sb.AppendLine(generateCode);
+                            sb.AppendLine();
+
+                            DynamicClassTemplateGenerator.SaveToFile(output_file, sb.ToString());
+
+                        }
+
+
+                    }
+                }
+            }
+
+        }
+    }
     public class DynamicClassTemplateGenerator
     {
+
+
+        public static bool CheckImportantInfo(GenerationOptions generationOptions)
+        {
+
+            if (string.IsNullOrWhiteSpace(generationOptions.SourceBaseInterface)
+                || string.IsNullOrWhiteSpace(generationOptions.SourceCategoryName)
+                || string.IsNullOrWhiteSpace(generationOptions.DestinationCategoryName))
+            {
+                Console.WriteLine("يجب تضمين اسم الفئة او الواجهة الاب ");
+                return false;
+            }
+
+
+
+
+            if (!File.Exists(generationOptions.SourceTemplateFilePath))
+            {
+                Console.WriteLine("الملف المصدر غير موجود.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(generationOptions.DestinationRoot))//  || Path.GetExtension(generationOptions.DestinationRoot) == string.Empty
+            {
+                Console.WriteLine("مسار الملف الوجهة غير صالح.");
+                return false;
+            }
+
+            return true;
+        }
         public static bool IsImplementsOrInheritsBase(ClassDeclarationSyntax classDecl, SemanticModel model, string baseTypeOrInterfaceName)
         {
 
@@ -37,28 +405,8 @@ namespace AutoGenerator.Code
         {
 
 
-            if (string.IsNullOrWhiteSpace(generationOptions.SourceBaseInterface) 
-                || string.IsNullOrWhiteSpace(generationOptions.SourceCategoryName)
-                || string.IsNullOrWhiteSpace(generationOptions.DestinationCategoryName))
-            {
-                Console.WriteLine("يجب تضمين اسم الفئة او الواجهة الاب ");
+            if (!CheckImportantInfo(generationOptions))
                 return;
-            }
-            
-
-    
-            
-            if (!File.Exists(generationOptions.SourceTemplateFilePath))
-            {
-                Console.WriteLine("الملف المصدر غير موجود.");
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(generationOptions.DestinationRoot))//  || Path.GetExtension(generationOptions.DestinationRoot) == string.Empty
-            {
-                Console.WriteLine("مسار الملف الوجهة غير صالح.");
-                return;
-            }
 
             var sb = new StringBuilder();
          
@@ -116,7 +464,8 @@ namespace AutoGenerator.Code
                 }
             }
 
-        } 
+        }
+       
         public static string RemoveLastSymbol(string symbolToRemove,string text)
         {
             text = text.TrimEnd();
@@ -131,28 +480,9 @@ namespace AutoGenerator.Code
         public static void GenerateAllMethodClassTemplate(GenerationOptions generationOptions)
         {
 
-            if (string.IsNullOrWhiteSpace(generationOptions.SourceBaseInterface) 
-                || string.IsNullOrWhiteSpace(generationOptions.SourceCategoryName)
-                || string.IsNullOrWhiteSpace(generationOptions.DestinationCategoryName))
-            {
-                Console.WriteLine("يجب تضمين اسم الفئة او الواجهة الاب ");
-                return;
-            }
-            
-            
-            if (!File.Exists(generationOptions.SourceTemplateFilePath))
-            {
-                Console.WriteLine("الملف المصدر غير موجود.");
-                return;
-            }
 
-            if (string.IsNullOrWhiteSpace(generationOptions.DestinationRoot))
-            {
-                Console.WriteLine("مسار الملف الوجهة غير صالح.");
+            if (!CheckImportantInfo(generationOptions))
                 return;
-            }
-
-       
 
             var code = File.ReadAllText(generationOptions.SourceTemplateFilePath);
             var tree = CSharpSyntaxTree.ParseText(code);
@@ -241,26 +571,9 @@ namespace AutoGenerator.Code
         public static void GenerateAllServicesFromUseCaseTemplate(GenerationOptions generationOptions)
         {
 
-            if (string.IsNullOrWhiteSpace(generationOptions.SourceBaseInterface) 
-                || string.IsNullOrWhiteSpace(generationOptions.SourceCategoryName)
-                || string.IsNullOrWhiteSpace(generationOptions.DestinationCategoryName))
-            {
-                Console.WriteLine("يجب تضمين اسم الفئة او الواجهة الاب ");
+            if (!CheckImportantInfo(generationOptions))
                 return;
-            }
-            
 
-            if (string.IsNullOrWhiteSpace(generationOptions.SourceDirectory))
-            {
-                Console.WriteLine("مسار  المصدر غير صالح.");
-                return;
-            }       
-            
-            if (string.IsNullOrWhiteSpace(generationOptions.DestinationRoot))
-            {
-                Console.WriteLine("مسار  الوجهة غير صالح.");
-                return;
-            }
 
             List<Type> interfaces = new List<Type>();
             if (generationOptions.Interfaces.Any())
@@ -312,9 +625,9 @@ namespace AutoGenerator.Code
                             {
                                 var variableName = $"{char.ToLower(sourceClassName[0])}{sourceClassName.Substring(1)}";
                                 var fieldName = $"_{variableName}";
-                                fildsPropertyCode.AppendLine($" private readonly {sourceClassName} {fieldName};");
-                                parametersCode.AppendLine($"{sourceClassName} {variableName},");
-                                initializeFieldsCode.AppendLine($"      {fieldName}={variableName};");
+                                fildsPropertyCode.AppendLine($"     private readonly {sourceClassName} {fieldName};");
+                                parametersCode.AppendLine($"            {sourceClassName} {variableName},");
+                                initializeFieldsCode.AppendLine($"          {fieldName}={variableName};");
 
                                 var newMethodName = sourceClassName.Replace(generationOptions.SourceCategoryName, "");
                                 newMethodName = $"{char.ToLower(newMethodName[0])}{newMethodName.Substring(1)}Async";
@@ -424,7 +737,7 @@ namespace AutoGenerator.Code
         }
         public static string GenerateInterface(ClassDeclarationSyntax classDeclaration, 
             GenerationOptions generationOptions,
-            List<Type>? interfaces)
+            List<Type>? interfaces,bool includeNamespaces=true)
         {
             var sb = new StringBuilder();
 
@@ -434,32 +747,19 @@ namespace AutoGenerator.Code
                 return " ";
             }
 
-            sb.Append(GenerateUsingsNamespaces(generationOptions));
+            if(includeNamespaces)
+                sb.Append(GenerateUsingsNamespaces(generationOptions));
+
             sb.AppendLine();
             sb.Append($"public interface {generationOptions.InterfaceName}");
 
-            //if (!string.IsNullOrWhiteSpace(generationOptions.BaseInterface) && )
-            //{
-            //    sb.Append($" : {generationOptions.BaseInterface} ");
 
-            //}
 
             if(interfaces!=null && interfaces.Any())
                 ImplementationInterfaces(ref sb, interfaces);
 
-
-            //if (generationOptions.Interfaces.Any()&& generationOptions.Interfaces.Count()>0)
-            //{
-            //    sb.Append($" : ");
-            //    foreach (var inter in generationOptions.Interfaces)
-            //    {
-            //        var interfaceName = inter.Name;
-            //        sb.Append($" {interfaceName} , ");
-            //    }
-            //    sb.Remove(sb.Length - 2, 1); // Remove the last comma
-
-            //}
-       
+            else if (!string.IsNullOrWhiteSpace(generationOptions.BaseInterface))
+                sb.Append($" : {generationOptions.BaseInterface} ");
 
             var methods = classDeclaration.Members
                                 .OfType<MethodDeclarationSyntax>()
@@ -477,8 +777,48 @@ namespace AutoGenerator.Code
             sb.AppendLine();
 
             return sb.ToString();
+        }     
+        public static string GenerateBuilderComponentsProperties(
+            ClassDeclarationSyntax classDeclaration,  
+            GenerationOptions generationOptions,
+            string typeClass= "interface",
+            List<Type>? interfaces=null)
+        {
+            var sb = new StringBuilder();
+
+            if (string.IsNullOrWhiteSpace(generationOptions.ClassName))
+            {
+                return " ";
+            }
+
+
+            sb.AppendLine();
+            sb.Append($"public {typeClass} {generationOptions.ClassName}");
+
+            if (interfaces != null && interfaces.Any())
+                ImplementationInterfaces(ref sb, interfaces);
+
+            else if (!string.IsNullOrWhiteSpace(generationOptions.BaseInterface))
+                sb.Append($" : {generationOptions.BaseInterface} ");
+
+            var methods = classDeclaration.Members
+                                .OfType<MethodDeclarationSyntax>()
+                                .Where(m => m.Modifiers.Any(SyntaxKind.PublicKeyword));
+
+
+            sb.AppendLine("{");
+            foreach (var method in methods)
+            {
+                var generateCode = GenerateDeclarationMethod(method, generationOptions.UnifiedNameForFunctions);
+                sb.AppendLine(generateCode);
+            }
+            sb.AppendLine("}");
+            sb.AppendLine();
+
+            return sb.ToString();
         }
         public static string GenerateClass(
+
             string className,
             string baseInterface,
             GenerationOptions generationOptions,
@@ -522,19 +862,27 @@ namespace AutoGenerator.Code
     string interfaceName,
     GenerationOptions generationOptions,
     List<Type>? interfaces,
-    string contentsCode)
+    string contentsCode,
+    bool includeNamespaces = true)
         {
             var sb = new StringBuilder();
 
 
 
-            sb.Append(GenerateUsingsNamespaces(generationOptions));
+            if (includeNamespaces)
+                sb.Append(GenerateUsingsNamespaces(generationOptions));
+
+
             sb.AppendLine();
             sb.Append($"public interface {interfaceName}");
 
 
             if (interfaces != null && interfaces.Any())
                 ImplementationInterfaces(ref sb, interfaces);
+
+            //else if (!string.IsNullOrWhiteSpace(generationOptions.BaseInterface))
+            //    sb.Append($" : {generationOptions.BaseInterface} ");
+            
 
             sb.AppendLine("{");
 
@@ -550,8 +898,13 @@ namespace AutoGenerator.Code
             return sb.ToString();
         }
 
-        public static string GenerateClass(ClassDeclarationSyntax classDeclaration, 
-            GenerationOptions generationOptions,string sourceClassName = "")
+    public static string GenerateClass(
+        ClassDeclarationSyntax classDeclaration, 
+        GenerationOptions generationOptions,
+        string sourceClassName = "", 
+        bool includeNamespaces = true,
+        string typeModifierClass = "", 
+        string typeModifierMethods = "")
         {
             var sb = new StringBuilder();
             
@@ -560,12 +913,12 @@ namespace AutoGenerator.Code
                 return " ";
             }
 
-
-            sb.Append(GenerateUsingsNamespaces(generationOptions));
+            if(includeNamespaces)
+                sb.Append(GenerateUsingsNamespaces(generationOptions));
             sb.AppendLine();
 
 
-            sb.Append($"public class {generationOptions.ClassName}");
+            sb.Append($" public {typeModifierClass} class {generationOptions.ClassName}");
 
             if (!string.IsNullOrWhiteSpace(generationOptions.BaseClass))
             {
@@ -602,7 +955,7 @@ namespace AutoGenerator.Code
 
             if (!string.IsNullOrWhiteSpace(generationOptions.AdditionalCode))
             {
-                var code = generationOptions.AdditionalCode.Replace("{ClassName}", generationOptions.ClassName);
+                var code = generationOptions.AdditionalCode.Replace("{ClassName}", Regex.Replace(generationOptions.ClassName, @"<[^<>]*>", ""));
                 if(code.Contains("{BaseClass"))
                     code = code.Replace("{BaseClass}", generationOptions.BaseClass);
                 if (code.Contains("{IPropertyType"))
@@ -615,154 +968,164 @@ namespace AutoGenerator.Code
 
             foreach (var method in methods)
             {
-             
-                var generateCode = GenerateMethod(method, generationOptions.MethodContentCode, generationOptions.UnifiedNameForFunctions);
+
+                var generateCode = "";
+
+                if (!string.IsNullOrWhiteSpace(typeModifierMethods))
+                {
+                    generateCode = GenerateDeclarationMethod(method, generationOptions.UnifiedNameForFunctions);
+                    generateCode= generateCode.Replace("public", $" public {typeModifierMethods} ");
+                }
+                else
+                    generateCode = GenerateMethod(method, generationOptions.MethodContentCode, generationOptions.UnifiedNameForFunctions);
+
                 sb.AppendLine(generateCode);
             }
             sb.AppendLine("}");
             sb.AppendLine();
 
             return sb.ToString();
-        }
-        public static string GenerateDeclarationMethod(MethodDeclarationSyntax method,string unifiedNameForFunctions="")
-        {
-
-            var sb = new StringBuilder();
-            var returnType = method.ReturnType.ToString();
-            var methodName = (string.IsNullOrWhiteSpace(unifiedNameForFunctions)) ? method.Identifier.Text : unifiedNameForFunctions;
-            var parameters = string.Join(", ", method.ParameterList.Parameters
-                .Select(p => $"{p.Type} {p.Identifier.Text}"));
-
-            var modifiers = string.Join(" ", method.Modifiers.Select(m => m.Text));
-
-            (returnType, modifiers) = CleanMethodSignature(method);
-
-            sb.AppendLine($"    {modifiers} {returnType} {methodName}({parameters});");
-
-            return CleanGeneratorCode(sb.ToString());
         }    
-        public static string GenerateMethod(MethodDeclarationSyntax method,
-            string implementationCode,string unifiedNameForFunctions="")
-        {
-            var sb = new StringBuilder();
-            var returnType = method.ReturnType.ToString();
-            var methodName = method.Identifier.Text;
-            var parameters = string.Join(", ", method.ParameterList.Parameters
-                .Select(p => $"{p.Type} {p.Identifier.Text}"));
-            var variables = string.Join(", ", method.ParameterList.Parameters
-                .Select(p => p.Identifier.Text));
+     
+    public static string GenerateDeclarationMethod(MethodDeclarationSyntax method,string unifiedNameForFunctions="",string typeModifierMethode="")
+    {
 
-            var modifiers = string.Join(" ", method.Modifiers.Select(m => m.Text));
+        var sb = new StringBuilder();
+        var returnType = method.ReturnType.ToString();
+        var methodName = (string.IsNullOrWhiteSpace(unifiedNameForFunctions)) ? method.Identifier.Text : unifiedNameForFunctions;
+        var parameters = string.Join(", ", method.ParameterList.Parameters
+            .Select(p => $"{p.Type} {p.Identifier.Text}"));
 
+        var modifiers = string.Join(" ", method.Modifiers.Select(m => m.Text));
 
+        (returnType, modifiers) = CleanMethodSignature(method);
 
-            (returnType,modifiers) = CleanMethodSignature(method, " async ");
+        sb.AppendLine($"    {modifiers} {returnType} {methodName}({parameters});");
 
-            implementationCode = implementationCode.Replace("{InvokeMethodCallback}",$"{methodName}({variables})" );
-            implementationCode = implementationCode.Replace("[RETERN]", returnType.Contains("Task<")?" return  ":"");
+        return CleanGeneratorCode(sb.ToString());
+    }    
+    public static string GenerateMethod(MethodDeclarationSyntax method,
+        string implementationCode,string unifiedNameForFunctions="")
+    {
+        var sb = new StringBuilder();
+        var returnType = method.ReturnType.ToString();
+        var methodName = method.Identifier.Text;
+        var parameters = string.Join(", ", method.ParameterList.Parameters
+            .Select(p => $"{p.Type} {p.Identifier.Text}"));
+        var variables = string.Join(", ", method.ParameterList.Parameters
+            .Select(p => p.Identifier.Text));
 
-             if(!string.IsNullOrWhiteSpace(unifiedNameForFunctions))
-                methodName =  unifiedNameForFunctions;
-
-            // كتابة توقيع الدالة + جسم فارغ
-            sb.AppendLine($"    {modifiers} {returnType} {methodName}({parameters})");
-            sb.AppendLine("   {");
-            sb.AppendLine();
-            sb.AppendLine($"    {implementationCode}");
-            sb.AppendLine();
-            sb.AppendLine("   }");
-            sb.AppendLine();
-
-            return CleanGeneratorCode(sb.ToString());
-        }
-        public static string GenerateMethodForService(MethodDeclarationSyntax method,string implementationCode, string newMethodName)
-        {
-            var sb = new StringBuilder();
-            var returnType = method.ReturnType.ToString();
-            var methodName = method.Identifier.Text;
-            var parameters = string.Join(", ", method.ParameterList.Parameters
-                .Select(p => $"{p.Type} {p.Identifier.Text}"));
-            var variables = string.Join(", ", method.ParameterList.Parameters
-                .Select(p => p.Identifier.Text));
-
-            var modifiers = string.Join(" ", method.Modifiers.Select(m => m.Text));
+        var modifiers = string.Join(" ", method.Modifiers.Select(m => m.Text));
 
 
 
-            //(returnType, modifiers) = CleanMethodSignature(method, " async ");
+        (returnType,modifiers) = CleanMethodSignature(method, " async ");
+
+        implementationCode = implementationCode.Replace("{InvokeMethodCallback}",$"{methodName}({variables})" );
+        implementationCode = implementationCode.Replace("[RETERN]", returnType.Contains("Task<")?" return  ":"");
+
+            if(!string.IsNullOrWhiteSpace(unifiedNameForFunctions))
+            methodName =  unifiedNameForFunctions;
+
+        // كتابة توقيع الدالة + جسم فارغ
+        sb.AppendLine($"    {modifiers} {returnType} {methodName}({parameters})");
+        sb.AppendLine("   {");
+        sb.AppendLine();
+        sb.AppendLine($"    {implementationCode}");
+        sb.AppendLine();
+        sb.AppendLine("   }");
+        sb.AppendLine();
+
+        return CleanGeneratorCode(sb.ToString());
+    }
+    public static string GenerateMethodForService(MethodDeclarationSyntax method,string implementationCode, string newMethodName)
+    {
+        var sb = new StringBuilder();
+        var returnType = method.ReturnType.ToString();
+        var methodName = method.Identifier.Text;
+        var parameters = string.Join(", ", method.ParameterList.Parameters
+            .Select(p => $"{p.Type} {p.Identifier.Text}"));
+        var variables = string.Join(", ", method.ParameterList.Parameters
+            .Select(p => p.Identifier.Text));
+
+        var modifiers = string.Join(" ", method.Modifiers.Select(m => m.Text));
+
+
+
+        //(returnType, modifiers) = CleanMethodSignature(method, " async ");
 
        
 
-            implementationCode = implementationCode.Replace("{InvokeMethodCallback}", $"{methodName}({variables})");
-            implementationCode = implementationCode.Replace("[RETERN]", returnType.Contains("Task<") ? " return  " : "");
+        implementationCode = implementationCode.Replace("{InvokeMethodCallback}", $"{methodName}({variables})");
+        implementationCode = implementationCode.Replace("[RETERN]", returnType.Contains("Task<") ? " return  " : "");
 
 
-            if (string.IsNullOrWhiteSpace(newMethodName))
-                return "";
+        if (string.IsNullOrWhiteSpace(newMethodName))
+            return "";
 
-            // كتابة توقيع الدالة + جسم فارغ
-            sb.AppendLine($"    {modifiers} {returnType} {newMethodName}({parameters})");
-            sb.AppendLine("   {");
-            sb.AppendLine();
-            sb.AppendLine($"    {implementationCode}");
-            sb.AppendLine();
-            sb.AppendLine("   }");
-            sb.AppendLine();
+        // كتابة توقيع الدالة + جسم فارغ
+        sb.AppendLine($"    {modifiers} {returnType} {newMethodName}({parameters})");
+        sb.AppendLine("   {");
+        sb.AppendLine();
+        sb.AppendLine($"    {implementationCode}");
+        sb.AppendLine();
+        sb.AppendLine("   }");
+        sb.AppendLine();
 
-            return CleanGeneratorCode(sb.ToString());
-        }
+        return CleanGeneratorCode(sb.ToString());
+    }
 
-        public static string CleanGeneratorCode(string code)
-        {
-            return code.Replace("System.Threading.Tasks.", "")
-                        .Replace("System.Threading.", "")
-                        .Replace("System.Collections.Generic.", "");
+    public static string CleanGeneratorCode(string code)
+    {
+        return code.Replace("System.Threading.Tasks.", "")
+                    .Replace("System.Threading.", "")
+                    .Replace("System.Collections.Generic.", "");
        
-        }
-        public static (string ReturnType, string Modifiers) CleanMethodSignature(MethodDeclarationSyntax method,string newText="")
+    }
+    public static (string ReturnType, string Modifiers) CleanMethodSignature(MethodDeclarationSyntax method,string newText="")
+    {
+        // استخراج نوع الإرجاع كـ string
+        var returnType = method.ReturnType.ToString();
+
+        // إزالة المسار الكامل لنوع Task لتبسيطه
+        returnType = returnType.Replace("System.Threading.Tasks.", " ");
+        returnType = returnType.Replace("System.Threading.", " ");
+
+        // استخراج المعدّلات (modifiers) كـ string
+        var modifiers = string.Join(" ", method.Modifiers.Select(m => m.Text));
+
+        // استبدال virtual بـ async إن كانت الدالة تُعيد Task<> ولم تكن async بالفعل
+        if ((returnType.Contains("Task<") || returnType.Contains(" Task ")) && !modifiers.Contains("async"))
         {
-            // استخراج نوع الإرجاع كـ string
-            var returnType = method.ReturnType.ToString();
-
-            // إزالة المسار الكامل لنوع Task لتبسيطه
-            returnType = returnType.Replace("System.Threading.Tasks.", " ");
-            returnType = returnType.Replace("System.Threading.", " ");
-
-            // استخراج المعدّلات (modifiers) كـ string
-            var modifiers = string.Join(" ", method.Modifiers.Select(m => m.Text));
-
-            // استبدال virtual بـ async إن كانت الدالة تُعيد Task<> ولم تكن async بالفعل
-            if ((returnType.Contains("Task<") || returnType.Contains(" Task ")) && !modifiers.Contains("async"))
-            {
-                modifiers = modifiers.Replace("virtual", newText);
-            }
-            else
-            {
-                if(modifiers.Contains("async") && string.IsNullOrWhiteSpace(newText))
-                    modifiers = modifiers.Replace("async", " ");
-
-                modifiers = modifiers.Replace("virtual", " ").Trim();
-            }
-
-            return (returnType.Trim(), modifiers.Trim());
+            modifiers = modifiers.Replace("virtual", newText);
         }
-        public static void SaveToFile(string filePath, string content)
+        else
         {
-            try
-            {
+            if(modifiers.Contains("async") && string.IsNullOrWhiteSpace(newText))
+                modifiers = modifiers.Replace("async", " ");
 
-                var directory = Path.GetDirectoryName(filePath);
-                if (!string.IsNullOrEmpty(directory))
-                {
-                    Directory.CreateDirectory(directory);
-                }
-                File.WriteAllText(filePath, content, Encoding.UTF8);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"حدث خطأ أثناء حفظ الملف: {ex.Message}");
-            }
+            modifiers = modifiers.Replace("virtual", " ").Trim();
         }
+
+        return (returnType.Trim(), modifiers.Trim());
+    }
+    public static void SaveToFile(string filePath, string content)
+    {
+        try
+        {
+
+            var directory = Path.GetDirectoryName(filePath);
+            if (!string.IsNullOrEmpty(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+            File.WriteAllText(filePath, content, Encoding.UTF8);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"حدث خطأ أثناء حفظ الملف: {ex.Message}");
+        }
+    }
        
     }
     

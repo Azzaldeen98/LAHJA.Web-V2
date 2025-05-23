@@ -1,4 +1,4 @@
-﻿using ApexCharts;
+using ApexCharts;
 using AutoMapper;
 using Blazorise;
 using Domain.Entities.Event.Request;
@@ -9,6 +9,7 @@ using Domain.Entities.Service.Request;
 using Domain.Entities.Service.Response;
 using Domain.ShareData.Base;
 using Domain.Wrapper;
+using Shared.Wrapper;
 using LAHJA.ApiClient.Models;
 using LAHJA.ApplicationLayer.Request;
 using LAHJA.ApplicationLayer.Service;
@@ -19,19 +20,17 @@ using LAHJA.Helpers.Services;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using static System.Runtime.InteropServices.JavaScript.JSType;
-
-
+using AutoGenerator.Attributes;
+using Client.Shared.Execution;
 
 namespace LAHJA.Data.UI.Templates.Services
 {
-
     public class DataBuildServiceBase
     {
- 
         public string? PublicKey { get; set; }
-        public string ServiceId {  get; set; }
-        public string Text {  get; set; }
-        public string Token {  get; set; }
+        public string ServiceId { get; set; }
+        public string Text { get; set; }
+        public string Token { get; set; }
         public string? ModelGateway { get; set; }
         public string? ModelAi { get; set; }
         public string? URL { get; set; }
@@ -40,27 +39,29 @@ namespace LAHJA.Data.UI.Templates.Services
         public long NumberRequests { get; set; }
         public long CurrentNumberRequests { get; set; }
         public bool Allowed { get; set; }
-
     }
-
-
 
     public interface IBuilderServicesComponent<T> : IBuilderComponents<T>
     {
         Func<T, Task> SubmitGetOne { get; set; }
+
         Func<T, Task<Result<List<DataBuildServiceInfo>>>> SubmitGetAll { get; set; }
+
         Func<T, Task> SubmitCreate { get; set; }
+
         Func<T, Task> SubmitDelete { get; set; }
+
         Func<T, Task> SubmitUpdate { get; set; }
+
         Func<T, Task> SubmitText2Text { get; set; }
+
         Func<T, Task> SubmitText2Speech { get; set; }
+
         Func<T, Task> SubmitVoiceBot { get; set; }
     }
 
     public class BuilderServicesComponent<T> : IBuilderServicesComponent<T>
     {
-
-
         public Func<T, Task> SubmitGetOne { get; set; }
         public Func<T, Task<Result<List<DataBuildServiceInfo>>>> SubmitGetAll { get; set; }
         public Func<T, Task> SubmitCreate { get; set; }
@@ -69,8 +70,8 @@ namespace LAHJA.Data.UI.Templates.Services
         public Func<T, Task> SubmitText2Text { get; set; }
         public Func<T, Task> SubmitText2Speech { get; set; }
         public Func<T, Task> SubmitVoiceBot { get; set; }
-
     }
+
     public interface IBuilderServicesApi<T> : IBuilderApi<T>
     {
         Task<Result<ServiceResponse>> GetOneAsync(T id);
@@ -92,12 +93,10 @@ namespace LAHJA.Data.UI.Templates.Services
         Task<Result<RequestResponse>> UpdateRequestAsync(T data);
         Task<Result<EventResponse>> CreateEventAsync(T data);
         Task<Result<ServiceResponse>> ResultRequestAsync(T data);
-
     }
 
     public abstract class BuilderServicesApi<T, E> : BuilderApi<T, E>, IBuilderServicesApi<E>, IBuilderRequestApi<E>
     {
-
         protected readonly RequestClientService requestClientService;
         public BuilderServicesApi(IMapper mapper, T service, RequestClientService requestClientService) : base(mapper, service)
         {
@@ -112,24 +111,20 @@ namespace LAHJA.Data.UI.Templates.Services
         public abstract Task<Result<ServiceAIResponse>> Text2Text(E data);
         public abstract Task<Result<ServiceAIResponse>> Text2Speech(E data);
         public abstract Task<Result<ServiceAIResponse>> VoiceBot(E data);
-
         public abstract Task<Result<RequestAllowed>> AllowedAsync(E data);
-        public abstract Task<Result<List<RequestResponse>>>  GetAllRequestAsync();
-        public abstract Task<Result<RequestResponse>>  CreateRequestAsync(E data);
-
+        public abstract Task<Result<List<RequestResponse>>> GetAllRequestAsync();
+        public abstract Task<Result<RequestResponse>> CreateRequestAsync(E data);
         public abstract Task<Result<RequestResponse>> UpdateRequestAsync(E data);
-
         public abstract Task<Result<EventResponse>> CreateEventAsync(E data);
-
         public abstract Task<Result<ServiceResponse>> ResultRequestAsync(E data);
         public abstract Task<Result<DeleteResponse>> DeleteRequestAsync(E data);
-       
     }
 
-    public class BuilderServiceApiClient : BuilderServicesApi<LAHJAClientService, DataBuildServiceBase>, IBuilderServicesApi<DataBuildServiceBase>,IBuilderRequestApi<DataBuildServiceBase>
+    public class BuilderServiceApiClient : BuilderServicesApi<LAHJAClientService, DataBuildServiceBase>, IBuilderServicesApi<DataBuildServiceBase>, IBuilderRequestApi<DataBuildServiceBase>
     {
-        
-        public BuilderServiceApiClient(IMapper mapper, LAHJAClientService service, RequestClientService requestClientService) : base(mapper, service,requestClientService) { }
+        public BuilderServiceApiClient(IMapper mapper, LAHJAClientService service, RequestClientService requestClientService) : base(mapper, service, requestClientService)
+        {
+        }
 
         public override async Task<Result<ServiceResponse>> CreateAsync(DataBuildServiceBase data)
         {
@@ -141,10 +136,8 @@ namespace LAHJA.Data.UI.Templates.Services
         //{
         //    return await Service.DeleteAsync(data.ServiceId);
         //}
-
         public override async Task<Result<List<DataBuildServiceInfo>>> GetAllAsync()
         {
-           
             var res = await Service.GetAllAsync();
             if (res.Succeeded)
             {
@@ -153,12 +146,9 @@ namespace LAHJA.Data.UI.Templates.Services
             }
             else
             {
-                return Result<List<DataBuildServiceInfo>>.Fail(res.Messages.Count>0?res.Messages[0]:"Error");
+                return Result<List<DataBuildServiceInfo>>.Fail(res.Messages.Count > 0 ? res.Messages[0] : "Error");
             }
-
         }
-
- 
 
         //public override async Task<Result<ServiceResponse>> UpdateAsync(DataBuildServiceBase data)
         //{
@@ -167,60 +157,53 @@ namespace LAHJA.Data.UI.Templates.Services
         //}    
         public override async Task<Result<ServiceResponse>> GetOneAsync(DataBuildServiceBase data)
         {
-          
             return await Service.GetOneAsync(data.ServiceId);
         }
 
-
-
         public override async Task<Result<ServiceAIResponse>> Text2Text(DataBuildServiceBase data)
         {
-
-            try { 
-            var mapReq = Mapper.Map<RequestCreate>(data);
-            var res = await requestClientService.CreateRequestAsync(mapReq);
-            if(res.Succeeded)
+            try
             {
-                var req = new QueryRequestTextToText { Text = data.Text };
-                //req.URL += data.ModelAi;
-                //var map = Mapper.Map<Data.UI.Models.QueryRequestTextToText>(data);
-                //map.Key = "AIzaSyC85_3TKmiXtOpwybhSFThZdF1nGKlxU5c"; 
-                //map.Method = "AIzaSyC85_3TKmiXtOpwybhSFThZdF1nGKlxU5c"; 
-                var servRes= await Service.Text2TextAsync(req);
-                if (servRes.Succeeded)
+                var mapReq = Mapper.Map<RequestCreate>(data);
+                var res = await requestClientService.CreateRequestAsync(mapReq);
+                if (res.Succeeded)
                 {
-                    var _event = Mapper.Map<EventRequest>(res.Data);
-                    _event.RequestId = res.Data.Id;
-                    await requestClientService.CreateEventAsync(_event);
-                    return Result<ServiceAIResponse>.Success(servRes.Data);
+                    var req = new QueryRequestTextToText
+                    {
+                        Text = data.Text
+                    };
+                    //req.URL += data.ModelAi;
+                    //var map = Mapper.Map<Data.UI.Models.QueryRequestTextToText>(data);
+                    //map.Key = "AIzaSyC85_3TKmiXtOpwybhSFThZdF1nGKlxU5c"; 
+                    //map.Method = "AIzaSyC85_3TKmiXtOpwybhSFThZdF1nGKlxU5c"; 
+                    var servRes = await Service.Text2TextAsync(req);
+                    if (servRes.Succeeded)
+                    {
+                        var _event = Mapper.Map<EventRequest>(res.Data);
+                        _event.RequestId = res.Data.Id;
+                        await requestClientService.CreateEventAsync(_event);
+                        return Result<ServiceAIResponse>.Success(servRes.Data);
+                    }
+                    else
+                    {
+                        var _event = Mapper.Map<EventRequest>(res.Data);
+                        _event.RequestId = res.Data.Id;
+                        await requestClientService.CreateEventAsync(_event);
+                        return Result<ServiceAIResponse>.Fail();
+                    }
                 }
                 else
                 {
-                    var _event = Mapper.Map<EventRequest>(res.Data);
-                    _event.RequestId = res.Data.Id;
-            
-                    await requestClientService.CreateEventAsync(_event);
-                    return  Result<ServiceAIResponse>.Fail();
+                    return Result<ServiceAIResponse>.Fail("لايوجد لديك رصيد كافي من الطلبات");
                 }
             }
-            else
-            {
-          
-                return Result<ServiceAIResponse>.Fail("لايوجد لديك رصيد كافي من الطلبات");
-   
-            }
-
-        }catch(Exception ex)
+            catch (Exception ex)
             {
                 return Result<ServiceAIResponse>.Fail(ex.Message);
             }
+        }
 
-
-
-
-}
-
-public override async Task<Result<ServiceAIResponse>> Text2Speech(DataBuildServiceBase data)
+        public override async Task<Result<ServiceAIResponse>> Text2Speech(DataBuildServiceBase data)
         {
             //var map = Mapper.Map<Models.QueryRequestTextToSpeech>(data);
             //return await Service.Text2SpeechAsync(map);
@@ -246,7 +229,6 @@ public override async Task<Result<ServiceAIResponse>> Text2Speech(DataBuildServi
                     {
                         var _event = Mapper.Map<EventRequest>(res.Data);
                         _event.RequestId = res.Data.Id;
-
                         await requestClientService.CreateEventAsync(_event);
                         return Result<ServiceAIResponse>.Fail(servRes.Messages[0]);
                     }
@@ -254,35 +236,32 @@ public override async Task<Result<ServiceAIResponse>> Text2Speech(DataBuildServi
                 else
                 {
                     return Result<ServiceAIResponse>.Fail("لايوجد لديك رصيد كافي من الطلبات");
-
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return Result<ServiceAIResponse>.Fail(ex.Message);
             }
-
-  
         }
 
         public override async Task<Result<ServiceAIResponse>> VoiceBot(DataBuildServiceBase data)
         {
-            try {
-
-         
+            try
+            {
                 var mapReq = Mapper.Map<RequestCreate>(data);
                 var res = await requestClientService.CreateRequestAsync(mapReq);
                 if (res.Succeeded)
                 {
-                    var req = new QueryRequestTextToText { Text = data.Text };
-   
+                    var req = new QueryRequestTextToText
+                    {
+                        Text = data.Text
+                    };
                     var servRes = await Service.Text2TextAsync(req);
                     if (servRes.Succeeded)
                     {
-                        
                         var map = Mapper.Map<Models.QueryRequestTextToSpeech>(data);
                         map.Data = servRes.Data.Result;
                         var response = await Service.Text2SpeechAsync(map);
-
                         if (response.Succeeded)
                         {
                             var _event = Mapper.Map<EventRequest>(res.Data);
@@ -305,21 +284,19 @@ public override async Task<Result<ServiceAIResponse>> Text2Speech(DataBuildServi
                         await requestClientService.CreateEventAsync(_event);
                         return Result<ServiceAIResponse>.Fail();
                     }
-
-                    
+                }
+                else
+                {
+                    return Result<ServiceAIResponse>.Fail(res.Messages[0]);
+                }
             }
-            else
-            {
-                return Result<ServiceAIResponse>.Fail(res.Messages[0]);
-            }
-        }catch(Exception ex)
+            catch (Exception ex)
             {
                 return Result<ServiceAIResponse>.Fail(ex.Message);
             }
+        }
 
-}
-
-public override Task<Result<RequestAllowed>> AllowedAsync(DataBuildServiceBase data)
+        public override Task<Result<RequestAllowed>> AllowedAsync(DataBuildServiceBase data)
         {
             throw new NotImplementedException();
         }
@@ -365,8 +342,6 @@ public override Task<Result<RequestAllowed>> AllowedAsync(DataBuildServiceBase d
         }
     }
 
-
-
     public class TemplateServicesShare<T, E> : TemplateBase<T, E>
     {
         protected readonly NavigationManager navigation;
@@ -378,22 +353,9 @@ public override Task<Result<RequestAllowed>> AllowedAsync(DataBuildServiceBase d
         private readonly IBuilderServicesComponent<E> builderComponents;
         protected readonly RequestClientService requestClientService;
         public IBuilderServicesComponent<E> BuilderComponents { get => builderComponents; }
-        public TemplateServicesShare(
 
-               IMapper mapper,
-               AuthService AuthService,
-                T client,
-                RequestClientService requestClientService,
-                IBuilderServicesComponent<E> builderComponents,
-                NavigationManager navigation,
-                IDialogService dialogService,
-                ISnackbar snackbar,
-                SubscriptionClientService subscriptionClientService
-            ) : base(mapper, AuthService, client)
+        public TemplateServicesShare(IMapper mapper, AuthService AuthService, T client, RequestClientService requestClientService, IBuilderServicesComponent<E> builderComponents, NavigationManager navigation, IDialogService dialogService, ISnackbar snackbar, SubscriptionClientService subscriptionClientService) : base(mapper, AuthService, client)
         {
-
-
-
             builderComponents = new BuilderServicesComponent<E>();
             this.navigation = navigation;
             this.dialogService = dialogService;
@@ -402,31 +364,15 @@ public override Task<Result<RequestAllowed>> AllowedAsync(DataBuildServiceBase d
             this.builderComponents = builderComponents;
             this.subscriptionClientService = subscriptionClientService;
         }
-
     }
 
+    [AutoSafeInvoke]
     public class TemplateServices : TemplateServicesShare<LAHJAClientService, DataBuildServiceBase>
     {
-        
-  
-        public  bool IsEndProcessing { get => _isResponse; }
-        public  string Response { get => _response; }
- 
+        private readonly ISafeInvoker safeInvoker;
         private string _response = "";
         private bool _isResponse = false;
-        public List<string> Errors => _errors;
-
-        public TemplateServices(
-            IMapper mapper,
-            AuthService authService,
-            LAHJAClientService client,
-             RequestClientService requestClientService,
-            IBuilderServicesComponent<DataBuildServiceBase> builderComponents,
-            SubscriptionClientService subscriptionClientService,
-            NavigationManager navigation,
-            IDialogService dialogService,
-            ISnackbar snackbar
-        ) : base(mapper, authService, client, requestClientService, builderComponents, navigation, dialogService, snackbar, subscriptionClientService)
+        public TemplateServices(IMapper mapper, AuthService authService, LAHJAClientService client, RequestClientService requestClientService, IBuilderServicesComponent<DataBuildServiceBase> builderComponents, SubscriptionClientService subscriptionClientService, NavigationManager navigation, IDialogService dialogService, ISnackbar snackbar, ISafeInvoker safeInvoker) : base(mapper, authService, client, requestClientService, builderComponents, navigation, dialogService, snackbar, subscriptionClientService)
         {
             this.BuilderComponents.SubmitCreate = OnCreate;
             this.BuilderComponents.SubmitUpdate = OnUpdate;
@@ -436,81 +382,98 @@ public override Task<Result<RequestAllowed>> AllowedAsync(DataBuildServiceBase d
             this.BuilderComponents.SubmitText2Text = Text2Text;
             this.BuilderComponents.SubmitText2Speech = Text2Speech;
             this.BuilderComponents.SubmitVoiceBot = VoiceBot;
-
             this.builderApi = new BuilderServiceApiClient(mapper, client, requestClientService);
             this.builderRequestApi = new BuilderServiceApiClient(mapper, client, requestClientService);
+            this.safeInvoker = safeInvoker;
         }
 
-        public async Task<Result<ServiceAIResponse>> Text2Speech(DataBuildServiceBase data) {
+        public bool IsEndProcessing { get => _isResponse; }
+        public string Response { get => _response; }
+        public List<string> Errors => _errors;
 
-            var resService = await builderApi.Text2Speech(data);
-            if (!resService.Succeeded)
-                navigation.NavigateTo("/Plans");
-            return resService;
+        public async Task<Result<ServiceAIResponse>> Text2Speech(DataBuildServiceBase data)
+        {
+            return await safeInvoker.InvokeAsync(async () =>
+            {
+                var resService = await builderApi.Text2Speech(data);
+                if (!resService.Succeeded)
+                    navigation.NavigateTo("/Plans");
+                return resService;
+            });
         }
-        public async Task<Result<ServiceAIResponse>> Text2Text(DataBuildServiceBase data) {
 
-             var resService = await builderApi.Text2Text(data);
-            if (!resService.Succeeded)
-                navigation.NavigateTo("/Plans");
-            return resService;
-              
-
+        public async Task<Result<ServiceAIResponse>> Text2Text(DataBuildServiceBase data)
+        {
+            return await safeInvoker.InvokeAsync(async () =>
+            {
+                var resService = await builderApi.Text2Text(data);
+                if (!resService.Succeeded)
+                    navigation.NavigateTo("/Plans");
+                return resService;
+            });
         }
+
         public async Task<Result<ServiceAIResponse>> VoiceBot(DataBuildServiceBase data)
         {
-            var resService = await builderApi.VoiceBot(data);
-            if (!resService.Succeeded)
+            return await safeInvoker.InvokeAsync(async () =>
             {
-                navigation.NavigateTo("/Plans");
-                return Result<ServiceAIResponse>.Fail(resService.Messages[0]);
-            }
-            else
-            {
-                return Result<ServiceAIResponse>.Success(resService.Data);
-            }
-              
-            //return resService;
-
+                var resService = await builderApi.VoiceBot(data);
+                if (!resService.Succeeded)
+                {
+                    navigation.NavigateTo("/Plans");
+                    return Result<ServiceAIResponse>.Fail(resService.Messages[0]);
+                }
+                else
+                {
+                    return Result<ServiceAIResponse>.Success(resService.Data);
+                }
+            });
         }
+
         private async Task OnCreate(DataBuildServiceBase data)
         {
-            var response = await builderApi.CreateAsync(data);
-            if (!response.Succeeded)
-                _errors = response.Messages;
+            await safeInvoker.InvokeAsync(async () =>
+            {
+                var response = await builderApi.CreateAsync(data);
+                if (!response.Succeeded)
+                    _errors = response.Messages;
+            });
         }
 
         private async Task OnUpdate(DataBuildServiceBase data)
         {
-            var response = await builderApi.UpdateAsync(data);
-            if (!response.Succeeded)
-                _errors = response.Messages;
+            await safeInvoker.InvokeAsync(async () =>
+            {
+                var response = await builderApi.UpdateAsync(data);
+                if (!response.Succeeded)
+                    _errors = response.Messages;
+            });
         }
 
-        private async Task<Result<List<DataBuildServiceInfo>>> GetAll(DataBuildServiceBase? data=null)
+        private async Task<Result<List<DataBuildServiceInfo>>> GetAll(DataBuildServiceBase? data = null)
         {
-            return await builderApi.GetAllAsync();
-            
+            return await safeInvoker.InvokeAsync(async () =>
+            {
+                return await builderApi.GetAllAsync();
+            });
         }
 
         private async Task OnDelete(DataBuildServiceBase data)
         {
-            var response = await builderApi.DeleteAsync(data);
-            if (!response.Succeeded)
-                _errors = response.Messages;
+            await safeInvoker.InvokeAsync(async () =>
+            {
+                var response = await builderApi.DeleteAsync(data);
+                if (!response.Succeeded)
+                    _errors = response.Messages;
+            });
         }
 
         private async Task<Result<ServiceResponse>> GetOne(DataBuildServiceBase data)
         {
-            return await builderApi.GetOneAsync(data);
+            return await safeInvoker.InvokeAsync(async () =>
+            {
+                return await builderApi.GetOneAsync(data);
+            });
         }
     }
-
-
-   
 }
-
-
-
-
-

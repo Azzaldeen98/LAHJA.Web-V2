@@ -8,7 +8,7 @@ using Application.UseCases;
 namespace Application.Services;
 
 
-public interface INotifacationService :  ITBaseService ,  ITScope  
+public interface INotifacationService :  ITBaseShareService  
 {
 
     public Task notifyAllUsersByEmailNotifacationAsync(string subject, string htmlMessage, CancellationToken cancellationToken);

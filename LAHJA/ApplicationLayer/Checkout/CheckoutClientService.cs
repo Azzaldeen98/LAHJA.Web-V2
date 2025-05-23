@@ -1,23 +1,24 @@
 ﻿using Application.Services.Plans;
 using AutoMapper;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using LAHJA.Helpers.Services;
 using Domain.Entities.Checkout.Response;
 using Domain.Entities.Checkout;
 using Domain.Entities.Checkout.Request;
 using Application.Services.Checkout;
+using Shared.Helpers;
 
 namespace LAHJA.ApplicationLayer.Checkout
 {
     public class CheckoutClientService
     {
         private readonly CheckoutService paymentService;
-        private readonly TokenService tokenService;
+        private readonly ITokenService tokenService;
         private readonly IMapper _mapper;
 
 
 
-        public CheckoutClientService(CheckoutService paymentService, IMapper mapper, TokenService tokenService)
+        public CheckoutClientService(CheckoutService paymentService, IMapper mapper, ITokenService tokenService)
         {
 
             this.paymentService = paymentService;

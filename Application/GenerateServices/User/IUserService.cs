@@ -8,7 +8,7 @@ using Application.UseCases;
 namespace Application.Services;
 
 
-public interface IUserService :  ITBaseService ,  ITScope  
+public interface IUserService :  ITBaseShareService  
 {
 
     public Task<UserResponse> assignModelAiUserAsync(AssignModelAi body, CancellationToken cancellationToken);

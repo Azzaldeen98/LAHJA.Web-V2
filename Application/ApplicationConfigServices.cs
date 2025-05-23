@@ -26,16 +26,21 @@ using Shared.Interfaces;
 
 namespace Infrastructure
 {
+
+    public interface IApplicationLayerMarker { }
+
     public static class ApplicationConfigServices
     {
+
+ 
+
         public static void InstallApplicationConfigServices(this IServiceCollection serviceCollection)
         {
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            //ApplicationGenerator.GenerateUseCaseTemplates();
-            //ApplicationGenerator.GenerateServicesTemplates();
+      
 
             serviceCollection.RegisterDependencies<ITBaseUseCase>(ServiceCollectionServiceExtensions.AddScoped, assemblies);
-            serviceCollection.RegisterDependencies<ITBaseService>(ServiceCollectionServiceExtensions.AddScoped, assemblies);
+            serviceCollection.RegisterDependencies<ITBaseShareService>(ServiceCollectionServiceExtensions.AddScoped, assemblies);
 
             InstallMapping(serviceCollection);
             InstallUsaCases(serviceCollection);

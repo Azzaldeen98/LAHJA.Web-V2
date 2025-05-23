@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Infrastructure.Repositories;
 
 
-public class ProductRepository : IProductRepository {
+ public  class ProductRepository : IProductRepository {
 
     private readonly IProductApiClient _apiClient;
     public ProductRepository(IProductApiClient apiClient){

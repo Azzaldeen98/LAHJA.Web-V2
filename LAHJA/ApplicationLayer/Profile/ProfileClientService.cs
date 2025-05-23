@@ -9,22 +9,23 @@ using Domain.Entities.Profile.Request;
 using Domain.Entities.Profile.Response;
 using Domain.Entities.Space.Request;
 using Domain.ShareData.Base;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 
 using LAHJA.Helpers.Services;
+using Shared.Helpers;
 
 namespace LAHJA.ApplicationLayer.Profile
 {
     public class ProfileClientService
     {
         private readonly ProfileService profileService;
-        private readonly TokenService tokenService;
+        private readonly ITokenService tokenService;
         private readonly AuthorizationSessionService    authorizationSessionService;
         private readonly IMapper _mapper;
 
         public ProfileClientService(ProfileService profileService,
             IMapper mapper,
-            TokenService tokenService,
+            ITokenService tokenService,
             AuthorizationSessionService authorizationSessionService)
         {
 

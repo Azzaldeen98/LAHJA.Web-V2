@@ -1,6 +1,6 @@
 ﻿using Domain.Repository.Service;
 using Domain.ShareData.Base;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 
 namespace Application.UseCase.Service
 {

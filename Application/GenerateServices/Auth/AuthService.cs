@@ -11,20 +11,20 @@ namespace Application.Services;
 public class AuthService : IAuthService {
 
 
-            
- private readonly ConfirmEmailAuthUseCase _confirmEmailAuthUseCase;
- private readonly ExternalLoginAuthUseCase _externalLoginAuthUseCase;
- private readonly ExternalLoginCallbackAuthUseCase _externalLoginCallbackAuthUseCase;
- private readonly ForgotPasswordAuthUseCase _forgotPasswordAuthUseCase;
- private readonly LoginAuthUseCase _loginAuthUseCase;
- private readonly LogoutAuthUseCase _logoutAuthUseCase;
- private readonly RefreshAuthUseCase _refreshAuthUseCase;
- private readonly RegisterAuthUseCase _registerAuthUseCase;
- private readonly ResendConfirmationEmailAuthUseCase _resendConfirmationEmailAuthUseCase;
- private readonly ResetPasswordAuthUseCase _resetPasswordAuthUseCase;
+        
+     private readonly ConfirmEmailAuthUseCase _confirmEmailAuthUseCase;
+     private readonly ExternalLoginAuthUseCase _externalLoginAuthUseCase;
+     private readonly ExternalLoginCallbackAuthUseCase _externalLoginCallbackAuthUseCase;
+     private readonly ForgotPasswordAuthUseCase _forgotPasswordAuthUseCase;
+     private readonly LoginAuthUseCase _loginAuthUseCase;
+     private readonly LogoutAuthUseCase _logoutAuthUseCase;
+     private readonly RefreshAuthUseCase _refreshAuthUseCase;
+     private readonly RegisterAuthUseCase _registerAuthUseCase;
+     private readonly ResendConfirmationEmailAuthUseCase _resendConfirmationEmailAuthUseCase;
+     private readonly ResetPasswordAuthUseCase _resetPasswordAuthUseCase;
 
 
-public AuthService(
+    public AuthService(   
             ConfirmEmailAuthUseCase confirmEmailAuthUseCase,
             ExternalLoginAuthUseCase externalLoginAuthUseCase,
             ExternalLoginCallbackAuthUseCase externalLoginCallbackAuthUseCase,
@@ -34,22 +34,22 @@ public AuthService(
             RefreshAuthUseCase refreshAuthUseCase,
             RegisterAuthUseCase registerAuthUseCase,
             ResendConfirmationEmailAuthUseCase resendConfirmationEmailAuthUseCase,
-            ResetPasswordAuthUseCase resetPasswordAuthUseCase){
+            ResetPasswordAuthUseCase resetPasswordAuthUseCase)
+    {
+                        
+          _confirmEmailAuthUseCase=confirmEmailAuthUseCase;
+          _externalLoginAuthUseCase=externalLoginAuthUseCase;
+          _externalLoginCallbackAuthUseCase=externalLoginCallbackAuthUseCase;
+          _forgotPasswordAuthUseCase=forgotPasswordAuthUseCase;
+          _loginAuthUseCase=loginAuthUseCase;
+          _logoutAuthUseCase=logoutAuthUseCase;
+          _refreshAuthUseCase=refreshAuthUseCase;
+          _registerAuthUseCase=registerAuthUseCase;
+          _resendConfirmationEmailAuthUseCase=resendConfirmationEmailAuthUseCase;
+          _resetPasswordAuthUseCase=resetPasswordAuthUseCase;
 
-                
-      _confirmEmailAuthUseCase=confirmEmailAuthUseCase;
-      _externalLoginAuthUseCase=externalLoginAuthUseCase;
-      _externalLoginCallbackAuthUseCase=externalLoginCallbackAuthUseCase;
-      _forgotPasswordAuthUseCase=forgotPasswordAuthUseCase;
-      _loginAuthUseCase=loginAuthUseCase;
-      _logoutAuthUseCase=logoutAuthUseCase;
-      _refreshAuthUseCase=refreshAuthUseCase;
-      _registerAuthUseCase=registerAuthUseCase;
-      _resendConfirmationEmailAuthUseCase=resendConfirmationEmailAuthUseCase;
-      _resetPasswordAuthUseCase=resetPasswordAuthUseCase;
 
-
-            }
+    }
 
                 
 
@@ -58,7 +58,7 @@ public AuthService(
 
     
 
-          await _confirmEmailAuthUseCase.ExecuteAsync(body, cancellationToken);
+         await _confirmEmailAuthUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -67,10 +67,9 @@ public AuthService(
 
     public async Task externalLoginAuthAsync(string provider, string returnUrl, CancellationToken cancellationToken)
    {
+        
 
-    
-
-          await _externalLoginAuthUseCase.ExecuteAsync(provider, returnUrl, cancellationToken);
+         await _externalLoginAuthUseCase.ExecuteAsync(provider, returnUrl, cancellationToken);
         
 
    }
@@ -82,7 +81,7 @@ public AuthService(
 
     
 
-          await _externalLoginCallbackAuthUseCase.ExecuteAsync(returnUrl, cancellationToken);
+         await _externalLoginCallbackAuthUseCase.ExecuteAsync(returnUrl, cancellationToken);
         
 
    }
@@ -94,7 +93,7 @@ public AuthService(
 
     
 
-          await _forgotPasswordAuthUseCase.ExecuteAsync(body, cancellationToken);
+         await _forgotPasswordAuthUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -106,7 +105,7 @@ public AuthService(
 
     
 
-         return    await _loginAuthUseCase.ExecuteAsync(useCookies, useSessionCookies, body, cancellationToken);
+         return   await _loginAuthUseCase.ExecuteAsync(useCookies, useSessionCookies, body, cancellationToken);
         
 
    }
@@ -118,7 +117,7 @@ public AuthService(
 
     
 
-          await _logoutAuthUseCase.ExecuteAsync(body, cancellationToken);
+         await _logoutAuthUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -130,7 +129,7 @@ public AuthService(
 
     
 
-         return    await _refreshAuthUseCase.ExecuteAsync(body, cancellationToken);
+         return   await _refreshAuthUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -142,7 +141,7 @@ public AuthService(
 
     
 
-          await _registerAuthUseCase.ExecuteAsync(body, cancellationToken);
+         await _registerAuthUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -154,7 +153,7 @@ public AuthService(
 
     
 
-         return    await _resendConfirmationEmailAuthUseCase.ExecuteAsync(body, cancellationToken);
+         return   await _resendConfirmationEmailAuthUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -166,7 +165,7 @@ public AuthService(
 
     
 
-          await _resetPasswordAuthUseCase.ExecuteAsync(body, cancellationToken);
+         await _resetPasswordAuthUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }

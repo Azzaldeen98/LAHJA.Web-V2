@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.WebUtilities;
 using Shared.Constants;
 using Shared.Helpers;
+using Shared.LocalStorage;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Text.Json;
@@ -17,12 +18,12 @@ namespace LAHJA
 
     public class CustomAuthenticationStateProvider : AuthenticationStateProvider
     {
-        private readonly TokenService _tokenService;
+        private readonly ITokenService _tokenService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly AuthenticationState _anonymous;
 
         private bool _isInitialized = false;
-        public CustomAuthenticationStateProvider(TokenService localStorage, IHttpContextAccessor httpContextAccessor)
+        public CustomAuthenticationStateProvider(ITokenService localStorage, IHttpContextAccessor httpContextAccessor)
         {
             _tokenService = localStorage;
             _anonymous = new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));

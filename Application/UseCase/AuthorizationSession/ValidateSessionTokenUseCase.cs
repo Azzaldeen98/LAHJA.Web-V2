@@ -1,6 +1,6 @@
 ﻿using Domain.Exceptions;
 using Domain.Repository.AuthorizationSession;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 
 namespace Application.UseCase.AuthorizationSession
 {

@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Infrastructure.Repositories;
 
 
-public class ModelAiRepository : IModelAiRepository {
+ public  class ModelAiRepository : IModelAiRepository {
 
     private readonly IModelAiApiClient _apiClient;
     public ModelAiRepository(IModelAiApiClient apiClient){

@@ -8,7 +8,7 @@ using Application.UseCases;
 namespace Application.Services;
 
 
-public interface IRolesService :  ITBaseService ,  ITScope  
+public interface IRolesService :  ITBaseShareService  
 {
 
     public Task assignPermissionRolesAsync(RolePermitionAssign body, CancellationToken cancellationToken);

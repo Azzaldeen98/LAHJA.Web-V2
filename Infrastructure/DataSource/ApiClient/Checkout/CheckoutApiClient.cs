@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using Infrastructure.DataSource.ApiClientFactory;
 using Infrastructure.Models.Checkout.Request;
 using Infrastructure.Models.Checkout.Response;
@@ -7,7 +7,7 @@ using Infrastructure.Nswag;
 using Microsoft.Extensions.Configuration;
 using Infrastructure.DataSource.ApiClient.Base;
 using Infrastructure.Middlewares;
-using Infrastructure.Shared.ApiInvoker;
+using Infrastructure.Share.Invoker;
 
 
 namespace Infrastructure.DataSource.ApiClient.Payment

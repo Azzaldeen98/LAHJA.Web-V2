@@ -7,7 +7,7 @@ using Domain.Entities.Request.Request;
 using Domain.Entities.Request.Response;
 using Domain.Entities.Service.Response;
 using Domain.Entities.Space.Request;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 
 
 namespace Application.Services.Service

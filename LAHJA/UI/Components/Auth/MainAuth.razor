@@ -135,7 +135,7 @@
     private int indexAuth = 0;
     // bool toLoginMode = false;
     List<string> errorMessages { get; set; } = new List<string>();
-    [Parameter] public EventCallback<ExternalLoginRequest> OnSubmitExternalLogin { get; set; }
+    [Parameter] public EventCallback<DataBuildAuthBase> OnSubmitExternalLogin { get; set; }
     [Parameter] public EventCallback<DataBuildAuthBase> OnSubmit { get; set; }
     [Parameter] public EventCallback<DataBuildAuthBase> OnSubmitedForgetPassword { get; set; }
     [Parameter] public EventCallback<DataBuildAuthBase> OnSubmitConfirmEmail { get; set; }
@@ -197,14 +197,14 @@
 
         if (OnSubmitExternalLogin.HasDelegate)
         {
-            await OnSubmitExternalLogin.InvokeAsync(new ExternalLoginRequest { Provider = "Facebook", ReturnUrl = "" });
+            await OnSubmitExternalLogin.InvokeAsync(new DataBuildAuthBase { Provider = "Facebook", ReturnUrl = "" });
         }
     }    
     async void onClickGoogleAccount()
     {
         if (OnSubmitExternalLogin.HasDelegate)
         {
-            await OnSubmitExternalLogin.InvokeAsync(new ExternalLoginRequest{Provider="Google",ReturnUrl=""});
+            await OnSubmitExternalLogin.InvokeAsync(new DataBuildAuthBase { Provider = "Google", ReturnUrl = "" });
         }
     }
 

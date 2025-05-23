@@ -8,7 +8,7 @@ using Application.UseCases;
 namespace Application.Services;
 
 
-public interface IManageService :  ITBaseService ,  ITScope  
+public interface IManageService :  ITBaseShareService  
 {
 
     public Task<InfoResponse> infoGETManageAsync(CancellationToken cancellationToken);

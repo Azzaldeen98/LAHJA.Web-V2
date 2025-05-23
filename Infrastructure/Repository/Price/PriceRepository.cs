@@ -1,7 +1,7 @@
 ﻿
 using AutoMapper;
 using Domain.Entities.Price.Response;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using Infrastructure.DataSource.Seeds;
 using Infrastructure.Models.Price.Request;
 using Infrastructure.Models.Price.Response;

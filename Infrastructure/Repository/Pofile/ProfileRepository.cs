@@ -8,7 +8,7 @@ using Domain.Entities.Request.Response;
 using Domain.Entities.Subscriptions.Response;
 using Domain.Repository.Profile;
 using Domain.ShareData;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using Infrastructure.DataSource.ApiClient.Plans;
 using Infrastructure.DataSource.ApiClient.Profile;
 using Infrastructure.DataSource.Seeds;

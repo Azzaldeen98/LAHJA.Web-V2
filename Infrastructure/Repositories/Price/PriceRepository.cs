@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Infrastructure.Repositories;
 
 
-public class PriceRepository : IPriceRepository {
+ public  class PriceRepository : IPriceRepository {
 
     private readonly IPriceApiClient _apiClient;
     public PriceRepository(IPriceApiClient apiClient){

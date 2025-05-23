@@ -4,7 +4,7 @@ using LAHJA.Data.UI.Models;
 using System.Text;
 using System.Text.Json;
 using Microsoft.JSInterop;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 

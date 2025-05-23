@@ -11,23 +11,24 @@ namespace Application.Services;
 public class ManageService : IManageService {
 
 
-            
- private readonly InfoGETManageUseCase _infoGETManageUseCase;
- private readonly InfoPOSTManageUseCase _infoPOSTManageUseCase;
- private readonly TwofaManageUseCase _twofaManageUseCase;
+        
+     private readonly InfoGETManageUseCase _infoGETManageUseCase;
+     private readonly InfoPOSTManageUseCase _infoPOSTManageUseCase;
+     private readonly TwofaManageUseCase _twofaManageUseCase;
 
 
-            public ManageService(
-InfoGETManageUseCase infoGETManageUseCase,
-InfoPOSTManageUseCase infoPOSTManageUseCase,
-TwofaManageUseCase twofaManageUseCase){
-                
-      _infoGETManageUseCase=infoGETManageUseCase;
-      _infoPOSTManageUseCase=infoPOSTManageUseCase;
-      _twofaManageUseCase=twofaManageUseCase;
+    public ManageService(   
+            InfoGETManageUseCase infoGETManageUseCase,
+            InfoPOSTManageUseCase infoPOSTManageUseCase,
+            TwofaManageUseCase twofaManageUseCase)
+    {
+                        
+          _infoGETManageUseCase=infoGETManageUseCase;
+          _infoPOSTManageUseCase=infoPOSTManageUseCase;
+          _twofaManageUseCase=twofaManageUseCase;
 
 
-            }
+    }
 
                 
 
@@ -36,7 +37,7 @@ TwofaManageUseCase twofaManageUseCase){
 
     
 
-         return    await _infoGETManageUseCase.ExecuteAsync(cancellationToken);
+         return   await _infoGETManageUseCase.ExecuteAsync(cancellationToken);
         
 
    }
@@ -48,7 +49,7 @@ TwofaManageUseCase twofaManageUseCase){
 
     
 
-         return    await _infoPOSTManageUseCase.ExecuteAsync(body, cancellationToken);
+         return   await _infoPOSTManageUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -60,7 +61,7 @@ TwofaManageUseCase twofaManageUseCase){
 
     
 
-         return    await _twofaManageUseCase.ExecuteAsync(body, cancellationToken);
+         return   await _twofaManageUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }

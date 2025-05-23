@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Infrastructure.Repositories;
 
 
-public class UserRepository : IUserRepository {
+ public  class UserRepository : IUserRepository {
 
     private readonly IUserApiClient _apiClient;
     public UserRepository(IUserApiClient apiClient){

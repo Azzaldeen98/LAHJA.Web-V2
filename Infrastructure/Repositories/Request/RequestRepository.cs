@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Infrastructure.Repositories;
 
 
-public class RequestRepository : IRequestRepository {
+ public  class RequestRepository : IRequestRepository {
 
     private readonly IRequestApiClient _apiClient;
     public RequestRepository(IRequestApiClient apiClient){

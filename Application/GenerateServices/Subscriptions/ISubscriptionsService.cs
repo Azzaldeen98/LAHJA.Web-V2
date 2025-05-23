@@ -8,7 +8,7 @@ using Application.UseCases;
 namespace Application.Services;
 
 
-public interface ISubscriptionsService :  ITBaseService ,  ITScope  
+public interface ISubscriptionsService :  ITBaseShareService  
 {
 
     public Task cancelAtEndSubscriptionsAsync(string id, CancellationToken cancellationToken);

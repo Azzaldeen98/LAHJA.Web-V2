@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Infrastructure.Repositories;
 
 
-public class AuthRepository : IAuthRepository {
+ public  class AuthRepository : IAuthRepository {
 
     private readonly IAuthApiClient _apiClient;
     public AuthRepository(IAuthApiClient apiClient){

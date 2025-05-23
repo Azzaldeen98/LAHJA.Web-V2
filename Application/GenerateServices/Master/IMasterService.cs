@@ -8,7 +8,7 @@ using Application.UseCases;
 namespace Application.Services;
 
 
-public interface IMasterService :  ITBaseService ,  ITScope  
+public interface IMasterService :  ITBaseShareService  
 {
 
     public Task<ICollection<AdvertisementView>> active2MasterAsync(string lg, CancellationToken cancellationToken);

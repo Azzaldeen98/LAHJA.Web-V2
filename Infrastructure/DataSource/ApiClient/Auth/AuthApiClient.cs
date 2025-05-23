@@ -10,7 +10,7 @@ using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 
 
 using LoginRequest = Infrastructure.Nswag.LoginRequest;
@@ -21,7 +21,7 @@ using Infrastructure.Models.Auth.Response;
 using Domain.Entities;
 using Infrastructure.DataSource.ApiClient.Base;
 using Infrastructure.Middlewares;
-using Infrastructure.Shared.ApiInvoker;
+using Infrastructure.Share.Invoker;
 
 
 //using Microsoft.AspNetCore.Http;

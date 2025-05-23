@@ -4,7 +4,7 @@ using Domain.Entities.Plans.Response;
 using Domain.Repository.Plans;
 using Domain.ShareData;
 using Domain.ShareData.Base;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using Infrastructure.DataSource.ApiClient.Plans;
 using Infrastructure.DataSource.Seeds;
 using Infrastructure.Models.Plans;

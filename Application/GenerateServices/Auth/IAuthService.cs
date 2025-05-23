@@ -8,7 +8,7 @@ using Application.UseCases;
 namespace Application.Services;
 
 
-public interface IAuthService :  ITBaseService ,  ITScope  
+public interface IAuthService :  ITBaseShareService  
 {
 
     public Task confirmEmailAuthAsync(ConfirmEmailRequest body, CancellationToken cancellationToken);

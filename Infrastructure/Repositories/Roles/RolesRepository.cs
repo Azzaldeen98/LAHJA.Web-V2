@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Infrastructure.Repositories;
 
 
-public class RolesRepository : IRolesRepository {
+ public  class RolesRepository : IRolesRepository {
 
     private readonly IRolesApiClient _apiClient;
     public RolesRepository(IRolesApiClient apiClient){

@@ -8,7 +8,7 @@ using Application.UseCases;
 namespace Application.Services;
 
 
-public interface IModelAiService :  ITBaseService ,  ITScope  
+public interface IModelAiService :  ITBaseShareService  
 {
 
     public Task<ModelAiResponse> createModelAiAsync(ModelAiCreate body, CancellationToken cancellationToken);

@@ -62,6 +62,9 @@
 	  <Folder Include="ApplicationLayer\ServiceMethod\" />
 	  <Folder Include="ApplicationLayer\Setting\" />
 	  <Folder Include="Data\UI\Components\Profile\" />
+	  <Folder Include="Data\UI\GenerateTemplates\" />
+	  <Folder Include="Data\UI\GenerateTemplates\Auth\" />
+	  <Folder Include="Data\UI\NewFolder\" />
 	  <Folder Include="Data\UI\Templates\User\" />
 	  <Folder Include="Data\UI\Templates\Request\" />
 	  <Folder Include="Data\UI\Templates\Setting\" />
@@ -74,6 +77,7 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\Application\Application.csproj" />
+	  <ProjectReference Include="..\Client.Shared\Client.Shared.csproj" />
 	  <ProjectReference Include="..\Domain\Domain.csproj" />
 	  <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
 	</ItemGroup>

@@ -8,7 +8,7 @@ using Application.UseCases;
 namespace Application.Services;
 
 
-public interface IDashboardService :  ITBaseService ,  ITScope  
+public interface IDashboardService :  ITBaseShareService  
 {
 
     public Task<ICollection<RequestData>> getRequestsByDatetimeDashboardAsync(FilterBy? filterBy, System.DateTimeOffset? startDate, System.DateTimeOffset? endDate, RequestType? requestType, DateTimeFilter? groupBy, CancellationToken cancellationToken);

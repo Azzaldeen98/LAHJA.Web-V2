@@ -1,6 +1,6 @@
 ﻿using Domain.Repository.Billing;
 using Domain.ShareData.Base;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 
 namespace Application.Services.Plans
 {

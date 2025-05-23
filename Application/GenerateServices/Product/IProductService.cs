@@ -8,7 +8,7 @@ using Application.UseCases;
 namespace Application.Services;
 
 
-public interface IProductService :  ITBaseService ,  ITScope  
+public interface IProductService :  ITBaseShareService  
 {
 
     public Task<ProductResponse> createProductAsync(ProductCreate body, CancellationToken cancellationToken);

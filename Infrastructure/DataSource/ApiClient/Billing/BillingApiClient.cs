@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using Infrastructure.DataSource.ApiClientFactory;
 using Infrastructure.Models.Checkout.Request;
 using Infrastructure.Models.Checkout.Response;
@@ -12,7 +12,7 @@ using Domain.ShareData.Base;
 using Infrastructure.Models.Billing.Request;
 using Infrastructure.Models.BaseFolder.Response;
 using Infrastructure.Middlewares;
-using Infrastructure.Shared.ApiInvoker;
+using Infrastructure.Share.Invoker;
 
 namespace Infrastructure.DataSource.ApiClient.Billing
 {

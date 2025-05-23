@@ -2,7 +2,7 @@
 using Domain.Entities.Product.Request;
 using Domain.Entities.Product.Response;
 using Domain.ShareData.Base;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 
 
 namespace Application.Services.Prroduct

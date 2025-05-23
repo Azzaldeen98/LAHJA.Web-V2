@@ -11,29 +11,30 @@ namespace Application.Services;
 public class RolesService : IRolesService {
 
 
-            
- private readonly AssignPermissionRolesUseCase _assignPermissionRolesUseCase;
- private readonly RolesAllUseCase _rolesAllUseCase;
- private readonly RolesDELETEUseCase _rolesDELETEUseCase;
- private readonly RolesGETUseCase _rolesGETUseCase;
- private readonly RolesPOSTUseCase _rolesPOSTUseCase;
+        
+     private readonly AssignPermissionRolesUseCase _assignPermissionRolesUseCase;
+     private readonly RolesAllUseCase _rolesAllUseCase;
+     private readonly RolesDELETEUseCase _rolesDELETEUseCase;
+     private readonly RolesGETUseCase _rolesGETUseCase;
+     private readonly RolesPOSTUseCase _rolesPOSTUseCase;
 
 
-            public RolesService(
-AssignPermissionRolesUseCase assignPermissionRolesUseCase,
-RolesAllUseCase rolesAllUseCase,
-RolesDELETEUseCase rolesDELETEUseCase,
-RolesGETUseCase rolesGETUseCase,
-RolesPOSTUseCase rolesPOSTUseCase){
-                
-      _assignPermissionRolesUseCase=assignPermissionRolesUseCase;
-      _rolesAllUseCase=rolesAllUseCase;
-      _rolesDELETEUseCase=rolesDELETEUseCase;
-      _rolesGETUseCase=rolesGETUseCase;
-      _rolesPOSTUseCase=rolesPOSTUseCase;
+    public RolesService(   
+            AssignPermissionRolesUseCase assignPermissionRolesUseCase,
+            RolesAllUseCase rolesAllUseCase,
+            RolesDELETEUseCase rolesDELETEUseCase,
+            RolesGETUseCase rolesGETUseCase,
+            RolesPOSTUseCase rolesPOSTUseCase)
+    {
+                        
+          _assignPermissionRolesUseCase=assignPermissionRolesUseCase;
+          _rolesAllUseCase=rolesAllUseCase;
+          _rolesDELETEUseCase=rolesDELETEUseCase;
+          _rolesGETUseCase=rolesGETUseCase;
+          _rolesPOSTUseCase=rolesPOSTUseCase;
 
 
-            }
+    }
 
                 
 
@@ -42,7 +43,7 @@ RolesPOSTUseCase rolesPOSTUseCase){
 
     
 
-          await _assignPermissionRolesUseCase.ExecuteAsync(body, cancellationToken);
+         await _assignPermissionRolesUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }
@@ -54,7 +55,7 @@ RolesPOSTUseCase rolesPOSTUseCase){
 
     
 
-         return    await _rolesAllUseCase.ExecuteAsync(cancellationToken);
+         return   await _rolesAllUseCase.ExecuteAsync(cancellationToken);
         
 
    }
@@ -66,7 +67,7 @@ RolesPOSTUseCase rolesPOSTUseCase){
 
     
 
-          await _rolesDELETEUseCase.ExecuteAsync(id, cancellationToken);
+         await _rolesDELETEUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -78,7 +79,7 @@ RolesPOSTUseCase rolesPOSTUseCase){
 
     
 
-         return    await _rolesGETUseCase.ExecuteAsync(id, cancellationToken);
+         return   await _rolesGETUseCase.ExecuteAsync(id, cancellationToken);
         
 
    }
@@ -90,7 +91,7 @@ RolesPOSTUseCase rolesPOSTUseCase){
 
     
 
-          await _rolesPOSTUseCase.ExecuteAsync(body, cancellationToken);
+         await _rolesPOSTUseCase.ExecuteAsync(body, cancellationToken);
         
 
    }

@@ -3,15 +3,16 @@ using MudBlazor;
 using Shared.Constants.Router;
 using System.Threading.Tasks;
 
-namespace LAHJA.ErrorHandling
+namespace Client.Shared.UI.ErrorHandling
 {
+   
 
     public interface IUserActionService
     {
 
         public void NavigationTo(string url, Dictionary<string, object>? parametrs=null);
-        public void ShowSnackBar(string message);
-        public void ShowNotify(string message);
+        public void ShowSnackBar(string message, Severity severity = Severity.Error);
+
         public  Task<bool?> ShowMessageBox(string title,string message, string? yesText = "", string? noText = "", string? cancelText = "");
         public  Task<bool?> ShowMessageBox(string message, string? yesText = "", string? noText = "", string? cancelText = "");
 
@@ -30,16 +31,23 @@ namespace LAHJA.ErrorHandling
             this.dialog = dialog;
         }
 
-        public void NavigationTo(string url, Dictionary<string,object>? parametrs=null)
+        public void NavigationTo(string url, Dictionary<string, object>? parameters = null)
         {
-              if(parametrs!=null && parametrs.Any())
-                    foreach (var parametr in parametrs)
-                    {
-                        url += $" {parametr.Key}={parametr.Value}&";
-                    }
+            if (parameters != null && parameters.Any())
+            {
+                var query = string.Join("&", parameters.Select(kvp =>
+                    $"{Uri.EscapeDataString(kvp.Key)}={Uri.EscapeDataString(kvp.Value?.ToString() ?? "")}"
+                ));
 
-                navigation?.NavigateTo(url,true);
+                if (!url.Contains('?'))
+                    url += "?" + query;
+                else
+                    url += "&" + query;
+            }
+
+            navigation.NavigateTo(url, true);
         }
+
 
 
         public async Task<bool?> ShowMessageBox(string message, string yesText = "", string noText = "",string cancelText="")
@@ -54,14 +62,11 @@ namespace LAHJA.ErrorHandling
            
         }
 
-        public void ShowNotify(string message)
-        {
-            throw new NotImplementedException();
-        }
 
-        public void ShowSnackBar(string message)
+
+        public void ShowSnackBar(string message, Severity severity = Severity.Error)
         {
-            snackbar?.Add(message, Severity.Error);
+            snackbar?.Add(message, severity);
         }
     }
 

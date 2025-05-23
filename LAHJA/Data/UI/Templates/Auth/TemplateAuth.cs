@@ -1,266 +1,166 @@
-﻿using ApexCharts;
-using Application.UseCase.Auth;
 using AutoMapper;
-using Blazorise;
+using Client.Shared.Execution;
 using Domain.Entities;
 using Domain.Entities.Auth.Request;
 using Domain.Entities.Auth.Response;
 using Domain.ShareData;
-using Domain.Wrapper;
-using LAHJA.ApplicationLayer.Auth;
+using Shared.Wrapper;
 using LAHJA.Data.UI.Components.Base;
 using LAHJA.Data.UI.Templates.Base;
 using LAHJA.Helpers;
 using LAHJA.Helpers.Enum;
-using LAHJA.Helpers.Services;
+using LAHJA.Providers;
 using LAHJA.UI.Components;
-using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using Shared.Constants;
 using Shared.Constants.Router;
-using Shared.Helpers;
-using Shared.Wrapper;
-using System;
-using System.Text.RegularExpressions;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using LAHJA.ApplicationLayer.Auth;
+using AutoGenerator.Attributes;
+using Shared.Enums;
 
 namespace LAHJA.Data.UI.Templates.Auth;
-
-
-public enum TypeTemplateAuth
+/// <summary>
+/// Interface to define authentication component lifecycle delegates
+/// </summary>
+public interface IBuilderAuthComponent<T> : IBuilderComponents<T>
 {
-
-}
-
-
-//public interface ITemplateAuth : ITemplateBase<DataBuildAuthBase, LoginResponse>
-//{
-
-
-//}
-
-//}//public interface ITemplateAuth : ITemplateBase<DataBuildAuthBase,LoginResponse>
-//{
-
-//}
-//public class TemplateAuth: TemplateBase<DataBuildAuthBase, LoginResponse>, ITemplateAuth
-//{
-
-
-//    public EventCallback<DataBuildAuthBase> OnSubmit { get; set; }
-
-//    public EventCallback<string> OnSubmitedForgetPassword { get; set; }
-
-//    public override DataBuildAuthBase Map(LoginResponse data)
-//    {
-//        throw new NotImplementedException();
-//    }
-
-
-//}
-public interface IBuilderAuthComponent<T>: IBuilderComponents<T>
-{
-    public Func<ExternalLoginRequest, Task> SubmitExternalLogin { get; set; }
+    public Func<T, Task> SubmitExternalLogin { get; set; }
     public Func<T, Task> Submit { get; set; }
     public Func<T, Task> SubmitedForgetPassword { get; set; }
     public Func<T, Task> SubmitConfirmEmail { get; set; }
     public Func<T, Task> SubmitReSendConfirmEmail { get; set; }
     public Func<T, Task> SubmitResetPassword { get; set; }
     public Func<T, Task> SubmitLogout { get; set; }
-
-
 }
 
-
-
+/// <summary>
+/// Interface to define the Auth Api services
+/// </summary>
 public interface IBuilderAuthApi<T> : IBuilderApi<T>
 {
-
-     Task<Result<LoginResponse>> Login(T data);
-     Task ExternalLoginAsync(ExternalLoginRequest data);
-    Task<Result<AccessTokenResponse>> RefreshToken(RefreshRequest request);
+    Task<Result<LoginResponse>> Login(T data);
+    Task ExternalLoginAsync(T data);
+    Task<Result<AccessTokenResponse>> RefreshToken(T data);
     Task<Result<string>> Logout();
-     Task<Result<RegisterResponse>> Register(T data);
-     Task<Result<ResetPasswordResponse>> ResetPassword(T data);
-     Task<Result> ReSendConfirmationEmail(T data);
-     Task<Result> SubmitConfirmEmail(T data);
-     Task<Result> ForgetPassword(T data);
-    
-
+    Task<Result<RegisterResponse>> Register(T data);
+    Task<Result<ResetPasswordResponse>> ResetPassword(T data);
+    Task<Result> ReSendConfirmationEmail(T data);
+    Task<Result> SubmitConfirmEmail(T data);
+    Task<Result> ForgetPassword(T data);
 }
 
-public abstract class BuilderAuthApi<T,E> : BuilderApi<T,E>, IBuilderAuthApi<E> 
+public abstract class BuilderAuthApi<T, E> : BuilderApi<T, E>, IBuilderAuthApi<E>
 {
-
-    public BuilderAuthApi(IMapper mapper, T service) : base(mapper,service)
+    public BuilderAuthApi(IMapper mapper, T service) : base(mapper, service)
     {
-      
     }
 
-    public abstract Task ExternalLoginAsync(ExternalLoginRequest data);
+    public abstract Task ExternalLoginAsync(E data);
     public abstract Task<Result> ForgetPassword(E data);
-
     public abstract Task<Result<LoginResponse>> Login(E data);
     public abstract Task<Result<string>> Logout();
-
     public abstract Task<Result<RegisterResponse>> Register(E data);
-    public abstract Task<Result<AccessTokenResponse>> RefreshToken(RefreshRequest request);
-
-
+    public abstract Task<Result<AccessTokenResponse>> RefreshToken(E data);
     public abstract Task<Result> ReSendConfirmationEmail(E data);
-
     public abstract Task<Result<ResetPasswordResponse>> ResetPassword(E data);
-
     public abstract Task<Result> SubmitConfirmEmail(E data);
-   
 }
+
 public class BuilderAuthComponent<T> : IBuilderAuthComponent<T>
 {
-
-    public Func<ExternalLoginRequest, Task> SubmitExternalLogin { get; set; }
-    public Func<T, Task> Submit { get ; set ; }
+    public Func<T, Task> SubmitExternalLogin { get; set; }
+    public Func<T, Task> Submit { get; set; }
     public Func<T, Task> SubmitedForgetPassword { get; set; }
     public Func<T, Task> SubmitConfirmEmail { get; set; }
     public Func<T, Task> SubmitReSendConfirmEmail { get; set; }
     public Func<T, Task> SubmitResetPassword { get; set; }
     public Func<T, Task> SubmitLogout { get; set; }
-
 }
 
-
-public class TemplateAuthShare<T,E> : TemplateBase<T,E>
+public class TemplateAuthShare<T, E> : TemplateBase<T, E>
 {
-    protected readonly NavigationManager navigation;
-    protected readonly IDialogService dialogService;
-    protected readonly ISnackbar Snackbar;
+    public IBuilderAuthComponent<E> BuilderComponents { get => builderComponents; }
+
     protected IBuilderAuthApi<E> builderApi;
+    protected readonly IShareTemplateProvider shareProvider;
     protected readonly CustomAuthenticationStateProvider AuthStateProvider;
-    //protected readonly ProtectedSessionStorage  PSession;
-
     private readonly IBuilderAuthComponent<E> builderComponents;
-    public  IBuilderAuthComponent<E> BuilderComponents { get => builderComponents; }
-    public TemplateAuthShare(
-
-           IMapper mapper,
-           CustomAuthenticationStateProvider authStateProvider,
-           AuthService authService,
-            //ProtectedSessionStorage PSession,
-            T client,
-            IBuilderAuthComponent<E> builderComponents,
-            NavigationManager navigation,
-            IDialogService dialogService,
-            ISnackbar snackbar ) : base(mapper, authService, client)
+    public TemplateAuthShare(CustomAuthenticationStateProvider authStateProvider, Helpers.Services.AuthService authService, T client, IBuilderAuthComponent<E> builderComponents, IShareTemplateProvider shareProvider) : base(shareProvider.Mapper, authService, client)
     {
-
-
-
-        builderComponents = new BuilderAuthComponent<E>();
-        this.navigation = navigation;
-        this.dialogService = dialogService;
-        this.Snackbar = snackbar;
-        //this.builderApi = builderApi;
+        //builderComponents = new BuilderAuthComponent<E>();
         this.builderComponents = builderComponents;
         AuthStateProvider = authStateProvider;
+        this.shareProvider = shareProvider;
     }
-
 }
-
 
 public class BuilderAuthApiClient : BuilderAuthApi<ClientAuthService, DataBuildAuthBase>, IBuilderAuthApi<DataBuildAuthBase>
 {
-
-    private readonly NavigationManager navigationManager;
-    public BuilderAuthApiClient(IMapper mapper, ClientAuthService service, NavigationManager navigationManager) : base(mapper, service)
+    public BuilderAuthApiClient(IMapper mapper, ApplicationLayer.Auth.ClientAuthService service) : base(mapper, service)
     {
-        this.navigationManager = navigationManager;
     }
 
-    public override  async Task ExternalLoginAsync(ExternalLoginRequest request)
+    public override async Task ExternalLoginAsync(DataBuildAuthBase data)
     {
-        await Service.ExternalLoginAsync(request);
-
+        var map_data = Mapper.Map<ExternalLoginRequest>(data);
+        await Service.ExternalLoginAsync(map_data);
     }
+
     public override async Task<Result> ForgetPassword(DataBuildAuthBase data)
     {
         var model = Mapper.Map<ForgetPasswordRequest>(data);
-
-        model.ReturnUrl = Helper.GetInstance().GetFullPath(ConstantsApp.RESET_PASSWORDL_PAGE_URL);// navigationManager.BaseUri+ConstantsApp.RESET_PASSWORDL_PAGE_URL;
+        model.ReturnUrl = Helper.GetInstance().GetFullPath(ConstantsApp.RESET_PASSWORDL_PAGE_URL); //   shareProvider.Navigation.anager.BaseUri+ConstantsApp.RESET_PASSWORDL_PAGE_URL;
         return await Service.forgetPasswordAsync(model);
     }
 
     public override async Task<Result<LoginResponse>> Login(DataBuildAuthBase data)
     {
         var model = Mapper.Map<LoginRequest>(data);
-
-         return await Service.loginAsync(model);
-       
-    } 
-    
-    public override async Task<Result<string>> Logout()
-    {
-        
-
-         return await Service.logoutAsync();
-       
+        return await Service.loginAsync(model);
     }
 
-    public async override Task<Result<AccessTokenResponse>> RefreshToken(RefreshRequest request)
+    public override async Task<Result<string>> Logout()
     {
-        return await Service.RefreshToken(request);
+        return await Service.logoutAsync();
+    }
+
+    public async override Task<Result<AccessTokenResponse>> RefreshToken(DataBuildAuthBase data)
+    {
+        var map_data = Mapper.Map<RefreshRequest>(data);
+        return await Service.RefreshToken(map_data);
     }
 
     public override async Task<Result<RegisterResponse>> Register(DataBuildAuthBase data)
     {
         var model = Mapper.Map<RegisterRequest>(data);
-
-        model.ReturnUrl = Helper.GetInstance().GetFullPath(ConstantsApp.CONFIRM_EMAIL_PAGE_URL); //navigationManager.BaseUri + ConstantsApp.CONFIRM_EMAIL_PAGE_URL;
-
-
         return await Service.registerAsync(model);
     }
 
     public override async Task<Result> ReSendConfirmationEmail(DataBuildAuthBase data)
     {
         var model = Mapper.Map<ResendConfirmationEmail>(data);
-
-        model.ReturnUrl = Helper.GetInstance().GetFullPath(ConstantsApp.CONFIRM_EMAIL_PAGE_URL); //navigationManager.BaseUri+ConstantsApp.CONFIRM_EMAIL_PAGE_URL;
-
         return await Service.reConfirmationEmailAsync(model);
     }
 
     public override async Task<Result<ResetPasswordResponse>> ResetPassword(DataBuildAuthBase data)
     {
         var model = Mapper.Map<ResetPasswordRequest>(data);
-
         return await Service.resetPasswordAsync(model);
     }
 
     public override async Task<Result> SubmitConfirmEmail(DataBuildAuthBase data)
     {
         var model = Mapper.Map<ConfirmationEmail>(data);
-        model.ReturnUrl = Helper.GetInstance().GetFullPath(ConstantsApp.CONFIRM_EMAIL_PAGE_URL);
-        //navigationManager.BaseUri + ConstantsApp.CONFIRM_EMAIL_PAGE_URL;
-
         return await Service.confirmationEmailAsync(model);
     }
 }
 
-
-public class TemplateAuth: TemplateAuthShare<ClientAuthService, DataBuildAuthBase>
+[AutoSafeInvoke]
+public class TemplateAuth : TemplateAuthShare<ClientAuthService, DataBuildAuthBase>
 {
-
-
     private readonly ISessionUserManager sessionUserManager;
-    //private readonly ISessionUserManager sessionUserManager;
-    public TemplateAuth(IMapper mapper,
-        AuthService authService,
-        ClientAuthService client,
-        CustomAuthenticationStateProvider AuthStateProvider,
-        IBuilderAuthComponent<DataBuildAuthBase> builderComponents,
-        NavigationManager navigation,
-        IDialogService dialogService,
-        ISnackbar snackbar,
-        ISessionUserManager sessionUserManager) : base(mapper, AuthStateProvider, authService, client, builderComponents, navigation, dialogService, snackbar)
+    private readonly ISafeInvoker safeInvoker;
+    public TemplateAuth(Helpers.Services.AuthService authService, ClientAuthService client, CustomAuthenticationStateProvider authStateProvider, IBuilderAuthComponent<DataBuildAuthBase> builderComponents, IShareTemplateProvider shareProvider, ISafeInvoker safeInvoker, ISessionUserManager sessionUserManager) : base(authStateProvider, authService, client, builderComponents, shareProvider)
     {
         this.BuilderComponents.SubmitExternalLogin = OnSubmitExternalLogin;
         this.BuilderComponents.Submit = OnSubmit;
@@ -269,379 +169,308 @@ public class TemplateAuth: TemplateAuthShare<ClientAuthService, DataBuildAuthBas
         this.BuilderComponents.SubmitReSendConfirmEmail = OnReSendConfirmationEmail;
         this.BuilderComponents.SubmitResetPassword = OnResetPassword;
         this.BuilderComponents.SubmitedForgetPassword = OnSubmitForgetPasswordAsync;
-        this.builderApi = new BuilderAuthApiClient(mapper, client, navigation);
+        this.builderApi = new BuilderAuthApiClient(mapper, client);
         this.sessionUserManager = sessionUserManager;
+        this.safeInvoker = safeInvoker;
     }
-
-
 
     public List<string> Errors { get => _errors; }
 
-
-    //public  IBuilderAuthComponent<DataBuildAuthBase, DataBuildAuthBase> BuilderAuthComponent { get => builderAuthComponents; }
-
-
     public async Task LogoutAsync()
     {
-        await OnSubmitLogout();
+        await safeInvoker.InvokeAsync(async () =>
+        {
+            await OnSubmitLogout();
+        });
     }
 
     /// <summary>
     ///   Edit in 24/3/2025 
     /// </summary>
-    /// <param name="request"></param>
+    /// <param name = "request"></param>
     /// <returns></returns>
-    public async Task<Result<AccessTokenResponse>> RefreshToken(RefreshRequest request)
+    public async Task<Result<AccessTokenResponse>> RefreshToken(DataBuildAuthBase data)
     {
-        var response = await builderApi.RefreshToken(request);
-        if (response.Succeeded)
+        return await safeInvoker.InvokeAsync(async () =>
         {
-       
+            var response = await builderApi.RefreshToken(data);
+            if (response.Succeeded)
+            {
                 await authService.DeleteLoginAsync();
                 var model = mapper.Map<LoginResponse>(response.Data);
                 initAuth(model, LoginType.Email);
                 await AuthStateProvider.InitializeAsync();
-            
-     
+            }
+            else
+            {
+                await OnSubmitLogout();
+            }
 
-        }
-        else
-        {
-            await OnSubmitLogout();
-        }
-
-
-
-        return response;
+            return response;
+        });
     }
 
- 
-    private async Task<bool> ConfirmAsync(string title ,string message)
+    [IgnoreSafeInvoke]
+    private async Task<bool> ConfirmAsync(string title, string message)
     {
-        var parameters = new DialogParameters<DialogBox>
-        {
-            { x => x.Title, title },
-            { x => x.Message,message},
-            //{ x => x.Color, Color.Success }
-        };
-        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true };
-        var dialog = dialogService.Show<DialogBox>(" ", parameters, options);
-
-
+        var dialog = await shareProvider.DialogNotification.ShowDialogAsync<DialogBox>(title: title, message: message, maxWidth: MaxWidth.Small);
         var result = await dialog.Result;
         return !result.Canceled;
-        
-
     }
+
     public async Task ReForgetPassword(DataBuildAuthBase data)
     {
-        var response = await builderApi.ForgetPassword(data);
-        if (response.Succeeded)
+        await safeInvoker.InvokeAsync(async () =>
         {
-            var msg = MapperMessages.Map(SuccessMessages.LINK_SENT_SUCCESSFULLY_EN, SuccessMessages.LINK_SENT_SUCCESSFULLY_AR);
-            Snackbar.Add(msg, Severity.Success);
-        }
-        else
-        {
-            //if (response.Messages != null && response.Messages.Count() > 0)
+            var response = await builderApi.ForgetPassword(data);
+            if (response.Succeeded)
+            {
+                var msg = MapperMessages.Map(SuccessMessages.LINK_SENT_SUCCESSFULLY_EN, SuccessMessages.LINK_SENT_SUCCESSFULLY_AR);
+                shareProvider.DialogNotification.ShowSnackbar(msg, Severity.Success);
+            }
+            else
             {
                 var msg = MapperMessages.Map(ErrorMessages.PROCESS_IS_FAILED_EN, ErrorMessages.PROCESS_IS_FAILED_AR);
-                Snackbar.Add(msg, Severity.Success);
-
+                shareProvider.DialogNotification.ShowSnackbar(msg, Severity.Success);
             }
-        }
+        });
     }
 
     public async Task ReSendConfirmationEmail(DataBuildAuthBase data)
     {
-        var response = await builderApi.ReSendConfirmationEmail(data);
-        if (response.Succeeded)
+        await safeInvoker.InvokeAsync(async () =>
         {
-            var msg = MapperMessages.Map(SuccessMessages.LINK_SENT_SUCCESSFULLY_EN, SuccessMessages.LINK_SENT_SUCCESSFULLY_AR);
-            Snackbar.Add(msg, Severity.Success);
-        }
-        else
-        {
-            //if (response.Messages != null && response.Messages.Count() > 0)
+            var response = await builderApi.ReSendConfirmationEmail(data);
+            if (response.Succeeded)
             {
-                var msg = MapperMessages.Map(ErrorMessages.PROCESS_IS_FAILED_EN, ErrorMessages.PROCESS_IS_FAILED_AR);
-                Snackbar.Add(msg,Severity.Success);
-
+                var msg = MapperMessages.Map(SuccessMessages.LINK_SENT_SUCCESSFULLY_EN, SuccessMessages.LINK_SENT_SUCCESSFULLY_AR);
+                shareProvider.DialogNotification.ShowSnackbar(msg, Severity.Success);
             }
-        }
+            else
+            {
+                //if (response.Messages != null && response.Messages.Count() > 0)
+                {
+                    var msg = MapperMessages.Map(ErrorMessages.PROCESS_IS_FAILED_EN, ErrorMessages.PROCESS_IS_FAILED_AR);
+                    shareProvider.DialogNotification.ShowSnackbar(msg, Severity.Success);
+                }
+            }
+        });
     }
+
     public async Task OnReSendConfirmationEmail(DataBuildAuthBase data)
     {
-      
-
-        var response = await builderApi.ReSendConfirmationEmail(data);
-        if (response.Succeeded)
+        await safeInvoker.InvokeAsync(async () =>
         {
-
-
-            var fullPath = Helper.GetInstance().GetFullPath(ConstantsApp.CONFIRM_EMAIL_PAGE_URL);
-            navigation.NavigateTo($"{RouterPage.EMAIL_CONFIRM_PAGE}?Email={data.Email}&Url={fullPath}&Method={AuthMethods.ConfirmEmail.ToString()}", forceLoad: true);
-
-            //var res = await  ConfirmAsync("Confirm Email", SuccessMessages.CONFIRM_EMAIL_MESSAGE_EN);
-            // if (res == true)
-            //{
-            //        navigation.NavigateTo(RouterPage.LOGIN, forceLoad: true);
-            //}
-            //else
-            //{
-
-            //}
-
-
-        }
-        else
-        {
-            var res = await ConfirmAsync("Error", ErrorMessages.PROCESS_IS_FAILED_EN);
-    
-        }
+            data.ReturnUrl = Helper.GetInstance().GetFullPath(ConstantsApp.CONFIRM_EMAIL_PAGE_URL);
+            var response = await builderApi.ReSendConfirmationEmail(data);
+            if (response.Succeeded)
+            {
+                var parameters = new Dictionary<string, object>
+                {
+                    ["Email"] = data.Email,
+                    ["Url"] = data.ReturnUrl,
+                    ["Method"] = AuthMethods.ConfirmEmail.ToString()
+                };
+                shareProvider.NavigationService.GoTo(RouterPage.EMAIL_CONFIRM_PAGE, parameters, forceReload: true);
+            }
+            else
+            {
+                var res = await ConfirmAsync("Error", ErrorMessages.PROCESS_IS_FAILED_EN);
+            }
+        });
     }
 
     protected async Task OnResetPassword(DataBuildAuthBase dataBuildAuthBase)
     {
-        var response = await builderApi.ResetPassword(dataBuildAuthBase);
-        if (response.Succeeded)
+        await safeInvoker.InvokeAsync(async () =>
         {
-
-            navigation.NavigateTo(RouterPage.LOGIN, forceLoad: true);
-
-        }
-        else
-        {
-            if (response.Messages != null && response.Messages.Count() > 0)
+            var response = await builderApi.ResetPassword(dataBuildAuthBase);
+            if (response.Succeeded)
             {
-                var msg = MapperMessages.Map(ErrorMessages.INVALID_EMAIL_EN, ErrorMessages.IINVALID_EMAIL_AR);
-                _errors?.Clear();
-                _errors.Add(msg);
-                Snackbar.Add(msg, Severity.Error);
+                shareProvider.NavigationService.GoTo(RouterPage.LOGIN, new(), true);
             }
-        };
+            else
+            {
+                if (response.Messages != null && response.Messages.Count() > 0)
+                {
+                    var msg = MapperMessages.Map(ErrorMessages.INVALID_EMAIL_EN, ErrorMessages.IINVALID_EMAIL_AR);
+                    _errors?.Clear();
+                    _errors.Add(msg);
+                    shareProvider.DialogNotification.ShowSnackbar(msg, Severity.Error);
+                }
+            };
+        });
     }
 
     protected async Task OnSubmitConfirmEmail(DataBuildAuthBase dataBuildAuthBase)
     {
-
-        var response = await builderApi.SubmitConfirmEmail(dataBuildAuthBase);
-        if (response.Succeeded)
+        await safeInvoker.InvokeAsync(async () =>
         {
-
-            var res = await ConfirmAsync("Confirm Email", SuccessMessages.CONFIRM_EMAIL_MESSAGE_EN);
-            if (res == true)
+            dataBuildAuthBase.ReturnUrl = Helper.GetInstance().GetFullPath(ConstantsApp.CONFIRM_EMAIL_PAGE_URL);
+            var response = await builderApi.SubmitConfirmEmail(dataBuildAuthBase);
+            if (response.Succeeded)
             {
-                navigation.NavigateTo(RouterPage.LOGIN, forceLoad: true);
+                var res = await ConfirmAsync("Confirm Email", SuccessMessages.CONFIRM_EMAIL_MESSAGE_EN);
+                if (res == true)
+                {
+                    shareProvider.NavigationService.GoTo(RouterPage.LOGIN, new(), true);
+                }
             }
-            
-          
-
-        }
-        else
-        {
-
-            var res = await ConfirmAsync("Error", ErrorMessages.PROCESS_IS_FAILED_EN);
-
-        }
+            else
+            {
+                var res = await ConfirmAsync("Error", ErrorMessages.PROCESS_IS_FAILED_EN);
+            }
+        });
     }
 
-    private async Task OnSubmitExternalLogin(ExternalLoginRequest request)
+    [IgnoreSafeInvoke]
+    private async Task OnSubmitExternalLogin(DataBuildAuthBase request)
     {
-
         try
         {
-            request.ReturnUrl = Helper.GetInstance().GetFullPath(ConstantsApp.RETEURN_EXTERNAL_LOGIN_PAGE); 
-            //$"{navigation.BaseUri}ReturnExternalLoginPage";
-            //await builderApi.ExternalLoginAsync(request);
-            navigation.NavigateTo($"https://asg-api.runasp.net/api/ExternalLogin?provider={request.Provider}&returnUrl={request.ReturnUrl}",true);
-
+            request.ReturnUrl = Helper.GetInstance().GetFullPath(ConstantsApp.RETEURN_EXTERNAL_LOGIN_PAGE);
+            var parameters = new Dictionary<string, object>
+            {
+                ["provider"] = request.Provider,
+                ["returnUrl"] = request.ReturnUrl
+            };
+            shareProvider.NavigationService.GoTo("https://asg-api.runasp.net/api/ExternalLogin", parameters, forceReload: true);
         }
-        catch(Exception e){
-
-            Snackbar.Add(e.Message, Severity.Error);
+        catch (Exception e)
+        {
+            shareProvider.DialogNotification.ShowSnackbar(e.Message, Severity.Error);
         }
-
-          
-       
-
     }
+
+    [IgnoreSafeInvoke]
     private async Task OnSubmit(DataBuildAuthBase dataBuildAuthBase)
     {
-
         if (dataBuildAuthBase != null)
         {
             if (dataBuildAuthBase.IsLogin)
             {
-
-               
                 await handleApiLoginAsync(dataBuildAuthBase);
-
             }
             else
             {
-         
                 await handleApiRegisterAsync(dataBuildAuthBase);
             }
         }
-
     }
 
-    
     private async Task OnSubmitForgetPasswordAsync(DataBuildAuthBase data)
     {
-        var response = await builderApi.ForgetPassword(data);
-        if (response.Succeeded)
+        await safeInvoker.InvokeAsync(async () =>
         {
-            var fullPath = Helper.GetInstance().GetFullPath(ConstantsApp.RESET_PASSWORDL_PAGE_URL);
-            navigation.NavigateTo($"{RouterPage.EMAIL_CONFIRM_PAGE}?Email={data.Email}&Url={fullPath}&Method={AuthMethods.ForgetPassword.ToString()}", forceLoad: true);
-            //navigation.NavigateTo($"{RouterPage.FORGET_PASSWORD}/{SuccessMessages.LINK_SENT_SUCCESSFULLY_AR}", forceLoad: true);
-
-        }
-        else
-        {
-            if (response.Messages != null && response.Messages.Count() > 0)
+            var response = await builderApi.ForgetPassword(data);
+            if (response.Succeeded)
             {
-
-                _errors?.Clear();
-                var msg = MapperMessages.Map(ErrorMessages.INVALID_EMAIL_EN, ErrorMessages.IINVALID_EMAIL_AR); 
-                Snackbar.Add(msg, Severity.Error);
-                _errors.Add(msg);
-
+                var fullPath = Helper.GetInstance().GetFullPath(ConstantsApp.RESET_PASSWORDL_PAGE_URL);
+                var parameters = new Dictionary<string, object>
+                {
+                    ["Email"] = data.Email,
+                    ["Url"] = fullPath,
+                    ["Method"] = AuthMethods.ForgetPassword.ToString()
+                };
+                shareProvider.NavigationService.GoTo(RouterPage.EMAIL_CONFIRM_PAGE, parameters, forceReload: true);
             }
-        }
+            else
+            {
+                if (response.Messages != null && response.Messages.Count() > 0)
+                {
+                    _errors?.Clear();
+                    var msg = MapperMessages.Map(ErrorMessages.INVALID_EMAIL_EN, ErrorMessages.IINVALID_EMAIL_AR);
+                    shareProvider.DialogNotification.ShowSnackbar(msg, Severity.Error);
+                    _errors.Add(msg);
+                }
+            }
+        });
     }
 
-    private void  initAuth(LoginResponse response, LoginType loginType)
+    [IgnoreSafeInvoke]
+    private void initAuth(LoginResponse response, LoginType loginType)
     {
-        navigation.NavigateTo($"/{RouterPage.SIGIN_PAGE}?" +
-            $"{ConstantsApp.ACCESS_TOKEN}={response.accessToken}" +
-            $"&{ConstantsApp.REFRESH_TOKEN}={response.refreshToken}" +
-            $"&{ConstantsApp.LOGIN_TYPE}={loginType.ToString()}", 
-            forceLoad: true);
+        var parameters = new Dictionary<string, object>
+        {
+            [ConstantsApp.ACCESS_TOKEN] = response.accessToken,
+            [ConstantsApp.REFRESH_TOKEN] = response.refreshToken,
+            [ConstantsApp.LOGIN_TYPE] = loginType.ToString()
+        };
+        shareProvider.NavigationService.GoTo($"/{RouterPage.SIGIN_PAGE}", parameters, forceReload: true);
     }
+
     /// <summary>
     ///   Edit in 24/3/2025 
     /// </summary>
-    /// <param name="request"></param>
+    /// <param name = "request"></param>
     /// <returns></returns>
     private async Task saveLoginAsync(LoginResponse response, LoginType loginType)
     {
-        await authService.SaveLoginAsync(response);
-        await authService.SaveLoginTypeAsync(loginType);
+        await safeInvoker.InvokeAsync(async () =>
+        {
+            await authService.SaveLoginAsync(response);
+            await authService.SaveLoginTypeAsync(loginType);
+        });
     }
+
     /// <summary>
     ///   Edit in 24/3/2025 
     /// </summary>
-    /// <param name="request"></param>
+    /// <param name = "request"></param>
     /// <returns></returns>
     private async Task handleApiLoginAsync(DataBuildAuthBase date)
     {
-        var response =await builderApi.Login(date);
-
-
-        if (response.Succeeded)
+        await safeInvoker.InvokeAsync(async () =>
         {
-
-            //try
-            //{
-            //    //await sessionUserManager.StoreEmailAsync(date.Email);
-              
-            //}
-            //finally
-            //{
-                //await saveLoginAsync(response.Data,LoginType.Email);
-                initAuth(response.Data,LoginType.Email);
-
-                //navigation.NavigateTo(RouterPage.HOME, forceLoad: true);
-            //}
-
-        }
-        else
-        {
-            if (response.Messages != null && response.Messages.Count() > 0)
+            var response = await builderApi.Login(date);
+            if (response.Succeeded)
             {
-                // errorMessages.AddRange(response.Messages);
-                _errors.Clear();
-                if (response.Messages.Count > 0)
-                {
-                    if (response.Messages[0].Contains("Unauthorized"))
-                        _errors.Add(MapperMessages.Map(ErrorMessages.INVALID_EMAIL_EN, ErrorMessages.IINVALID_EMAIL_AR));
-                    else
-                        _errors.AddRange(response.Messages);
-                }
+                initAuth(response.Data, LoginType.Email);
             }
-
-            //navigation.NavigateTo(RouterPage.LOGIN, forceLoad: true);
-        }
+            else
+            {
+            }
+        });
     }
+
     private async Task handleApiRegisterAsync(DataBuildAuthBase data)
     {
-        var response = await builderApi.Register(data);
-        if (response.Succeeded)
+        await safeInvoker.InvokeAsync(async () =>
         {
-            var fullPath = Helper.GetInstance().GetFullPath(ConstantsApp.CONFIRM_EMAIL_PAGE_URL);
-            navigation.NavigateTo($"{RouterPage.EMAIL_CONFIRM_PAGE}?Email={data.Email}&Url={fullPath}&Method={AuthMethods.ConfirmEmail.ToString()}", forceLoad: true);
-
-        }
-        else
-        {
-            if (response.Messages != null && response.Messages.Count() > 0)
+            data.ReturnUrl = Helper.GetInstance().GetFullPath(ConstantsApp.CONFIRM_EMAIL_PAGE_URL);
+            var response = await builderApi.Register(data);
+            if (response.Succeeded)
             {
-                _errors.Clear();
-                if (response.Messages.Count > 0)
+                shareProvider.NavigationService.GoTo(RouterPage.EMAIL_CONFIRM_PAGE, new Dictionary<string, object> { ["Email"] = data.Email, ["Url"] = data.ReturnUrl, ["Method"] = AuthMethods.ConfirmEmail.ToString(), }, true);
+            }
+            else
+            {
+                if (response.Messages != null && response.Messages.Count() > 0)
                 {
-                    if (response.Messages[0].Contains("Unauthorized"))
-                        _errors.Add(MapperMessages.Map(ErrorMessages.INVALID_EMAIL_EN, ErrorMessages.IINVALID_EMAIL_AR));
-                    else
-                        _errors.AddRange(response.Messages);
-
-                    Snackbar.Add(response.Messages[0], Severity.Error);
+                    shareProvider.DialogNotification.ShowSnackbar(response.Messages[0], Severity.Error);
                 }
             }
-        }
+        });
     }
 
     /// <summary>
     ///   Edit in 24/3/2025 
     /// </summary>
-    /// <param name="request"></param>
+    /// <param name = "request"></param>
     /// <returns></returns>
     private async Task OnSubmitLogout(DataBuildAuthBase? dataBuildAuthBase = null)
     {
-        try
+        await safeInvoker.InvokeAsync(async () =>
         {
             var response = await builderApi.Logout();
-            if (response.Succeeded){ }
-            else{ }
+            if (response.Succeeded)
+            {
+            }
 
-            
             await authService.DeleteLoginAsync();
             await authService.RemoveCookiesAsync();
-
-            
-            //authService.DeleteLogin();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
             AuthStateProvider.MarkUserAsLoggedOut();
-            //await AuthStateProvider.InitializeAsync();
-            navigation.NavigateTo(RouterPage.SIGINOUT_PAGE, forceLoad: true);
-            
-           
-        }
+            shareProvider.NavigationService.GoTo(RouterPage.SIGINOUT_PAGE, null, true);
+        });
     }
-
 }
-
-
-
-
-
-
-
-

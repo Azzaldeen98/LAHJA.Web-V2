@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Infrastructure.Repositories;
 
 
-public class ProfileRepository : IProfileRepository {
+ public  class ProfileRepository : IProfileRepository {
 
     private readonly IProfileApiClient _apiClient;
     public ProfileRepository(IProfileApiClient apiClient){

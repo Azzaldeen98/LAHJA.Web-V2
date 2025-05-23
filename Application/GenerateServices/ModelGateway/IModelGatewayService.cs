@@ -8,7 +8,7 @@ using Application.UseCases;
 namespace Application.Services;
 
 
-public interface IModelGatewayService :  ITBaseService ,  ITScope  
+public interface IModelGatewayService :  ITBaseShareService  
 {
 
     public Task<ModelGatewayResponse> createModelGatewayAsync(ModelGatewayCreate body, CancellationToken cancellationToken);

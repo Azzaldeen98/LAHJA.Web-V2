@@ -4,7 +4,7 @@ using Domain.Entities.Checkout;
 using Domain.Entities.Checkout.Request;
 using Domain.Entities.Checkout.Response;
 using Domain.Repository.Checkout;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using Infrastructure.DataSource;
 using Infrastructure.DataSource.ApiClient.Payment;
 using Infrastructure.DataSource.Seeds;

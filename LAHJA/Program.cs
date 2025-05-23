@@ -22,6 +22,13 @@ using Shared.Services.Infrastructure.Extensions;
 using FluentValidation;
 using LAHJA.Validators;
 using LAHJA.Data.UI.Components.Base;
+using Shared.Extensions;
+using Shared.Interfaces;
+using System.Reflection;
+using Domain;
+using AutoGenerator;
+using Client.Shared;
+using Shared.LocalStorage;
 
 
 internal class Program
@@ -30,32 +37,69 @@ internal class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.Services.AddScoped<ProtectedLocalStorage>();
+        builder.Services.AddScoped<ProtectedSessionStorage>();
+        builder.Services.AddScoped<IProtectedStorage, ProtectedCookieStorage>();
+        builder.Services.AddScoped<ITokenService, TokenService>();
+        builder.Services.AddScoped<ISessionUserManager, SessionUserManager>();
+
+
+
+        var assemblies = new Assembly[] {
+            Assembly.GetExecutingAssembly(),
+            typeof(IClientSharedMarker).Assembly,
+            typeof(IAutoGeneratorMarker).Assembly,
+            typeof(ISharedLayerMarker).Assembly,
+            typeof(IDomainLayerMarker).Assembly,
+            typeof(IApplicationLayerMarker).Assembly,
+            typeof(IInfrastructureLayerMarker).Assembly
+        };
+
+        var loggerFactory = LoggerFactory.Create(builder =>
+        {
+            builder.AddConsole();
+        });
+
+        var buildLogger = loggerFactory.CreateLogger("ServiceRegistrationLogger");
+
+
+        //// Generator Code for Layers 
+        BuildGeneratorApp.BuildAllLayers();
+
+        builder.Services.RegisterServicesByLifetimes(assemblies, buildLogger);
+
+
+
+
 
         //ExtractedClassInfo.ReadInfoFromFile("ITApiClient",
         //    "..\\Infrastructure\\DataSource\\ApiClientFactory\\Nswag\\WebClientApi2.cs",
         //    "NSwageCode.txt");
 
 
+        //var sharedAsm = typeof(ISharedLayerMarker).Assembly;
+        //var applicationAsm = typeof(IApplicationLayerMarker).Assembly;
+        //var infrastructureAsm = typeof(IInfrastructureLayerMarker).Assembly;
+
+        //var assemblies =  AppDomain.CurrentDomain.GetAssemblies();
 
 
-
-        //builder.Services.AddSingleton<ProxyGenerator>();
-        //builder.Services.AddSingleton<RequestHandlingInterceptor>();
-        //builder.Services.AddScoped<ErrorHandlingInterceptor>();
-
+        //builder.Services.AddServiceByLifetime<ITTransient>(ServiceCollectionServiceExtensions.AddTransient, assemblies, buildLogger);
+        //builder.Services.AddServiceByLifetime<ITScope>(ServiceCollectionServiceExtensions.AddScoped, assemblies, buildLogger);
+        //builder.Services.AddServiceByLifetime<ITSingleton>(ServiceCollectionServiceExtensions.AddSingleton, assemblies, buildLogger);
 
 
+    
 
         ////////////////////////////////////////////////////
 
         //  Register (AddSingleton - AddScoped - AddTransient)
-        builder.Services.RegisterServicesByLifetime();
 
-        builder.Services.AddScoped<TokenService>();
-        builder.Services.AddScoped<ITokenService, TokenService>();
-        builder.Services.AddScoped<ISessionUserManager, SessionUserManager>();
-        builder.Services.AddScoped<ProtectedLocalStorage>();
-        builder.Services.AddScoped<ProtectedSessionStorage>();
+        //builder.Services.RegisterServicesByLifetime();
+
+    
+
+
         builder.Services.AddScoped<IUserClaimsHelper, UserClaimsHelper>();
         ////////////////////////////////////////////////////
 

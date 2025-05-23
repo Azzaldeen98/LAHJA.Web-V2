@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Infrastructure.Repositories;
 
 
-public class AuthorizationSessionRepository : IAuthorizationSessionRepository {
+ public  class AuthorizationSessionRepository : IAuthorizationSessionRepository {
 
     private readonly IAuthorizationSessionApiClient _apiClient;
     public AuthorizationSessionRepository(IAuthorizationSessionApiClient apiClient){

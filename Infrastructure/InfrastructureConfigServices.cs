@@ -40,7 +40,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Domain.Repository.ModelAi;
 using Infrastructure.Mappings.Dynamic;
 using Infrastructure.Middlewares;
-using Infrastructure.Shared.ApiInvoker;
+using Infrastructure.Share.Invoker;
 using Infrastructure.Config;
 using Shared.Interfaces;
 using Shared.Extensions;
@@ -48,15 +48,16 @@ using Shared.Extensions;
 
 namespace Infrastructure
 {
+
+    public interface IInfrastructureLayerMarker { }
+
+
     public static class InfrastructureConfigServices
     {
-        //private static string thisFilePath = $"{ArchitecturalLayers.InfrastructureRoot}\\InfrastructureConfigServices.cs";
+
         public static void InstallInfrastructureConfigServices(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-
-            //InfrastructureGenerator.GenerateApiClientTemplates();
-            //InfrastructureGenerator.GenerateRepositoryTemplates();
 
             //DependencyInjectionRegistrar.RegisterScopedDependencies<ITBaseRepository>(assemblies, thisFilePath, "serviceCollection");
             serviceCollection.RegisterDependencies<ITBaseApiClient>(ServiceCollectionServiceExtensions.AddScoped,assemblies);            

@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Infrastructure.Repositories;
 
 
-public class NotifacationRepository : INotifacationRepository {
+ public  class NotifacationRepository : INotifacationRepository {
 
     private readonly INotifacationApiClient _apiClient;
     public NotifacationRepository(INotifacationApiClient apiClient){

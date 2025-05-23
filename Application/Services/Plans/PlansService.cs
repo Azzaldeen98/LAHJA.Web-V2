@@ -2,7 +2,7 @@
 using Application.UseCase.Plans.Get;
 using Domain.Entities.Plans.Response;
 using Domain.ShareData.Base;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using Infrastructure.Models.Profile.Response;
 
 namespace Application.Services.Plans
@@ -11,18 +11,11 @@ namespace Application.Services.Plans
     {
         private readonly GetPlansUseCase getPlansUseCase;
         private readonly GetPlanUseCase getPlanUseCase;
-
         private readonly UpdatePlanUseCase updatePlanUseCase;
         private readonly CreatePlanUseCase createPlanUseCase;
         private readonly DeletePlanUseCase deletePlanUseCase;
-
-        //private readonly GetPlansGroupUseCase getPlansGroupUseCase;
-        //private readonly GetPlanByIdUseCase getPlanByIdUseCase;
-        //private readonly GetPlanInfoByIdUseCase getPlanInfoByIdUseCase;
-        //private readonly GetAllPlansContainersUseCase getAllPlansContainersUseCase;
         private readonly GetAllContainersPlansUseCase _getContainersUseCase;
-        //private readonly GetSubscriptionPlansUseCase getSubscriptionPlansUseCase;
-        //private readonly GetSubscriptionPlanFeaturesUseCase getSubscriptionPlanFeaturesUseCase;
+
 
 
         public PlansService(GetPlansUseCase getPlansUseCase, GetPlanUseCase getPlanUseCase, UpdatePlanUseCase updatePlanUseCase, CreatePlanUseCase createPlanUseCase, DeletePlanUseCase deletePlanUseCase, GetAllContainersPlansUseCase getAllContainersPlansUseCase)

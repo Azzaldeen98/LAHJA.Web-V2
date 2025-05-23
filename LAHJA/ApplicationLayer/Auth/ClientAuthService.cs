@@ -7,22 +7,24 @@ using Blazorise.Extensions;
 using Domain.Entities;
 using Domain.Entities.Auth.Request;
 using Domain.Entities.Auth.Response;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using Infrastructure.Models.Plans;
 using LAHJA.Helpers.Services;
+using Shared.Helpers;
 
 
 namespace LAHJA.ApplicationLayer.Auth
 {
     public class ClientAuthService
     {
-        private readonly TokenService tokenService;
+        private readonly ITokenService tokenService;
         private readonly WebAuthService service;
 
         private readonly IMapper _mapper;
 
 
-        public ClientAuthService(WebAuthService service, IMapper mapper, TokenService tokenService)
+        public ClientAuthService(WebAuthService service, IMapper mapper,
+            ITokenService tokenService)
         {
 
             this.service = service;

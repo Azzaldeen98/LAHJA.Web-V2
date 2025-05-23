@@ -8,7 +8,7 @@ using Application.UseCases;
 namespace Application.Services;
 
 
-public interface IAuthorizationSessionService :  ITBaseService ,  ITScope  
+public interface IAuthorizationSessionService :  ITBaseShareService  
 {
 
     public Task<AuthorizationSessionCoreResponse> authorizationSessionAsync(ValidateTokenRequest body, CancellationToken cancellationToken);

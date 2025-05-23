@@ -10,6 +10,11 @@ namespace Application.Config
     {
        
         private static string appRoot = ArchitecturalLayers.ApplicationRoot;
+        public static void GeneratorCode()
+        {
+            GenerateUseCaseTemplates();
+            GenerateServicesTemplates();
+        }
 
         public static void GenerateUseCaseTemplates()
         {
@@ -28,16 +33,16 @@ namespace Application.Config
         {
 
             var files = FileScanner.GetAllCsFilePaths($"{appRoot}\\UseCases");
-            foreach (var file in files)
-            {
-           // اسم المجلد الأخير
-                //Console.WriteLine($"Last folder: {lastFolderName}");
-            }
+      
             if (files != null && files.Any())
             {
-                string directoryPath = Path.GetDirectoryName(files[0]); // المسار الكامل للمجلد الذي يحتوي على الملف
-                string lastFolderName = new DirectoryInfo(directoryPath).Name;
-                GenerateAllServicesTemplates(files[0], lastFolderName);
+                 foreach (var file in files)
+                {
+                    string directoryPath = Path.GetDirectoryName(file); // المسار الكامل للمجلد الذي يحتوي على الملف
+                    string lastFolderName = new DirectoryInfo(directoryPath).Name;
+                    GenerateAllServicesTemplates(file, lastFolderName);
+                }
+             
             }
             
         }
@@ -95,12 +100,11 @@ namespace Application.Config
                 SourceDirectory = $"{appRoot}\\UseCases",
                 DestinationCategoryName = "Service",
                 ImplementGenerateInterface = true,
-                BaseInterface = "ITBaseService",
+                BaseInterface = "ITBaseShareService",
                 NamespaceName = "Application.Services",
                 Interfaces = new List<Type>
                 {
-                    typeof(ITBaseService),
-                    typeof(ITScope),
+                    typeof(ITBaseShareService),
                 },
                 Usings = new List<string>
                 {
@@ -110,16 +114,17 @@ namespace Application.Config
                      "Microsoft.Extensions.Configuration",
                      "Application.UseCases"
         },
-                AdditionalCode = @"
-            {PropertyFields}
-            public {ClassName}({Parameters}){
-                {InitializeFields}
-            }
+        AdditionalCode = @"
+        {PropertyFields}
+    public {ClassName}(   {Parameters})
+    {
+                        {InitializeFields}
+    }
 
                 ",
-            MethodContentCode = @"
+    MethodContentCode = @"
 
-        [RETERN]  await {PropertyFieldName}.{InvokeMethodCallback};
+        [RETERN] await {PropertyFieldName}.{InvokeMethodCallback};
         ",
 
             });

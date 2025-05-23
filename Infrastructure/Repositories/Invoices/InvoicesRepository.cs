@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Infrastructure.Repositories;
 
 
-public class InvoicesRepository : IInvoicesRepository {
+ public  class InvoicesRepository : IInvoicesRepository {
 
     private readonly IInvoicesApiClient _apiClient;
     public InvoicesRepository(IInvoicesApiClient apiClient){

@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Infrastructure.Repositories;
 
 
-public class ModelGatewayRepository : IModelGatewayRepository {
+ public  class ModelGatewayRepository : IModelGatewayRepository {
 
     private readonly IModelGatewayApiClient _apiClient;
     public ModelGatewayRepository(IModelGatewayApiClient apiClient){

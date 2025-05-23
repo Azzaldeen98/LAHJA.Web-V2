@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Infrastructure.Repositories;
 
 
-public class PlansRepository : IPlansRepository {
+ public  class PlansRepository : IPlansRepository {
 
     private readonly IPlansApiClient _apiClient;
     public PlansRepository(IPlansApiClient apiClient){

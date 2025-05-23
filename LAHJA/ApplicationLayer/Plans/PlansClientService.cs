@@ -1,6 +1,6 @@
 ﻿using Application.Services.Plans;
 using AutoMapper;
-using Domain.Wrapper;
+using Domain.Wrapper; using Shared.Wrapper;
 using LAHJA.Helpers.Services;
 using Domain.Entities.Plans.Response;
 using Application.UseCase.Plans.Get;
